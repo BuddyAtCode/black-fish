@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ReactLenis } from "lenis/react";
 import { Link } from "react-router-dom";
-import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
-import headerImage from "../assets/Images/BlackFish_header.svg";
-import profilePhotoImage from "../assets/Images/Profile_photo.png";
-import storeImage from "../assets/Images/Store_image.png";
+import headerImage from "../assets/Images/BlackFish_header.svg"
 const ImageComponent = (props: any) => {
   const height = window.innerHeight;
   const width = window.innerWidth;
@@ -22,7 +19,7 @@ const ImageComponent = (props: any) => {
         width: (width / 12) * props.width,
         marginLeft: ml,
         marginTop: mt,
-        backgroundImage: `url(${props.img})`,
+        backgroundImage: `url("/images/IMG_${props.index}.jpg")`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -89,6 +86,7 @@ function Portfolio() {
   const width = window.innerWidth;
   const ml = (width / 12) * 2;
 
+  const arr = [0,1,2,3,4,5,6,7]
   return (
     <ReactLenis root>
       <section className="w-screen h-screen relative">
@@ -115,7 +113,7 @@ function Portfolio() {
           style={{
             width: width,
             height: height,
-            backgroundImage: `url(${tatooGuyImage})`,
+            //backgroundImage: `url(${tatooGuyImage})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
@@ -132,12 +130,13 @@ function Portfolio() {
         />
 
         <div className="w-full h-full  grid grid-cols-12 grid-rows-8 ">
+         
           <ImageComponent
             width={3}
             height={2}
             ml={8}
             mt={-2}
-            img={tatooGuyImage}
+            index={4}
             x={calculateParalax(mouseX, window.innerWidth, 0.03)}
             y={calculateParalax(mouseY, window.innerWidth, 0.02)}
           />
@@ -146,16 +145,15 @@ function Portfolio() {
             height={1}
             ml={6}
             mt={5}
-            img={storeImage}
-            x={calculateParalax(mouseX, window.innerWidth, 0.02)}
+            index={1}
+            x={calculateParalax(mouseX, window.innerWidth, 0.08)}
             y={calculateParalax(mouseY, window.innerWidth, 0.01)}
           />
           <ImageComponent
             width={4}
             height={3}
             ml={6}
-            mt={1}
-            img={profilePhotoImage}
+            index={2}
             x={calculateParalax(mouseX, window.innerWidth, 0.04)}
             y={calculateParalax(mouseY, window.innerWidth, 0.03)}
           />
@@ -164,10 +162,38 @@ function Portfolio() {
             height={2}
             ml={-3}
             mt={3}
-            img={storeImage}
-            x={calculateParalax(mouseX, window.innerWidth, 0.02)}
+            index={0}
+            x={calculateParalax(mouseX, window.innerWidth, 0.12)}
             y={calculateParalax(mouseY, window.innerWidth, 0.02)}
           />
+        <ImageComponent
+            width={2}
+            height={2}
+            ml={-3}
+            mt={3}
+            index={3}
+            x={calculateParalax(mouseX, window.innerWidth, 0.04)}
+            y={calculateParalax(mouseY, window.innerWidth, 0.06)}
+          />
+           <ImageComponent
+            width={2}
+            height={2}
+            ml={-3}
+            mt={3}
+            index={5}
+            x={calculateParalax(mouseX, window.innerWidth, 0.05)}
+            y={calculateParalax(mouseY, window.innerWidth, 0.01)}
+          />
+           <ImageComponent
+            width={2}
+            height={2}
+            ml={-3}
+            mt={3}
+            index={7}
+            x={calculateParalax(mouseX, window.innerWidth, 0.08)}
+            y={calculateParalax(mouseY, window.innerWidth, 0.08)}
+          />
+          
         </div>
       </section>
     </ReactLenis>
