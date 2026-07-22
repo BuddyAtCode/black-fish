@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactLenis } from "lenis/react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import PageLoader from "./components/PageLoader";
 import SiteChrome from "./components/SiteChrome";
 import Biography from "./pages/Biography";
 import Booking from "./pages/Booking";
@@ -40,6 +41,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ReactLenis root options={{ lerp: 0.075, smoothWheel: true }}>
+        <PageLoader />
         <AnimatedRoutes />
       </ReactLenis>
     </BrowserRouter>

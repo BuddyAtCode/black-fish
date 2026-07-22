@@ -127,7 +127,7 @@ export default function Booking() {
             <b>↗</b>
           </button>
           <small className="form-disclaimer">
-            Toto je zatiaľ funkčná ukážka. Žiadne údaje sa neodosielajú ani neukladajú.
+            Formulár zatiaľ slúži ako ukážka. Zadané údaje sa po odoslaní zahodia.
           </small>
         </form>
       </section>
@@ -135,10 +135,10 @@ export default function Booking() {
       <section className="booking-faq">
         <span>Predtým, než napíšeš</span>
         <div>
-          <h2>PRINES OBRAZ.<br />NIE HOTOVÝ NÁVRH.</h2>
+          <h2>PRINES NÁPAD.<br />DADLA MU DÁ TVAR.</h2>
           <p>
-            Referencie sú vítané, kopírovanie cudzej práce nie. Najlepšie projekty vznikajú,
-            keď máme slobodu vytvoriť niečo vlastné pre tvoje telo.
+            Pošli referencie, ktoré vystihujú náladu, kompozíciu alebo detail. Dadla z nich
+            pripraví vlastný návrh pre tvoje telo.
           </p>
           <Link to="/portfolio">Pozrieť rukopis Dadly ↗</Link>
         </div>

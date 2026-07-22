@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import biographyTextImage from "../assets/Images/BiographyText.png";
 import profilePhotoImage from "../assets/Images/Profile_photo.png";
 import storeImage from "../assets/Images/Store_image.png";
 
@@ -38,6 +39,12 @@ export default function Biography() {
   return (
     <main className="biography-page inner-page">
       <section className="bio-hero">
+        <img
+          className="page-gothic-wordmark page-gothic-wordmark--biography"
+          src={biographyTextImage}
+          alt=""
+          aria-hidden="true"
+        />
         <div className="bio-hero-image">
           <motion.img
             src={profilePhotoImage}
@@ -51,10 +58,11 @@ export default function Biography() {
           <span>DADLA</span>
           <span>TATS</span>
         </div>
+        <div className="bio-gothic-signature" aria-hidden="true">Dadla Tats</div>
         <div className="bio-hero-intro">
           <span>Artist / Founder / Image maker</span>
           <p>
-            Tetujem obrazy pre ľudí, ktorí si nechcú vybrať z katalógu.
+            Tetujem autorské obrazy pre konkrétneho človeka a konkrétne miesto na tele.
           </p>
         </div>
       </section>
@@ -72,13 +80,13 @@ export default function Biography() {
           </p>
           <div className="bio-columns">
             <p>
-              BLACK FISH je malé autorské štúdio postavené na pokoji, presnosti a dôvere.
-              Žiadny tlak na rýchle rozhodnutie. Žiadna výrobná linka. Pred prvou čiarou musí
-              obraz dávať zmysel obom stranám.
+              V BLACK FISH je čas na rozhovor, skúšanie mierky a pokojné rozhodnutie.
+              Pred prvou čiarou si Dadla s klientom prejde celý návrh, aby dobre sedel telu
+              aj pôvodnej predstave.
             </p>
             <p>
-              Výsledkom nie je len tetovanie, ale vizuálny artefakt — trochu temný, trochu
-              nežný a dostatočne zvláštny na to, aby zostal osobný.
+              Výsledok je osobný: trochu temný, trochu nežný a navrhnutý tak, aby sedel
+              práve tebe.
             </p>
           </div>
         </div>

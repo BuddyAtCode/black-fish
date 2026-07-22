@@ -1,5 +1,4 @@
 import {
-  AnimatePresence,
   motion,
   MotionValue,
   useScroll,
@@ -7,8 +6,11 @@ import {
 } from "framer-motion";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import biographyTextImage from "../assets/Images/BiographyText.png";
 import headerImage from "../assets/Images/BlackFish_header.svg";
+import portfolioTextImage from "../assets/Images/PortfolioText.png";
 import profilePhotoImage from "../assets/Images/Profile_photo.png";
+import storeTextImage from "../assets/Images/StoreText.png";
 import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
 
 const FishRelicScene = lazy(() => import("../components/FishRelicScene"));
@@ -60,7 +62,7 @@ function ScrollStatement() {
     offset: ["start 0.78", "end 0.38"],
   });
   const words =
-    "Netetujeme dekoráciu. Premieňame spomienky, obrazy a zvláštne nápady na diela, ktoré žijú spolu s telom.".split(
+    "Spomienky, obrazy a zvláštne nápady premieňame na tetovania kreslené pre konkrétne telo.".split(
       " ",
     );
 
@@ -88,50 +90,6 @@ function ScrollStatement() {
   );
 }
 
-function Intro() {
-  const [visible, setVisible] = useState(() => !sessionStorage.getItem("blackfish-intro"));
-
-  useEffect(() => {
-    if (!visible) return;
-    const timeout = window.setTimeout(() => {
-      sessionStorage.setItem("blackfish-intro", "seen");
-      setVisible(false);
-    }, 2200);
-    return () => window.clearTimeout(timeout);
-  }, [visible]);
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          className="intro-screen"
-          exit={{ clipPath: "inset(0 0 100% 0)" }}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-        >
-          <motion.img
-            src={headerImage}
-            alt=""
-            initial={{ opacity: 0, scale: 0.82, filter: "blur(18px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          />
-          <div className="intro-progress">
-            <motion.span
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.8, ease: "easeInOut" }}
-            />
-          </div>
-          <div className="intro-meta">
-            <span>Ink / Image / Ritual</span>
-            <span>Loading experience</span>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 function Hero() {
   const target = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -141,6 +99,7 @@ function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.16]);
   const imageY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -110]);
+  const markY = useTransform(scrollYProgress, [0, 1], [0, -54]);
   const opacity = useTransform(scrollYProgress, [0.45, 1], [1, 0]);
 
   return (
@@ -149,6 +108,10 @@ function Hero() {
         <img src="/images/generated/tattoo-session.jpg" alt="DADLA TATS pri tetovaní" />
       </motion.div>
       <div className="hero-shade" />
+
+      <motion.div className="hero-gothic-logo" style={{ y: markY, opacity }} aria-hidden="true">
+        <img src="/blackfish-mark.svg" alt="" />
+      </motion.div>
 
       <motion.div className="hero-title" style={{ y: titleY, opacity }} aria-label="Black Fish">
         <span>BLACK</span>
@@ -162,8 +125,8 @@ function Hero() {
 
       <div className="hero-bottomline">
         <p>
-          Autorské tetovacie štúdio pre ľudí,
-          <br /> ktorí nechcú vyzerať ako všetci ostatní.
+          Dadla navrhuje autorské tetovania
+          <br /> podľa tvojho príbehu a tvaru tela.
         </p>
         <Link className="magnetic-link" to="/booking">
           <span>Rezervovať konzultáciu</span>
@@ -290,8 +253,8 @@ function RelicSection() {
 
         <motion.div className="relic-description" style={{ opacity: copyOpacity }}>
           <p>
-            Každý návrh kreslí Dadla od nuly. Smer určuje telo, príbeh a napätie medzi
-            čiernou plochou a prázdnym miestom.
+            Dadla začína každý motív kresbou. Pri návrhu pracuje s tvarom tela, tvojím
+            príbehom a tým, ako bude tetovanie pôsobiť v pohybe.
           </p>
           <Link to="/biography">Spoznaj Dadlu ↗</Link>
         </motion.div>
@@ -312,6 +275,16 @@ function RelicSection() {
 function PortfolioPreview() {
   return (
     <section className="portfolio-preview">
+      <motion.img
+        className="gothic-wordmark gothic-wordmark--portfolio"
+        src={portfolioTextImage}
+        alt=""
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.18 }}
+        viewport={{ once: true, margin: "-15%" }}
+        transition={{ duration: 1.2 }}
+      />
       <div className="section-heading">
         <div className="section-kicker">
           <span>03</span>
@@ -352,6 +325,16 @@ function PortfolioPreview() {
 function ArtistPreview() {
   return (
     <section className="artist-preview">
+      <motion.img
+        className="gothic-wordmark gothic-wordmark--biography"
+        src={biographyTextImage}
+        alt=""
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.15 }}
+        viewport={{ once: true, margin: "-15%" }}
+        transition={{ duration: 1.2 }}
+      />
       <div className="artist-image-wrap">
         <motion.img
           src={profilePhotoImage}
@@ -364,15 +347,15 @@ function ArtistPreview() {
         <div className="artist-image-label">Artist / Founder</div>
       </div>
       <div className="artist-copy">
-        <span className="eyebrow">DADLA TATS</span>
+        <span className="eyebrow">Dadla Tats</span>
         <h2>
-          KRESLÍM TO,
-          <br /> ČO NEVIEŠ
-          <br /> POVEDAŤ.
+          OBRAZ, KTORÝ
+          <br /> SADNE TVOJMU
+          <br /> TELU.
         </h2>
         <p>
-          Dadla premieňa obrazy, symboly a útržky spomienok na osobné kompozície.
-          Výsledok nevzniká výberom zo šablóny, ale rozhovorom a kresbou pre konkrétne telo.
+          Dadla pracuje s obrazmi, symbolmi a útržkami spomienok. Na konzultácii spolu
+          prejdete motív, miesto aj mierku. Potom nakreslí kompozíciu priamo pre tvoje telo.
         </p>
         <Link className="text-link" to="/biography">Celý príbeh ↗</Link>
       </div>
@@ -383,6 +366,16 @@ function ArtistPreview() {
 function ShopPreview() {
   return (
     <section className="shop-preview">
+      <motion.img
+        className="gothic-wordmark gothic-wordmark--store"
+        src={storeTextImage}
+        alt=""
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.2 }}
+        viewport={{ once: true, margin: "-15%" }}
+        transition={{ duration: 1.2 }}
+      />
       <div className="shop-copy">
         <div className="section-kicker">
           <span>04</span>
@@ -467,7 +460,6 @@ function Footer() {
 export default function Landing() {
   return (
     <main className="landing-page">
-      <Intro />
       <Hero />
       <ScrollStatement />
       <ExpandingMedia />

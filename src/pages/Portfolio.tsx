@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import portfolioTextImage from "../assets/Images/PortfolioText.png";
 import profilePhotoImage from "../assets/Images/Profile_photo.png";
 import storeImage from "../assets/Images/Store_image.png";
 import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
@@ -86,6 +87,12 @@ export default function Portfolio() {
   return (
     <main className="portfolio-page inner-page">
       <section className="inner-hero portfolio-hero">
+        <img
+          className="page-gothic-wordmark page-gothic-wordmark--portfolio"
+          src={portfolioTextImage}
+          alt=""
+          aria-hidden="true"
+        />
         <div className="inner-hero-meta">
           <span>BLACK FISH ARCHIVE</span>
           <span>001—008 / DADLA TATS</span>
@@ -146,7 +153,7 @@ export default function Portfolio() {
       </section>
 
       <section className="portfolio-cta">
-        <p>Máš v hlave obraz, ktorý tu ešte nie je?</p>
+        <p>Máš v hlave vlastný obraz?</p>
         <h2>VYTVORME<br />ĎALŠÍ.</h2>
         <Link className="magnetic-link magnetic-link--light" to="/booking">
           <span>Začať konzultáciu</span>

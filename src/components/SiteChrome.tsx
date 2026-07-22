@@ -17,7 +17,7 @@ function CursorTrail() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const cursor = cursorRef.current;
-    if (!canvas || !cursor || window.matchMedia("(pointer: coarse)").matches) {
+    if (!canvas || !cursor || !window.matchMedia("(pointer: fine)").matches) {
       return;
     }
 
@@ -25,8 +25,12 @@ function CursorTrail() {
     if (!context) return;
 
     const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const trail = Array.from({ length: 24 }, () => ({ ...pointer }));
+    const trail = Array.from({ length: 32 }, () => ({ ...pointer }));
     let frame = 0;
+
+    document.documentElement.dataset.customCursor = "true";
+    cursor.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
+    cursor.dataset.visible = "true";
 
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -42,10 +46,22 @@ function CursorTrail() {
       pointer.y = event.clientY;
       cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
       cursor.dataset.visible = "true";
+      cursor.dataset.hovering = String(
+        event.target instanceof Element &&
+          Boolean(event.target.closest("a, button, input, textarea, select, [data-cursor]")),
+      );
     };
 
     const hide = () => {
       cursor.dataset.visible = "false";
+    };
+
+    const press = () => {
+      cursor.dataset.pressed = "true";
+    };
+
+    const release = () => {
+      cursor.dataset.pressed = "false";
     };
 
     const draw = () => {
@@ -64,9 +80,16 @@ function CursorTrail() {
         context.beginPath();
         context.moveTo(previous.x, previous.y);
         context.lineTo(point.x, point.y);
-        context.strokeStyle = `rgba(159, 18, 28, ${0.48 * (1 - index / trail.length)})`;
-        context.lineWidth = Math.max(0.4, 5 * (1 - index / trail.length));
+        context.strokeStyle = `rgba(242, 235, 224, ${0.16 * (1 - index / trail.length)})`;
+        context.lineWidth = Math.max(1, 11 * (1 - index / trail.length));
         context.lineCap = "round";
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(previous.x, previous.y);
+        context.lineTo(point.x, point.y);
+        context.strokeStyle = `rgba(181, 15, 29, ${0.82 * (1 - index / trail.length)})`;
+        context.lineWidth = Math.max(0.8, 6.5 * (1 - index / trail.length));
         context.stroke();
       });
 
@@ -77,13 +100,18 @@ function CursorTrail() {
     draw();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", move);
+    window.addEventListener("pointerdown", press);
+    window.addEventListener("pointerup", release);
     document.documentElement.addEventListener("mouseleave", hide);
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerdown", press);
+      window.removeEventListener("pointerup", release);
       document.documentElement.removeEventListener("mouseleave", hide);
+      delete document.documentElement.dataset.customCursor;
     };
   }, []);
 
@@ -91,7 +119,8 @@ function CursorTrail() {
     <>
       <canvas className="cursor-trail" ref={canvasRef} aria-hidden="true" />
       <div className="custom-cursor" ref={cursorRef} aria-hidden="true">
-        <span />
+        <span className="custom-cursor-ring" />
+        <span className="custom-cursor-dot" />
       </div>
     </>
   );
@@ -189,8 +218,8 @@ export default function SiteChrome() {
 
       <header className="site-header">
         <Link className="mini-logo" to="/" aria-label="BLACK FISH — domov">
-          <span>BLACK</span>
-          <span>FISH</span>
+          <span>Black</span>
+          <span>Fish</span>
         </Link>
 
         <div className="header-meta" aria-hidden="true">
@@ -243,7 +272,7 @@ export default function SiteChrome() {
               ))}
             </div>
             <div className="menu-footer">
-              <span>DADLA TATS</span>
+              <span>Dadla Tats</span>
               <span>Slovensko · Instagram DM</span>
               <span>© {new Date().getFullYear()}</span>
             </div>
