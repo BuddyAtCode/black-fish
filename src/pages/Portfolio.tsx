@@ -1,203 +1,158 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ReactLenis } from "lenis/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import headerImage from "../assets/Images/BlackFish_header.svg"
-const ImageComponent = (props: any) => {
-  const height = window.innerHeight;
-  const width = window.innerWidth;
-  const ml = (width / 12) * props.ml;
-  const mt = (height / 8) * props.mt;
-  useEffect(() => {
-    console.log(props.x);
-  }, [props.x]);
+import profilePhotoImage from "../assets/Images/Profile_photo.png";
+import storeImage from "../assets/Images/Store_image.png";
+import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
+
+type Category = "Všetko" | "Figurálne" | "Príroda" | "Surreal";
+
+const works = [
+  {
+    src: "/images/generated/tattoo-session.jpg",
+    title: "Záhrada, ktorá vidí",
+    category: "Príroda" as Category,
+    number: "001",
+    size: "is-wide",
+    position: "50% 54%",
+  },
+  {
+    src: tatooGuyImage,
+    title: "Tiché monštrum",
+    category: "Surreal" as Category,
+    number: "002",
+    size: "is-tall",
+    position: "50% 50%",
+  },
+  {
+    src: profilePhotoImage,
+    title: "Druhá tvár",
+    category: "Figurálne" as Category,
+    number: "003",
+    size: "is-small",
+    position: "72% 42%",
+  },
+  {
+    src: storeImage,
+    title: "Čierny kvet",
+    category: "Príroda" as Category,
+    number: "004",
+    size: "is-medium",
+    position: "38% 50%",
+  },
+  {
+    src: storeImage,
+    title: "Jazva ako ornament",
+    category: "Surreal" as Category,
+    number: "005",
+    size: "is-tall",
+    position: "50% 45%",
+  },
+  {
+    src: "/images/generated/tattoo-session.jpg",
+    title: "Oko v záhrade",
+    category: "Figurálne" as Category,
+    number: "006",
+    size: "is-small",
+    position: "25% 70%",
+  },
+  {
+    src: tatooGuyImage,
+    title: "Proces / 02:17",
+    category: "Figurálne" as Category,
+    number: "007",
+    size: "is-wide",
+    position: "80% 50%",
+  },
+  {
+    src: profilePhotoImage,
+    title: "Nočná anatómia",
+    category: "Surreal" as Category,
+    number: "008",
+    size: "is-medium",
+    position: "15% 50%",
+  },
+];
+
+const filters: Category[] = ["Všetko", "Figurálne", "Príroda", "Surreal"];
+
+export default function Portfolio() {
+  const [activeFilter, setActiveFilter] = useState<Category>("Všetko");
+  const visibleWorks =
+    activeFilter === "Všetko"
+      ? works
+      : works.filter((work) => work.category === activeFilter);
+
   return (
-    <motion.div
-      className="flex"
-      style={{
-        height: (height / 8) * props.height,
-        width: (width / 12) * props.width,
-        marginLeft: ml,
-        marginTop: mt,
-        backgroundImage: `url("/images/IMG_${props.index}.jpg")`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        x: props.x,
-        y: props.y,
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{
-        opacity: {
-          delay: 0.3,
-          duration: 1,
-        },
-        x: {
-          duration: 0.1,
-          delay: 0.001,
-        },
-      }}
-    />
-  );
-};
-const useMousePosition = () => {
-  const [mousePosition, setMousePosition] = React.useState({
-    x: null,
-    y: null,
-  });
-
-  React.useEffect(() => {
-    const updateMousePosition = (ev: any) => {
-      setMousePosition({ x: ev.clientX, y: ev.clientY });
-    };
-
-    window.addEventListener("mousemove", updateMousePosition);
-
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-    };
-  }, []);
-
-  return mousePosition;
-};
-function Portfolio() {
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
-
-  const mousePosition = useMousePosition();
-  const stringPos = JSON.stringify(mousePosition);
-  useEffect(() => {
-    const x = mousePosition.x;
-    const y = mousePosition.y;
-    x ? setMouseX(x) : null;
-    y ? setMouseY(y) : null;
-    console.log(mouseX);
-  }, [stringPos]);
-
-  const calculateParalax = (
-    position: any,
-    maxDistance: any,
-    factor: number
-  ) => {
-    return (position - maxDistance / 1000) * factor;
-  };
-  const height = window.innerHeight;
-  const width = window.innerWidth;
-  const ml = (width / 12) * 2;
-
-  const arr = [0,1,2,3,4,5,6,7]
-  return (
-    <ReactLenis root>
-      <section className="w-screen h-screen relative">
-        <div className="w-full h-full absolute  flex items-center justify-center">
-          <motion.div
-            className="w-[61%] h-[61%]
-           fixed z-40"
-            style={{
-              backgroundImage: `url(${headerImage})`,
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              x: calculateParalax(mouseX, window.innerWidth, -0.02),
-              y: calculateParalax(mouseY, window.innerHeight, -0.02),
-            }}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-          />
-          <Link to={"/"} className="w-96 h-96 z-50 " />
+    <main className="portfolio-page inner-page">
+      <section className="inner-hero portfolio-hero">
+        <div className="inner-hero-meta">
+          <span>BLACK FISH ARCHIVE</span>
+          <span>001—008 / DADLA TATS</span>
         </div>
-
-        <motion.div
-          style={{
-            width: width,
-            height: height,
-            //backgroundImage: `url(${tatooGuyImage})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            x: calculateParalax(mouseX, window.innerWidth, 0.05),
-            y: calculateParalax(mouseY, window.innerHeight, 0.05),
-          }}
-          initial={{ height: (height / 8) * 6, width: width, marginLeft: 0 }}
-          animate={{
-            height: (height / 8) * 2,
-            width: (width / 12) * 2,
-            marginLeft: ml,
-          }}
-          transition={{ duration: 1 }}
-        />
-
-        <div className="w-full h-full  grid grid-cols-12 grid-rows-8 ">
-         
-          <ImageComponent
-            width={3}
-            height={2}
-            ml={8}
-            mt={-2}
-            index={4}
-            x={calculateParalax(mouseX, window.innerWidth, 0.03)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.02)}
-          />
-          <ImageComponent
-            width={2}
-            height={1}
-            ml={6}
-            mt={5}
-            index={1}
-            x={calculateParalax(mouseX, window.innerWidth, 0.08)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.01)}
-          />
-          <ImageComponent
-            width={4}
-            height={3}
-            ml={6}
-            index={2}
-            x={calculateParalax(mouseX, window.innerWidth, 0.04)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.03)}
-          />
-          <ImageComponent
-            width={2}
-            height={2}
-            ml={-3}
-            mt={3}
-            index={0}
-            x={calculateParalax(mouseX, window.innerWidth, 0.12)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.02)}
-          />
-        <ImageComponent
-            width={2}
-            height={2}
-            ml={-3}
-            mt={3}
-            index={3}
-            x={calculateParalax(mouseX, window.innerWidth, 0.04)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.06)}
-          />
-           <ImageComponent
-            width={2}
-            height={2}
-            ml={-3}
-            mt={3}
-            index={5}
-            x={calculateParalax(mouseX, window.innerWidth, 0.05)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.01)}
-          />
-           <ImageComponent
-            width={2}
-            height={2}
-            ml={-3}
-            mt={3}
-            index={7}
-            x={calculateParalax(mouseX, window.innerWidth, 0.08)}
-            y={calculateParalax(mouseY, window.innerWidth, 0.08)}
-          />
-          
-        </div>
+        <h1>
+          OBRAZY
+          <br /> POD KOŽOU
+        </h1>
+        <p>
+          Každé telo má inú kompozíciu. Každý obraz vzniká pre jedného človeka
+          a existuje iba raz.
+        </p>
+        <div className="portfolio-hero-mark" aria-hidden="true">✣</div>
       </section>
-    </ReactLenis>
+
+      <section className="portfolio-content">
+        <div className="portfolio-filters" aria-label="Filtrovať portfólio">
+          {filters.map((filter) => (
+            <button
+              type="button"
+              key={filter}
+              className={activeFilter === filter ? "is-active" : ""}
+              onClick={() => setActiveFilter(filter)}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        <motion.div className="portfolio-masonry" layout>
+          {visibleWorks.map((work, index) => (
+            <motion.figure
+              layout
+              className={`portfolio-item ${work.size}`}
+              key={work.number}
+              initial={{ opacity: 0, y: 70 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.65, delay: Math.min(index * 0.06, 0.3) }}
+            >
+              <div className="portfolio-item-image">
+                <img
+                  src={work.src}
+                  alt={work.title}
+                  loading={index > 2 ? "lazy" : "eager"}
+                  style={{ objectPosition: work.position }}
+                />
+                <span>{work.number}</span>
+                <b aria-hidden="true">VIEW ↗</b>
+              </div>
+              <figcaption>
+                <strong>{work.title}</strong>
+                <span>{work.category} / autorský návrh</span>
+              </figcaption>
+            </motion.figure>
+          ))}
+        </motion.div>
+      </section>
+
+      <section className="portfolio-cta">
+        <p>Máš v hlave obraz, ktorý tu ešte nie je?</p>
+        <h2>VYTVORME<br />ĎALŠÍ.</h2>
+        <Link className="magnetic-link magnetic-link--light" to="/booking">
+          <span>Začať konzultáciu</span>
+          <b>↗</b>
+        </Link>
+      </section>
+    </main>
   );
 }
-
-export default Portfolio;

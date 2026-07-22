@@ -1,42 +1,148 @@
-function ProductContainer() {
+import { AnimatePresence, motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
+const products = [
+  { name: "Nocturne Ring", price: 42, crop: "12% 78%", tag: "Black titanium" },
+  { name: "Blood Moon", price: 58, crop: "46% 48%", tag: "Red zircon / steel" },
+  { name: "Twin Thorn", price: 36, crop: "86% 38%", tag: "Surgical steel" },
+  { name: "Orbit Chain", price: 64, crop: "76% 78%", tag: "Black titanium" },
+  { name: "Ritual Bar", price: 49, crop: "22% 38%", tag: "Red zircon / steel" },
+  { name: "Void Spike", price: 31, crop: "78% 24%", tag: "Surgical steel" },
+];
+
+export default function Eshop() {
+  const [cart, setCart] = useState<number[]>([]);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const total = useMemo(
+    () => cart.reduce((sum, productIndex) => sum + products[productIndex].price, 0),
+    [cart],
+  );
+
   return (
-    <div className="w-full h-[40vh] flex flex-col justify-between">
-      <div className="bg-white w-full h-[70%]" />
-      <div className="flex justify-between -mt-4">
-        <h2 className="text-white text-2xl">Title</h2>
-        <h2 className="text-white text-2xl">300 EUR</h2>
-      </div>
-      <div className="flex justify-between ">
-        <div>
-          <p className="text-white mobile:text-[8px] laptop:text-[12px]">EAR</p>
-          <p className="text-white mobile:text-[8px] laptop:text-[12px]">
-            2 COLORS/3 SIZES
+    <main className="shop-page inner-page">
+      <section className="shop-hero">
+        <div className="shop-hero-image">
+          <img src="/images/generated/piercing-collection.jpg" alt="BLACK FISH piercing collection" />
+        </div>
+        <div className="shop-hero-copy">
+          <div className="inner-hero-meta">
+            <span>DROP 001</span>
+            <span>SIMULATED STORE</span>
+          </div>
+          <h1>OBJECTS<br />AFTER DARK</h1>
+          <p>
+            Piercingy z titánu a chirurgickej ocele. Ostré línie, bezpečné materiály,
+            limitované kusy.
           </p>
         </div>
-        <p className="text-white mobile:text-[8px] laptop:text-[12px] self-end">
-          3 in stock
-        </p>
-      </div>
-    </div>
-  );
-}
-function Eshop() {
-  return (
-    <section className="w-screen  grid laptop:grid-cols-3 mobile:grid-cols-2 laptop:gap-x-4 laptop:gap-y-16 mobile:gap-x-2 mobile:gap-y-8 laptop:py-16 laptop:px-64 mobile:p-4">
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-      <ProductContainer />
-    </section>
-  );
-}
+      </section>
 
-export default Eshop;
+      <section className="product-section">
+        <div className="product-toolbar">
+          <span>6 objects / drop 001</span>
+          <button type="button" onClick={() => setCheckoutOpen(true)}>
+            Bag [{String(cart.length).padStart(2, "0")}] · {total} €
+          </button>
+        </div>
+
+        <div className="product-grid">
+          {products.map((product, index) => (
+            <motion.article
+              className="product-card"
+              key={product.name}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ duration: 0.6, delay: (index % 3) * 0.08 }}
+            >
+              <div className="product-image">
+                <img
+                  src="/images/generated/piercing-collection.jpg"
+                  alt={product.name}
+                  style={{ objectPosition: product.crop }}
+                />
+                <span>0{index + 1}</span>
+                <button
+                  type="button"
+                  onClick={() => setCart((items) => [...items, index])}
+                  aria-label={`Pridať ${product.name} do tašky`}
+                >
+                  + Add
+                </button>
+              </div>
+              <div className="product-info">
+                <div>
+                  <h2>{product.name}</h2>
+                  <span>{product.tag}</span>
+                </div>
+                <strong>{product.price} €</strong>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      <section className="shop-note">
+        <span>Hygiene / Material / Fit</span>
+        <h2>SPRÁVNY KUS.<br />SPRÁVNE MIESTO.</h2>
+        <p>
+          Pri ostrom nasadení bude každý piercing dostupný s profesionálnou konzultáciou
+          a odporúčaním veľkosti.
+        </p>
+        <Link to="/booking">Rezervovať piercing konzultáciu ↗</Link>
+      </section>
+
+      <AnimatePresence>
+        {checkoutOpen && (
+          <motion.div
+            className="checkout-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="checkout-title"
+          >
+            <motion.div
+              className="checkout-panel"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+            >
+              <button type="button" className="checkout-close" onClick={() => setCheckoutOpen(false)}>
+                Close ×
+              </button>
+              <span>BLACK FISH / BAG</span>
+              <h2 id="checkout-title">TVOJ VÝBER</h2>
+              {cart.length === 0 ? (
+                <p className="empty-cart">Zatiaľ je tu ticho.</p>
+              ) : (
+                <div className="cart-lines">
+                  {cart.map((productIndex, cartIndex) => (
+                    <div key={`${productIndex}-${cartIndex}`}>
+                      <span>{products[productIndex].name}</span>
+                      <b>{products[productIndex].price} €</b>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="cart-total">
+                <span>Total</span>
+                <strong>{total} €</strong>
+              </div>
+              <button
+                type="button"
+                className="checkout-button"
+                onClick={() => setCheckoutOpen(false)}
+              >
+                Demo checkout / čoskoro
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
+  );
+}

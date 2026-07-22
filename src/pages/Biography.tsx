@@ -1,215 +1,134 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import profilePhotoImage from "../assets/Images/Profile_photo.png";
-import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
-import headerImage from "../assets/Images/BlackFish_header.svg";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import profilePhotoImage from "../assets/Images/Profile_photo.png";
+import storeImage from "../assets/Images/Store_image.png";
 
-interface DescriptionContainerProps {
-  leftPicked: boolean;
-  rightPicked: boolean;
-}
-const DescriptionContainer: React.FC<DescriptionContainerProps> = (props) => {
-  const leftPicked = props.leftPicked;
-  const rightPicked = props.rightPicked;
-  const descriptions = {
-    dadla: {
-      dadlaHeading: "Dadla",
-      dadlaDescription:
-        "Dadla je skúsená tatérka, ktorá sa špecializuje na detailné a osobné tetovania. Jej práca odráža vášeň pre umenie a precíznosť, pričom každé tetovanie je jedinečné a navrhnuté podľa predstáv klienta.",
-    },
-    blackfish: {
-      blackfishHeading: "BlackFish",
-      blackfishDescription:
-        "Štúdio BlackFish je miestom, kde sa stretáva profesionalita s vášňou pre umenie. Špecializujeme sa na vytváranie detailných a osobných tetovaní, ktoré sú navrhnuté podľa individuálnych predstáv našich klientov. Naša filozofia je založená na precíznom prístupe k dizajnu a kvalitnej realizácii, aby každé tetovanie bolo jedinečným a významným dielom.",
-    },
-  };
-  return (
-    <motion.div
-      className="fixed w-full h-[70%] l-0 bottom-0 laptop:px-[20%] mobile:px-[0] laptop:py-32 mobile:py-8 bg-backround-light z-20"
-      initial={{ y: "100%", opacity: 0 }}
-      animate={{
-        y: leftPicked || rightPicked ? "0%" : "100%",
-        opacity: leftPicked || rightPicked ? 1 : 0,
-      }}
-      transition={{
-        y: { duration: 1, delay: 2.3 },
-        opacity: { duration: 0.01, delay: 0.01 },
-      }}
-    >
-      <div className="flex flex-col items-center">
-        <h1 className="text-primary-light laptop:text-[96px] mobile:text-[64px] text-center mb-8 font-plex-serif font-light">
-          {leftPicked
-            ? descriptions.dadla.dadlaHeading
-            : rightPicked
-            ? descriptions.blackfish.blackfishHeading
-            : null}
-        </h1>
-        <p className="text-white laptop:w-1/2 mobile:w-3/4 laptop:text-lg mobile:text-sm font-plex-serif">
-          {leftPicked
-            ? descriptions.dadla.dadlaDescription
-            : rightPicked
-            ? descriptions.blackfish.blackfishDescription
-            : null}
-        </p>
-      </div>
-    </motion.div>
-  );
-};
-function Biography() {
-  const [leftHovered, setLeftHovered] = useState(false);
-  const [rightHovered, setRightHovered] = useState(false);
-  const [picked, setPicked] = useState({
-    leftPicked: false,
-    rightPicked: false,
+const process = [
+  {
+    number: "01",
+    title: "Obraz",
+    text: "Prinesieš fotku, sen, vetu alebo len zvláštny pocit. Spoločne nájdeme jadro motívu.",
+  },
+  {
+    number: "02",
+    title: "Kresba",
+    text: "Dadla pripraví autorskú kompozíciu pre konkrétne miesto a pohyb tvojho tela.",
+  },
+  {
+    number: "03",
+    title: "Rituál",
+    text: "V štúdiu doladíme mierku a detail. Potom obraz pomaly prejde pod kožu.",
+  },
+  {
+    number: "04",
+    title: "Život",
+    text: "Dostaneš jasné pokyny k hojeniu. Dielo sa ďalej mení spolu s tebou.",
+  },
+];
+
+export default function Biography() {
+  const imageSection = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: imageSection,
+    offset: ["start end", "end start"],
   });
+  const imageY = useTransform(scrollYProgress, [0, 1], [-60, 90]);
 
-  const hoveredLeft = (state: any) => {
-    setLeftHovered(state);
-  };
-  const hoveredRight = (state: any) => {
-    setRightHovered(state);
-  };
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  const rightPictureDelayValue = 1.5;
   return (
-    <section className="w-screen h-screen  snap-center overflow-hidden ">
-      <div className="w-full h-full absolute  flex items-center justify-center pointer-events-none">
-        <motion.div
-          className="w-[35%] h-[35%]
-           fixed z-40 pointer-events-auto"
-          style={{
-            backgroundImage: `url(${headerImage})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{
-            scale: 1,
-            opacity: picked.leftPicked || picked.rightPicked ? 0 : 1,
-          }}
-          transition={{ delay: 1 }}
-        />
-        <Link
-          to={"/"}
-          className="w-[35%] h-[35%]  z-50 pointer-events-auto cursor-pointer"
-        />
-      </div>
-      {/* Description container */}
-      <DescriptionContainer
-        leftPicked={picked.leftPicked}
-        rightPicked={picked.rightPicked}
-      />
-      {/* Back button */}
-      <motion.div
-        className="cursor-pointer"
-        initial={{ display: "none", opacity: 0 }}
-        animate={{
-          display: picked.leftPicked || picked.rightPicked ? "flex" : "none",
-          opacity: picked.leftPicked || picked.rightPicked ? 1 : 0,
-        }}
-        transition={{
-          display: { delay: 2 },
-          opacity: { duration: 1, delay: 0 },
-        }}
-        onClick={() => {
-          setPicked((prevPicked) => ({
-            ...prevPicked,
-            leftPicked: false,
-            rightPicked: false,
-          }));
-        }}
-      >
-        <h1 className="laptop:text-[96px] mobile:text-[48px] text-primary-light fixed bottom-0 z-20 cursor-pointer font-plex-serif font-thin">
-          Back
-        </h1>
-      </motion.div>
+    <main className="biography-page inner-page">
+      <section className="bio-hero">
+        <div className="bio-hero-image">
+          <motion.img
+            src={profilePhotoImage}
+            alt="DADLA TATS — tatérka a zakladateľka BLACK FISH"
+            initial={{ scale: 1.15, filter: "grayscale(1) brightness(.45)" }}
+            animate={{ scale: 1, filter: "grayscale(1) brightness(.72)" }}
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </div>
+        <div className="bio-hero-type" aria-label="DADLA TATS">
+          <span>DADLA</span>
+          <span>TATS</span>
+        </div>
+        <div className="bio-hero-intro">
+          <span>Artist / Founder / Image maker</span>
+          <p>
+            Tetujem obrazy pre ľudí, ktorí si nechcú vybrať z katalógu.
+          </p>
+        </div>
+      </section>
 
-      <div className="w-full h-full  flex">
-        {/* Left Image */}
-        <motion.div
-          onClick={() => {
-            setPicked((prevPicked) => ({ ...prevPicked, leftPicked: true }));
-          }}
-          style={{
-            width: width,
-            height: (height / 8) * 6,
-            backgroundImage: `url(${profilePhotoImage})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            cursor: "pointer",
-          }}
-          initial={{
-            width: width,
-            height: (height / 8) * 6,
-          }}
-          animate={{
-            width: picked.leftPicked
-              ? width
-              : picked.rightPicked
-              ? 0
-              : width / 2,
-            height: height,
-            opacity: !leftHovered ? 0.5 : 1,
-          }}
-          transition={{ width: { duration: 1, delay: 0.3 } }}
-          onMouseEnter={() => {
-            hoveredLeft(true);
-          }}
-          onMouseLeave={() => {
-            hoveredLeft(false);
-          }}
+      <section className="bio-manifesto">
+        <div className="section-kicker">
+          <span>01</span>
+          <span>O Dadle</span>
+        </div>
+        <div>
+          <h2>NAJPRV KRESBA.<br />POTOM KOŽA.</h2>
+          <p className="bio-lead">
+            DADLA TATS pracuje s figurálnymi obrazmi, prírodnými detailmi a surrealistickými
+            kompozíciami. Každý motív vzniká ako odpoveď na konkrétne telo a príbeh.
+          </p>
+          <div className="bio-columns">
+            <p>
+              BLACK FISH je malé autorské štúdio postavené na pokoji, presnosti a dôvere.
+              Žiadny tlak na rýchle rozhodnutie. Žiadna výrobná linka. Pred prvou čiarou musí
+              obraz dávať zmysel obom stranám.
+            </p>
+            <p>
+              Výsledkom nie je len tetovanie, ale vizuálny artefakt — trochu temný, trochu
+              nežný a dostatočne zvláštny na to, aby zostal osobný.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bio-studio-image" ref={imageSection}>
+        <motion.img
+          src={storeImage}
+          alt="Atmosféra štúdia BLACK FISH"
+          style={{ y: imageY }}
         />
-        {/* Right Image */}
-        <motion.div
-          onClick={() => {
-            setPicked((prevPicked) => ({ ...prevPicked, rightPicked: true }));
-          }}
-          style={{
-            height: (height / 8) * 6,
-            backgroundImage: `url(${tatooGuyImage})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            overflow: "hidden",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
-          initial={{
-            width: 0,
-            height: (height / 8) * 6,
-            right: "100%",
-          }}
-          animate={{
-            width: picked.rightPicked
-              ? width
-              : picked.leftPicked
-              ? 0
-              : width / 2,
-            height: height,
-            right: "0%",
-            opacity: !rightHovered ? 0.5 : picked.leftPicked ? 0 : 1,
-          }}
-          transition={{
-            width: { duration: 1, delay: rightPictureDelayValue },
-            opacity: { duration: 1, delax: rightPictureDelayValue },
-            height: { duration: 1, delay: rightPictureDelayValue },
-            right: { duration: 1, delay: rightPictureDelayValue },
-          }}
-          onMouseEnter={() => {
-            hoveredRight(true);
-          }}
-          onMouseLeave={() => {
-            hoveredRight(false);
-          }}
-        />
-      </div>
-    </section>
+        <div className="bio-studio-caption">
+          <span>BLACK FISH STUDIO</span>
+          <span>Safe space / sharp work</span>
+        </div>
+      </section>
+
+      <section className="process-section">
+        <div className="section-heading section-heading--compact">
+          <div className="section-kicker">
+            <span>02</span>
+            <span>Proces</span>
+          </div>
+          <h2>OD SPRÁVY<br />K OBRAZU.</h2>
+        </div>
+        <div className="process-list">
+          {process.map((step, index) => (
+            <motion.article
+              key={step.number}
+              initial={{ opacity: 0, x: 45 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.65, delay: index * 0.08 }}
+            >
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      <section className="bio-cta">
+        <span>Niečo ti chodí po rozume?</span>
+        <h2>UKÁŽ MI TO.</h2>
+        <Link className="magnetic-link magnetic-link--light" to="/booking">
+          <span>Naplánovať konzultáciu</span>
+          <b>↗</b>
+        </Link>
+      </section>
+    </main>
   );
 }
-
-export default Biography;
