@@ -67,6 +67,7 @@ function ScrollStatement() {
     "Spomienky, obrazy a zvláštne nápady premieňame na tetovania kreslené pre konkrétne telo.".split(
       " ",
     );
+  const revealScale = 0.74;
 
   return (
     <section className="statement-section" ref={target}>
@@ -76,8 +77,11 @@ function ScrollStatement() {
       </div>
       <p className="scroll-statement">
         {words.map((word, index) => {
-          const start = index / words.length;
-          const end = Math.min(start + 0.16, 1);
+          const start = (index / words.length) * revealScale;
+          const end = Math.min(
+            (index / words.length + 0.16) * revealScale,
+            revealScale,
+          );
           return (
             <RevealWord key={`${word}-${index}`} progress={scrollYProgress} range={[start, end]}>
               {word}
