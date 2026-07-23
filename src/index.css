@@ -8,7 +8,7 @@
   --line: rgba(231, 225, 216, 0.2);
   --sans: "Space Grotesk", Arial, sans-serif;
   --serif: "Bodoni Moda SC", Georgia, serif;
-  --gothic: "Grenze Gotisch", "Bodoni Moda SC", Georgia, serif;
+  --gothic: "UnifrakturMaguntia", "Bodoni Moda SC", Georgia, serif;
   --mono: "IBM Plex Mono", monospace;
 }
 
@@ -299,7 +299,7 @@ img {
   color: rgba(0, 0, 0, 0.12);
   font-family: var(--gothic);
   font-size: 52vw;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.7;
   letter-spacing: -0.15em;
   pointer-events: none;
@@ -328,7 +328,7 @@ img {
 
 .menu-list a small {
   color: rgba(5, 5, 5, 0.62);
-  font: 700 1.3rem/0.7 var(--gothic);
+  font: 400 1.3rem/0.7 var(--gothic);
 }
 
 .menu-list a span {
@@ -431,7 +431,7 @@ img {
   align-items: center;
   color: var(--blood-bright);
   font-family: var(--gothic);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 0.61;
   letter-spacing: -0.045em;
   text-align: center;
@@ -480,6 +480,7 @@ img {
   color: var(--bone);
   font-family: var(--gothic);
   font-size: 1.5rem;
+  font-weight: 400;
   line-height: 0.7;
   letter-spacing: 0;
 }
@@ -822,7 +823,7 @@ img {
   justify-content: center;
   flex-direction: column;
   color: transparent;
-  font: 700 clamp(5rem, 14vw, 13rem)/0.62 var(--gothic);
+  font: 400 clamp(5rem, 14vw, 13rem)/0.62 var(--gothic);
   letter-spacing: -0.06em;
   -webkit-text-stroke: 1px rgba(231, 225, 216, 0.38);
 }
@@ -1020,7 +1021,7 @@ img {
   position: absolute;
   left: 50%;
   z-index: 3;
-  font: 700 clamp(8rem, 18vw, 17rem)/0.7 var(--gothic);
+  font: 400 clamp(8rem, 18vw, 17rem)/0.7 var(--gothic);
   letter-spacing: -0.06em;
   white-space: nowrap;
   transform: translateX(-50%);
@@ -1202,7 +1203,7 @@ img {
 .eyebrow {
   margin-bottom: 3rem;
   color: var(--blood-bright);
-  font: 700 clamp(1.8rem, 2.4vw, 2.8rem)/0.75 var(--gothic);
+  font: 400 clamp(1.8rem, 2.4vw, 2.8rem)/0.75 var(--gothic);
   letter-spacing: -0.025em;
 }
 
@@ -1405,7 +1406,7 @@ img {
 .footer-brand {
   align-self: center;
   color: var(--ink);
-  font: 700 clamp(6rem, 13vw, 12rem)/0.52 var(--gothic);
+  font: 400 clamp(6rem, 13vw, 12rem)/0.52 var(--gothic);
   letter-spacing: -0.075em;
 }
 
@@ -1467,7 +1468,7 @@ img {
   position: absolute;
   left: 50%;
   z-index: 1;
-  font: 700 clamp(8rem, 21vw, 19rem)/0.7 var(--gothic);
+  font: 400 clamp(8rem, 21vw, 19rem)/0.7 var(--gothic);
   letter-spacing: -0.065em;
   white-space: nowrap;
   transform: translateX(-50%);
@@ -1712,7 +1713,7 @@ img {
   left: 4vw;
   z-index: 3;
   color: var(--blood-bright);
-  font: 700 clamp(2.4rem, 4vw, 4.8rem)/0.72 var(--gothic);
+  font: 400 clamp(2.4rem, 4vw, 4.8rem)/0.72 var(--gothic);
   letter-spacing: -0.035em;
   text-shadow: 0 12px 32px rgba(0, 0, 0, 0.62);
 }
