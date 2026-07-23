@@ -49,7 +49,10 @@ export default function Booking() {
           <span>BLACK FISH / OPEN CHAIR</span>
           <span>DEMO BOOKING SYSTEM</span>
         </div>
-        <h1>TVÔJ OBRAZ<br />ZAČÍNA TU.</h1>
+        <h1>
+          <span>TVÔJ OBRAZ</span>
+          <span>ZAČÍNA TU.</span>
+        </h1>
         <p>
           Vyber orientačný termín konzultácie a opíš predstavu. Potvrdenie zatiaľ dokončíme
           cez Instagram DM.
