@@ -7,7 +7,9 @@ import {
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const FishRelicScene = lazy(() => import("../components/FishRelicScene"));
+const BlackFishArtifactScene = lazy(
+  () => import("../components/BlackFishArtifactScene"),
+);
 
 const featuredWorks = [
   {
@@ -171,7 +173,7 @@ function ExpandingMedia() {
   );
 }
 
-function RelicCanvas({ progress }: { progress: MotionValue<number> }) {
+function ArtifactCanvas({ progress }: { progress: MotionValue<number> }) {
   const host = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
@@ -192,13 +194,13 @@ function RelicCanvas({ progress }: { progress: MotionValue<number> }) {
   }, []);
 
   return (
-    <div className="relic-canvas-shell" ref={host}>
+    <div className="artifact-canvas-shell" ref={host}>
       {ready ? (
-        <Suspense fallback={<div className="relic-scene-loader">MATERIALIZING / 02</div>}>
-          <FishRelicScene progress={progress} />
+        <Suspense fallback={<div className="artifact-scene-loader">MATERIALIZING / 02</div>}>
+          <BlackFishArtifactScene progress={progress} />
         </Suspense>
       ) : (
-        <div className="relic-scene-loader">MATERIALIZING / 02</div>
+        <div className="artifact-scene-loader">MATERIALIZING / 02</div>
       )}
     </div>
   );
@@ -225,8 +227,8 @@ function RelicSection() {
         <div className="relic-grid" aria-hidden="true" />
 
         <div className="relic-meta">
-          <span>02 / BLACK FISH TOTEM</span>
-          <span>PROCEDURAL WEBGL OBJECT</span>
+          <span>02 / BLACK FISH RELIC</span>
+          <span>SCANNED FORM / WEBGL</span>
         </div>
 
         <motion.h2 className="relic-heading" style={{ y: headingY, opacity: headingOpacity }}>
@@ -234,14 +236,12 @@ function RelicSection() {
           <span>INŠTINKTU.</span>
         </motion.h2>
 
-        <RelicCanvas progress={scrollYProgress} />
-
         <motion.div
-          className="relic-annotation relic-annotation--skeleton"
+          className="relic-annotation relic-annotation--skull"
           style={{ opacity: annotationOpacity }}
         >
           <i />
-          <span>01 / KOSTRA</span>
+          <span>01 / RELIC</span>
         </motion.div>
         <motion.div
           className="relic-annotation relic-annotation--needle"
@@ -269,6 +269,26 @@ function RelicSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ArtifactJourney() {
+  const target = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <div className="artifact-journey" ref={target}>
+      <div className="artifact-stage">
+        <ArtifactCanvas progress={scrollYProgress} />
+        <div className="artifact-stage-vignette" />
+      </div>
+      <RelicSection />
+      <PortfolioPreview />
+      <ArtistPreview />
+    </div>
   );
 }
 
@@ -464,9 +484,7 @@ export default function Landing() {
       <Hero />
       <ScrollStatement />
       <ExpandingMedia />
-      <RelicSection />
-      <PortfolioPreview />
-      <ArtistPreview />
+      <ArtifactJourney />
       <ShopPreview />
       <BookingPreview />
       <Footer />

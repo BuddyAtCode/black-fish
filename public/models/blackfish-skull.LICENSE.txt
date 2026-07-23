@@ -1,0 +1,9 @@
+BLACK FISH 3D ARTIFACT
+
+Model: Scattering Skull
+Author: Vladimir Petkovic
+Source: https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/ScatteringSkull
+License: CC0 1.0 Universal
+
+The source geometry was optimized and combined with an original material,
+lighting, motion, particles, line work and tattoo-needle object for this website.
