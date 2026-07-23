@@ -131,7 +131,7 @@ export default function Biography() {
         <h2>UKÁŽ MI TO.</h2>
         <Link className="magnetic-link magnetic-link--light" to="/booking">
           <span>Naplánovať konzultáciu</span>
-          <b>↗</b>
+          <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </section>
     </main>

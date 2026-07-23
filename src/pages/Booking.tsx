@@ -127,7 +127,7 @@ export default function Booking() {
           </div>
           <button className="booking-submit" type="submit">
             <span>Odoslať nezáväzný dopyt</span>
-            <b>↗</b>
+            <i className="thorn-arrow" aria-hidden="true" />
           </button>
           <small className="form-disclaimer">
             Formulár zatiaľ slúži ako ukážka. Zadané údaje sa po odoslaní zahodia.
@@ -143,7 +143,10 @@ export default function Booking() {
             Pošli referencie, ktoré vystihujú náladu, kompozíciu alebo detail. Dadla z nich
             pripraví vlastný návrh pre tvoje telo.
           </p>
-          <Link to="/portfolio">Pozrieť rukopis Dadly ↗</Link>
+          <Link to="/portfolio">
+            Pozrieť rukopis Dadly
+            <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 

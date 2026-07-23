@@ -96,7 +96,10 @@ export default function Eshop() {
           Pri ostrom nasadení bude každý piercing dostupný s profesionálnou konzultáciou
           a odporúčaním veľkosti.
         </p>
-        <Link to="/booking">Rezervovať piercing konzultáciu ↗</Link>
+        <Link to="/booking">
+          Rezervovať piercing konzultáciu
+          <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
+        </Link>
       </section>
 
       <AnimatePresence>

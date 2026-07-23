@@ -79,6 +79,58 @@ a {
   text-decoration: none;
 }
 
+.thorn-arrow {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: currentColor;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thorn-arrow::before {
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  width: 86%;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.thorn-arrow::after {
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: 42%;
+  height: 42%;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  content: "";
+}
+
+.thorn-arrow--menu {
+  width: 1.8rem;
+  height: 1.8rem;
+  opacity: 0.72;
+}
+
+.thorn-arrow--inline {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: 0.45rem;
+  vertical-align: -0.16rem;
+}
+
+a:hover .thorn-arrow,
+button:hover .thorn-arrow {
+  opacity: 1;
+  transform: translate(0.18rem, -0.18rem);
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -337,11 +389,6 @@ img {
   line-height: 1;
   letter-spacing: -0.075em;
   text-transform: uppercase;
-}
-
-.menu-list a b {
-  font-size: 1.5rem;
-  font-weight: 400;
 }
 
 .menu-footer {
@@ -1624,6 +1671,9 @@ img {
 .portfolio-item-image > span { left: 1rem; }
 .portfolio-item-image > b {
   right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.3s ease, transform 0.3s ease;

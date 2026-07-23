@@ -266,7 +266,7 @@ export default function SiteChrome() {
                   >
                     <small>0{index + 1}</small>
                     <span>{item.label}</span>
-                    <b aria-hidden="true">↗</b>
+                    <i className="thorn-arrow thorn-arrow--menu" aria-hidden="true" />
                   </Link>
                 </motion.div>
               ))}

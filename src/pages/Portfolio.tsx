@@ -137,7 +137,10 @@ export default function Portfolio() {
                   style={{ objectPosition: work.position }}
                 />
                 <span>{work.number}</span>
-                <b aria-hidden="true">VIEW ↗</b>
+                <b aria-hidden="true">
+                  VIEW
+                  <i className="thorn-arrow thorn-arrow--inline" />
+                </b>
               </div>
               <figcaption>
                 <strong>{work.title}</strong>
@@ -153,7 +156,7 @@ export default function Portfolio() {
         <h2>VYTVORME<br />ĎALŠÍ.</h2>
         <Link className="magnetic-link magnetic-link--light" to="/booking">
           <span>Začať konzultáciu</span>
-          <b>↗</b>
+          <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </section>
     </main>

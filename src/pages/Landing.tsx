@@ -127,7 +127,7 @@ function Hero() {
         </p>
         <Link className="magnetic-link" to="/booking">
           <span>Rezervovať konzultáciu</span>
-          <b aria-hidden="true">↗</b>
+          <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
 
@@ -254,7 +254,10 @@ function RelicSection() {
             Dadla začína každý motív kresbou. Pri návrhu pracuje s tvarom tela, tvojím
             príbehom a tým, ako bude tetovanie pôsobiť v pohybe.
           </p>
-          <Link to="/biography">Spoznaj Dadlu ↗</Link>
+          <Link to="/biography">
+            Spoznaj Dadlu
+            <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
+          </Link>
         </motion.div>
 
         <div className="relic-instruction">
@@ -312,7 +315,10 @@ function PortfolioPreview() {
           KOŽA JE
           <br /> GALÉRIA.
         </h2>
-        <Link to="/portfolio">Pozrieť celé portfólio ↗</Link>
+        <Link to="/portfolio">
+          Pozrieť celé portfólio
+          <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
+        </Link>
       </div>
 
       <div className="work-grid">
@@ -375,7 +381,10 @@ function ArtistPreview() {
           Dadla pracuje s obrazmi, symbolmi a útržkami spomienok. Na konzultácii spolu
           prejdete motív, miesto aj mierku. Potom nakreslí kompozíciu priamo pre tvoje telo.
         </p>
-        <Link className="text-link" to="/biography">Celý príbeh ↗</Link>
+        <Link className="text-link" to="/biography">
+          Celý príbeh
+          <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );
@@ -405,7 +414,7 @@ function ShopPreview() {
         </p>
         <Link className="magnetic-link magnetic-link--light" to="/eshop">
           <span>Vstúpiť do shopu</span>
-          <b aria-hidden="true">↗</b>
+          <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
       <div className="shop-image">
@@ -441,7 +450,7 @@ function BookingPreview() {
         ))}
         <Link className="slot-cta" to="/booking">
           <span>Otvoriť kalendár</span>
-          <b>↗</b>
+          <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
     </section>
