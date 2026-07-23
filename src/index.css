@@ -1096,16 +1096,9 @@ img {
   mix-blend-mode: screen;
 }
 
-.gothic-wordmark--store {
-  bottom: 1.2rem;
-  color: var(--ink);
-  mix-blend-mode: multiply;
-}
-
 .portfolio-preview .section-heading,
 .portfolio-preview .work-grid,
-.artist-preview > :not(.gothic-wordmark),
-.shop-preview > :not(.gothic-wordmark) {
+.artist-preview > :not(.gothic-wordmark) {
   position: relative;
   z-index: 4;
 }
@@ -1117,13 +1110,11 @@ img {
   margin-bottom: 7rem;
 }
 
-.section-heading .section-kicker,
-.shop-preview .section-kicker {
+.section-heading .section-kicker {
   color: rgba(5, 5, 5, 0.58);
 }
 
 .section-heading h2,
-.shop-copy h2,
 .booking-title h2,
 .portfolio-cta h2,
 .process-section h2,
@@ -1285,61 +1276,169 @@ img {
 
 .shop-preview {
   position: relative;
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  min-height: 100vh;
+  min-height: 130vh;
   overflow: hidden;
-  background: var(--bone);
+  padding: 7rem 4vw 10rem;
+  background: var(--blood);
   color: var(--ink);
+  isolation: isolate;
 }
 
-.shop-copy {
+.shop-preview-meta {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8rem 4vw;
-}
-
-.shop-copy h2 {
-  margin: 3rem 0 2.3rem;
-  font-size: clamp(4rem, 7.5vw, 8.5rem);
-}
-
-.shop-copy p {
-  max-width: 440px;
-  margin: 0 0 3rem;
-  font-size: 1.08rem;
-  line-height: 1.45;
-  letter-spacing: -0.025em;
-}
-
-.shop-image {
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+  z-index: 3;
+  justify-content: space-between;
+  border-top: 1px solid rgba(5, 5, 5, 0.35);
+  border-bottom: 1px solid rgba(5, 5, 5, 0.35);
+  padding: 0.9rem 0;
+  font: 500 0.58rem/1 var(--mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
-.shop-image img {
+.shop-preview-title {
+  position: relative;
+  z-index: 3;
+  margin: 5.5rem 0 7rem;
+  font-size: clamp(6rem, 11vw, 13rem);
+  font-weight: 650;
+  line-height: 0.72;
+  letter-spacing: -0.105em;
+}
+
+.shop-preview-title span {
+  display: block;
+  white-space: nowrap;
+}
+
+.shop-preview-title span:last-child {
+  margin-left: 16vw;
+  color: var(--bone);
+}
+
+.shop-product-track {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+
+.shop-product-card:nth-child(2) {
+  margin-top: -4rem;
+}
+
+.shop-product-card:nth-child(3) {
+  margin-top: 3.5rem;
+}
+
+.shop-product-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 0.8;
+  background: var(--ink);
+}
+
+.shop-product-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(0.85) contrast(1.18) brightness(0.72);
+  transform: scale(1.12);
+  transition: filter 0.6s ease, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.shop-image:hover img {
+.shop-product-card:hover img {
+  filter: grayscale(0.1) contrast(1.12) brightness(0.86);
   transform: scale(1.04);
 }
 
-.shop-stamp {
+.shop-product-media > span {
   position: absolute;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  border: 1px solid var(--bone);
-  border-radius: 50%;
-  padding: 2.5rem 1.2rem;
+  top: 1rem;
+  left: 1rem;
   color: var(--bone);
-  font: 500 0.62rem/1 var(--mono);
-  transform: rotate(-12deg);
+  font: 500 0.52rem/1 var(--mono);
+  letter-spacing: 0.06em;
+}
+
+.shop-product-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.35);
+  padding: 1rem 0;
+}
+
+.shop-product-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shop-product-info strong {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.shop-product-info span,
+.shop-product-info b {
+  font: 500 0.56rem/1 var(--mono);
+  text-transform: uppercase;
+}
+
+.shop-product-info span {
+  opacity: 0.62;
+}
+
+.shop-preview-footer {
+  display: grid;
+  position: relative;
+  z-index: 3;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+  align-items: end;
+  gap: 8vw;
+  margin-top: 7rem;
+}
+
+.shop-preview-footer p {
+  max-width: 520px;
+  margin: 0;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+  line-height: 1.35;
+  letter-spacing: -0.035em;
+}
+
+.shop-preview-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.35rem 1.4rem;
+  background: var(--ink);
+  color: var(--bone);
+  font: 500 0.66rem/1 var(--mono);
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.shop-preview-cta:hover {
+  background: var(--bone);
+  color: var(--ink);
+  transform: translateY(-4px);
+}
+
+.shop-preview-wordmark {
+  position: absolute;
+  right: -0.08em;
+  bottom: -0.18em;
+  z-index: 1;
+  color: rgba(5, 5, 5, 0.11);
+  font: 400 clamp(12rem, 28vw, 28rem)/0.7 var(--gothic);
+  letter-spacing: -0.07em;
+  pointer-events: none;
+  user-select: none;
 }
 
 .booking-preview {
@@ -2455,7 +2554,6 @@ img {
   .section-heading h2 { font-size: clamp(4.2rem, 11vw, 8rem); }
 
   .artist-preview,
-  .shop-preview,
   .shop-hero {
     grid-template-columns: 1fr 1fr;
   }
@@ -2569,7 +2667,6 @@ img {
   .gothic-wordmark { font-size: 34vw; }
   .gothic-wordmark--portfolio { top: 3.6rem; }
   .gothic-wordmark--biography { top: 2.8rem; }
-  .gothic-wordmark--store { bottom: 2rem; }
   .portfolio-preview { padding: 7rem 1.1rem; }
   .section-heading { display: block; margin-bottom: 4rem; }
   .section-heading h2 { margin: 3rem 0 2rem; font-size: 17vw; }
@@ -2580,16 +2677,54 @@ img {
   .work-card figcaption { align-items: flex-start; flex-direction: column; }
 
   .artist-preview,
-  .shop-preview,
   .shop-hero {
     grid-template-columns: 1fr;
   }
   .artist-image-wrap { min-height: 68vh; }
   .artist-copy { padding: 6rem 1.1rem; }
   .artist-copy h2 { font-size: 15vw; }
-  .shop-copy { order: 2; padding: 6rem 1.1rem; }
-  .shop-copy h2 { font-size: 16vw; }
-  .shop-image { min-height: 72vh; }
+  .shop-preview {
+    min-height: 0;
+    padding: 6rem 0 7rem;
+  }
+  .shop-preview-meta { margin: 0 1.1rem; }
+  .shop-preview-meta span:last-child {
+    max-width: 150px;
+    text-align: right;
+  }
+  .shop-preview-title {
+    margin: 4.5rem 1.1rem 5rem;
+    font-size: 18vw;
+    line-height: 0.76;
+    letter-spacing: -0.09em;
+  }
+  .shop-preview-title span:last-child {
+    margin-left: 0;
+  }
+  .shop-product-track {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    padding: 0 1.1rem 1.25rem;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+  }
+  .shop-product-card {
+    flex: 0 0 min(74vw, 290px);
+    scroll-snap-align: start;
+  }
+  .shop-product-card:nth-child(n) { margin-top: 0; }
+  .shop-preview-footer {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+    margin: 4.5rem 1.1rem 0;
+  }
+  .shop-preview-footer p { font-size: 1.15rem; }
+  .shop-preview-wordmark {
+    right: -0.05em;
+    bottom: -0.08em;
+    font-size: 54vw;
+  }
 
   .booking-preview { padding: 7rem 1.1rem; }
   .booking-title h2 { font-size: 16vw; }

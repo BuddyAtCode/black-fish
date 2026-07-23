@@ -32,6 +32,12 @@ const featuredWorks = [
   },
 ];
 
+const shopPreviewProducts = [
+  { name: "Nocturne Ring", price: "42 €", position: "12% 78%", material: "Black titanium" },
+  { name: "Blood Moon", price: "58 €", position: "46% 48%", material: "Red zircon / steel" },
+  { name: "Twin Thorn", price: "36 €", position: "86% 38%", material: "Surgical steel" },
+];
+
 function RevealWord({
   progress,
   range,
@@ -393,34 +399,67 @@ function ArtistPreview() {
 function ShopPreview() {
   return (
     <section className="shop-preview">
-      <motion.div
-        className="gothic-wordmark gothic-wordmark--store"
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.2 }}
+      <div className="shop-preview-meta">
+        <span>04 / BLACK FISH OBJECTS</span>
+        <span>DROP 001 / TITANIUM + STEEL</span>
+      </div>
+
+      <motion.h2
+        className="shop-preview-title"
+        initial={{ opacity: 0, y: 70 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-15%" }}
-        transition={{ duration: 1.2 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
-        Store
-      </motion.div>
-      <div className="shop-copy">
-        <div className="section-kicker">
-          <span>04</span>
-          <span>Objects</span>
-        </div>
-        <h2>PIERCING<br />AFTER DARK.</h2>
+        <span>PIERCING</span>
+        <span>AFTER DARK.</span>
+      </motion.h2>
+
+      <div className="shop-product-track">
+        {shopPreviewProducts.map((product, index) => (
+          <motion.article
+            className="shop-product-card"
+            key={product.name}
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{
+              duration: 0.8,
+              delay: index * 0.08,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          >
+            <div className="shop-product-media">
+              <img
+                src="/images/generated/piercing-collection.jpg"
+                alt={product.name}
+                style={{ objectPosition: product.position }}
+              />
+              <span>0{index + 1} / LIMITOVANÝ KUS</span>
+            </div>
+            <div className="shop-product-info">
+              <div>
+                <strong>{product.name}</strong>
+                <span>{product.material}</span>
+              </div>
+              <b>{product.price}</b>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+
+      <div className="shop-preview-footer">
         <p>
-          Vybrané kúsky z titánu a chirurgickej ocele. Malé objekty s ostrým charakterom.
+          Limitované piercingy z titánu a chirurgickej ocele. Malé objekty s ostrým
+          charakterom, vybrané priamo pre BLACK FISH.
         </p>
-        <Link className="magnetic-link magnetic-link--light" to="/eshop">
-          <span>Vstúpiť do shopu</span>
+        <Link className="shop-preview-cta" to="/eshop">
+          <span>Otvoriť Drop 001</span>
           <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
-      <div className="shop-image">
-        <img src="/images/generated/piercing-collection.jpg" alt="Kolekcia piercingov BLACK FISH" />
-        <div className="shop-stamp">DROP / 001</div>
-      </div>
+
+      <div className="shop-preview-wordmark" aria-hidden="true">Store</div>
     </section>
   );
 }
