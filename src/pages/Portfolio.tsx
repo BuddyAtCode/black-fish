@@ -94,8 +94,8 @@ export default function Portfolio() {
           <span>001—008 / DADLA TATS</span>
         </div>
         <h1>
-          OBRAZY
-          <br /> POD KOŽOU
+          <span>OBRAZY</span>
+          <span>POD KOŽOU</span>
         </h1>
         <p>
           Každé telo má inú kompozíciu. Každý obraz vzniká pre jedného človeka

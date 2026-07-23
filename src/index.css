@@ -1564,6 +1564,11 @@ img {
   letter-spacing: -0.105em;
 }
 
+.portfolio-hero h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
 .portfolio-hero > p {
   align-self: flex-end;
   width: min(500px, 42vw);
@@ -2602,10 +2607,17 @@ img {
 
   .inner-hero { padding: 6rem 1.1rem 2rem; }
   .page-gothic-wordmark { font-size: 38vw; }
-  .page-gothic-wordmark--portfolio { top: 18%; }
+  .page-gothic-wordmark--portfolio {
+    top: 18%;
+    font-size: 31vw;
+  }
   .page-gothic-wordmark--biography { top: 15%; }
   .page-gothic-wordmark--store { bottom: 10%; }
-  .portfolio-hero h1 { font-size: 22vw; }
+  .portfolio-hero h1 {
+    font-size: 20vw;
+    line-height: 0.84;
+    letter-spacing: -0.09em;
+  }
   .portfolio-hero > p { align-self: flex-start; width: 85%; margin: 0 0 1rem; }
   .portfolio-hero-mark { font-size: 20vw; }
   .portfolio-content { padding: 5rem 1.1rem 7rem; }
