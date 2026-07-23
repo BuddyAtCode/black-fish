@@ -441,6 +441,14 @@ img {
   padding-left: 0.25em;
 }
 
+.brand-k {
+  display: inline-block;
+  margin-left: -0.03em;
+  font: 800 0.84em/1 "Grenze Gotisch", serif;
+  font-style: normal;
+  transform: translateY(-0.01em);
+}
+
 .brand-lockup--loader {
   font-size: clamp(5.4rem, 11vw, 9.4rem);
   line-height: 0.72;

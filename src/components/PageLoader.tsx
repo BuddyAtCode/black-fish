@@ -86,7 +86,7 @@ export default function PageLoader() {
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <span>Black</span>
+              <span>Blac<i className="brand-k">K</i></span>
               <span>Fish</span>
             </motion.div>
           </motion.div>

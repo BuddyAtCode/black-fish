@@ -110,7 +110,7 @@ function Hero() {
         aria-label="Black Fish"
       >
         <div className="brand-lockup brand-lockup--hero">
-          <span>Black</span>
+          <span>Blac<i className="brand-k">K</i></span>
           <span>Fish</span>
         </div>
       </motion.div>
@@ -457,7 +457,7 @@ function Footer() {
       </div>
       <div className="footer-inner">
         <div className="footer-brand" aria-label="BLACK FISH">
-          <span>Black</span>
+          <span>Blac<i className="brand-k">K</i></span>
           <span>Fish</span>
         </div>
         <div className="footer-links">

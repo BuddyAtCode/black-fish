@@ -218,7 +218,7 @@ export default function SiteChrome() {
 
       <header className="site-header">
         <Link className="mini-logo" to="/" aria-label="BLACK FISH — domov">
-          <span>Black</span>
+          <span>Blac<i className="brand-k">K</i></span>
           <span>Fish</span>
         </Link>
 

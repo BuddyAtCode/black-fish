@@ -472,7 +472,7 @@ export default function BlackFishArtifactScene({
         role="img"
         aria-label="Abstraktný symbol BLACK FISH"
       >
-        <span>Black</span>
+        <span>Blac<i className="brand-k">K</i></span>
         <span>Fish</span>
       </div>
     );
