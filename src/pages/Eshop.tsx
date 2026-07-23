@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import storeTextImage from "../assets/Images/StoreText.png";
 
 const products = [
   { name: "Nocturne Ring", price: 42, crop: "12% 78%", tag: "Black titanium" },
@@ -23,12 +22,12 @@ export default function Eshop() {
   return (
     <main className="shop-page inner-page">
       <section className="shop-hero">
-        <img
+        <div
           className="page-gothic-wordmark page-gothic-wordmark--store"
-          src={storeTextImage}
-          alt=""
           aria-hidden="true"
-        />
+        >
+          Store
+        </div>
         <div className="shop-hero-image">
           <img src="/images/generated/piercing-collection.jpg" alt="BLACK FISH piercing collection" />
         </div>

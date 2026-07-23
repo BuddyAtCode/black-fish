@@ -1,9 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import biographyTextImage from "../assets/Images/BiographyText.png";
-import profilePhotoImage from "../assets/Images/Profile_photo.png";
-import storeImage from "../assets/Images/Store_image.png";
 
 const process = [
   {
@@ -39,16 +36,16 @@ export default function Biography() {
   return (
     <main className="biography-page inner-page">
       <section className="bio-hero">
-        <img
+        <div
           className="page-gothic-wordmark page-gothic-wordmark--biography"
-          src={biographyTextImage}
-          alt=""
           aria-hidden="true"
-        />
+        >
+          Biography
+        </div>
         <div className="bio-hero-image">
           <motion.img
-            src={profilePhotoImage}
-            alt="DADLA TATS — tatérka a zakladateľka BLACK FISH"
+            src="/images/generated/dadla-portrait.webp"
+            alt="Atmosférický portrét tatérky v štúdiu BLACK FISH"
             initial={{ scale: 1.15, filter: "grayscale(1) brightness(.45)" }}
             animate={{ scale: 1, filter: "grayscale(1) brightness(.72)" }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
@@ -94,7 +91,7 @@ export default function Biography() {
 
       <section className="bio-studio-image" ref={imageSection}>
         <motion.img
-          src={storeImage}
+          src="/images/generated/studio-interior.webp"
           alt="Atmosféra štúdia BLACK FISH"
           style={{ y: imageY }}
         />

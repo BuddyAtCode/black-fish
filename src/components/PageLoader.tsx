@@ -75,9 +75,8 @@ export default function PageLoader() {
               ease: loaderEase,
             }}
           >
-            <motion.img
-              src="/blackfish-mark.svg"
-              alt=""
+            <motion.div
+              className="brand-lockup brand-lockup--loader"
               initial={{ opacity: 0, scale: 0.78, filter: "blur(16px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 1.08 }}
@@ -86,7 +85,10 @@ export default function PageLoader() {
                 delay: reduceMotion ? 0 : 0.16,
                 ease: [0.16, 1, 0.3, 1],
               }}
-            />
+            >
+              <span>Black</span>
+              <span>Fish</span>
+            </motion.div>
           </motion.div>
 
           <motion.div

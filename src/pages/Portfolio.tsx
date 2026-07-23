@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import portfolioTextImage from "../assets/Images/PortfolioText.png";
-import profilePhotoImage from "../assets/Images/Profile_photo.png";
-import storeImage from "../assets/Images/Store_image.png";
-import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
 
 type Category = "Všetko" | "Figurálne" | "Príroda" | "Surreal";
 
@@ -18,7 +14,7 @@ const works = [
     position: "50% 54%",
   },
   {
-    src: tatooGuyImage,
+    src: "/images/generated/tattoo-botanical-eye.webp",
     title: "Tiché monštrum",
     category: "Surreal" as Category,
     number: "002",
@@ -26,7 +22,7 @@ const works = [
     position: "50% 50%",
   },
   {
-    src: profilePhotoImage,
+    src: "/images/generated/tattoo-abstract-forearm.webp",
     title: "Druhá tvár",
     category: "Figurálne" as Category,
     number: "003",
@@ -34,7 +30,7 @@ const works = [
     position: "72% 42%",
   },
   {
-    src: storeImage,
+    src: "/images/generated/tattoo-botanical-eye.webp",
     title: "Čierny kvet",
     category: "Príroda" as Category,
     number: "004",
@@ -42,7 +38,7 @@ const works = [
     position: "38% 50%",
   },
   {
-    src: storeImage,
+    src: "/images/generated/tattoo-abstract-forearm.webp",
     title: "Jazva ako ornament",
     category: "Surreal" as Category,
     number: "005",
@@ -58,7 +54,7 @@ const works = [
     position: "25% 70%",
   },
   {
-    src: tatooGuyImage,
+    src: "/images/generated/tattoo-abstract-forearm.webp",
     title: "Proces / 02:17",
     category: "Figurálne" as Category,
     number: "007",
@@ -66,7 +62,7 @@ const works = [
     position: "80% 50%",
   },
   {
-    src: profilePhotoImage,
+    src: "/images/generated/tattoo-botanical-eye.webp",
     title: "Nočná anatómia",
     category: "Surreal" as Category,
     number: "008",
@@ -87,12 +83,12 @@ export default function Portfolio() {
   return (
     <main className="portfolio-page inner-page">
       <section className="inner-hero portfolio-hero">
-        <img
+        <div
           className="page-gothic-wordmark page-gothic-wordmark--portfolio"
-          src={portfolioTextImage}
-          alt=""
           aria-hidden="true"
-        />
+        >
+          Portfolio
+        </div>
         <div className="inner-hero-meta">
           <span>BLACK FISH ARCHIVE</span>
           <span>001—008 / DADLA TATS</span>

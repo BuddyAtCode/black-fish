@@ -6,12 +6,6 @@ import {
 } from "framer-motion";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import biographyTextImage from "../assets/Images/BiographyText.png";
-import headerImage from "../assets/Images/BlackFish_header.svg";
-import portfolioTextImage from "../assets/Images/PortfolioText.png";
-import profilePhotoImage from "../assets/Images/Profile_photo.png";
-import storeTextImage from "../assets/Images/StoreText.png";
-import tatooGuyImage from "../assets/Images/Tatoo_guy.png";
 
 const FishRelicScene = lazy(() => import("../components/FishRelicScene"));
 
@@ -23,15 +17,15 @@ const featuredWorks = [
     className: "work-card work-card--wide",
   },
   {
-    src: tatooGuyImage,
+    src: "/images/generated/tattoo-botanical-eye.webp",
     title: "Pamäť pod kožou",
-    meta: "Obrazové tetovanie · rameno",
+    meta: "Blackwork · chrbát",
     className: "work-card work-card--portrait",
   },
   {
-    src: profilePhotoImage,
+    src: "/images/generated/tattoo-abstract-forearm.webp",
     title: "Nočná anatómia",
-    meta: "Autorský motív · detail",
+    meta: "Abstrakcia · predlaktie",
     className: "work-card work-card--small",
   },
 ];
@@ -110,7 +104,10 @@ function Hero() {
       <div className="hero-shade" />
 
       <motion.div className="hero-gothic-logo" style={{ y: markY, opacity }} aria-hidden="true">
-        <img src="/blackfish-mark.svg" alt="" />
+        <div className="brand-lockup brand-lockup--hero">
+          <span>Black</span>
+          <span>Fish</span>
+        </div>
       </motion.div>
 
       <motion.div className="hero-title" style={{ y: titleY, opacity }} aria-label="Black Fish">
@@ -156,7 +153,10 @@ function ExpandingMedia() {
     <section className="expanding-section" ref={target}>
       <div className="expanding-sticky">
         <motion.div className="expanding-media" style={{ scale, borderRadius: radius }}>
-          <img src={tatooGuyImage} alt="Proces tetovania v štúdiu BLACK FISH" />
+          <img
+            src="/images/generated/studio-interior.webp"
+            alt="Interiér štúdia BLACK FISH"
+          />
           <div className="expanding-media-overlay" />
           <motion.div className="expanding-copy" style={{ y: copyY }}>
             <small>Ručne kreslené · osobne navrhnuté</small>
@@ -275,16 +275,16 @@ function RelicSection() {
 function PortfolioPreview() {
   return (
     <section className="portfolio-preview">
-      <motion.img
+      <motion.div
         className="gothic-wordmark gothic-wordmark--portfolio"
-        src={portfolioTextImage}
-        alt=""
         aria-hidden="true"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.18 }}
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 1.2 }}
-      />
+      >
+        Portfolio
+      </motion.div>
       <div className="section-heading">
         <div className="section-kicker">
           <span>03</span>
@@ -325,20 +325,20 @@ function PortfolioPreview() {
 function ArtistPreview() {
   return (
     <section className="artist-preview">
-      <motion.img
+      <motion.div
         className="gothic-wordmark gothic-wordmark--biography"
-        src={biographyTextImage}
-        alt=""
         aria-hidden="true"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.15 }}
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 1.2 }}
-      />
+      >
+        Biography
+      </motion.div>
       <div className="artist-image-wrap">
         <motion.img
-          src={profilePhotoImage}
-          alt="DADLA TATS"
+          src="/images/generated/dadla-portrait.webp"
+          alt="Atmosférický portrét tatérky v štúdiu BLACK FISH"
           initial={{ scale: 1.12 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
@@ -366,16 +366,16 @@ function ArtistPreview() {
 function ShopPreview() {
   return (
     <section className="shop-preview">
-      <motion.img
+      <motion.div
         className="gothic-wordmark gothic-wordmark--store"
-        src={storeTextImage}
-        alt=""
         aria-hidden="true"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.2 }}
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 1.2 }}
-      />
+      >
+        Store
+      </motion.div>
       <div className="shop-copy">
         <div className="section-kicker">
           <span>04</span>
@@ -438,8 +438,9 @@ function Footer() {
         <span>BLACK FISH · SKIN AS CANVAS · DADLA TATS · </span>
       </div>
       <div className="footer-inner">
-        <div>
-          <img src={headerImage} alt="BLACK FISH" />
+        <div className="footer-brand" aria-label="BLACK FISH">
+          <span>Black</span>
+          <span>Fish</span>
         </div>
         <div className="footer-links">
           <Link to="/portfolio">Portfólio</Link>
