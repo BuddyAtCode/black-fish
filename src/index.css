@@ -8,7 +8,7 @@
   --line: rgba(231, 225, 216, 0.2);
   --sans: "Space Grotesk", Arial, sans-serif;
   --serif: "Bodoni Moda SC", Georgia, serif;
-  --gothic: "UnifrakturCook", "Bodoni Moda SC", Georgia, serif;
+  --gothic: "Grenze Gotisch", "Bodoni Moda SC", Georgia, serif;
   --mono: "IBM Plex Mono", monospace;
 }
 
@@ -408,6 +408,7 @@ img {
   display: flex;
   justify-content: center;
   width: min(540px, 72vw);
+  padding: clamp(0.8rem, 2vw, 1.4rem) 0;
   filter: drop-shadow(0 24px 60px rgba(196, 21, 32, 0.2));
   will-change: clip-path;
 }
@@ -430,9 +431,9 @@ img {
   align-items: center;
   color: var(--blood-bright);
   font-family: var(--gothic);
-  font-weight: 700;
-  line-height: 0.58;
-  letter-spacing: -0.055em;
+  font-weight: 800;
+  line-height: 0.61;
+  letter-spacing: -0.045em;
   text-align: center;
 }
 
@@ -442,6 +443,7 @@ img {
 
 .brand-lockup--loader {
   font-size: clamp(5.4rem, 11vw, 9.4rem);
+  line-height: 0.72;
   text-shadow: 0 20px 50px rgba(0, 0, 0, 0.78);
 }
 
@@ -519,18 +521,19 @@ img {
 
 .hero-gothic-logo {
   position: absolute;
-  top: 13%;
-  right: 0;
-  left: 0;
+  inset: 11% 0 19%;
   z-index: 2;
   display: flex;
+  align-items: center;
   justify-content: center;
   pointer-events: none;
 }
 
 .brand-lockup--hero {
-  font-size: clamp(4.5rem, 8.6vw, 8rem);
-  filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.62));
+  color: #f7f1e9;
+  font-size: clamp(8rem, 17vw, 16rem);
+  line-height: 0.58;
+  mix-blend-mode: difference;
 }
 
 .hero-media img {
@@ -545,26 +548,6 @@ img {
   background:
     radial-gradient(circle at 52% 44%, transparent 0, rgba(0, 0, 0, 0.08) 42%, rgba(0, 0, 0, 0.68) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 36%, rgba(0, 0, 0, 0.52));
-}
-
-.hero-title {
-  position: absolute;
-  inset: 48% 2vw auto;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  color: #f4efe8;
-  font-size: clamp(5.2rem, 15vw, 14rem);
-  font-weight: 700;
-  line-height: 0.68;
-  letter-spacing: -0.095em;
-  mix-blend-mode: difference;
-  transform: translateY(-50%);
-}
-
-.hero-title span:last-child {
-  align-self: flex-end;
-  padding-right: 0.05em;
 }
 
 .hero-topline,
@@ -2393,7 +2376,6 @@ img {
   .site-header { grid-template-columns: 1fr 1fr; }
   .header-actions { grid-column: 2; }
 
-  .hero-title { font-size: clamp(5.5rem, 18vw, 11rem); }
   .statement-section { grid-template-columns: 1fr; gap: 4rem; }
   .scroll-statement { font-size: clamp(3rem, 8vw, 6.5rem); }
 
@@ -2464,11 +2446,10 @@ img {
   .menu-footer span:nth-child(2) { display: none; }
 
   .hero { min-height: 620px; }
-  .hero-gothic-logo { top: 15%; }
-  .brand-lockup--hero { font-size: 19vw; }
+  .hero-gothic-logo { inset: 11% 0 18%; }
+  .brand-lockup--hero { font-size: 31vw; }
   .hero-topline { top: 5.7rem; right: 1.1rem; left: 1.1rem; }
   .hero-topline span:last-child { display: none; }
-  .hero-title { inset: 46% 0.7rem auto; font-size: 25vw; line-height: 0.72; }
   .hero-bottomline { right: 1.1rem; bottom: 1.1rem; left: 1.1rem; }
   .hero-bottomline p { display: none; }
   .magnetic-link { width: 100%; min-width: 0; }

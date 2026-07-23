@@ -94,7 +94,6 @@ function Hero() {
   });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.16]);
   const imageY = useTransform(scrollYProgress, [0, 1], [0, 160]);
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -110]);
   const markY = useTransform(scrollYProgress, [0, 1], [0, -54]);
   const opacity = useTransform(scrollYProgress, [0.45, 1], [1, 0]);
 
@@ -105,16 +104,15 @@ function Hero() {
       </motion.div>
       <div className="hero-shade" />
 
-      <motion.div className="hero-gothic-logo" style={{ y: markY, opacity }} aria-hidden="true">
+      <motion.div
+        className="hero-gothic-logo"
+        style={{ y: markY, opacity }}
+        aria-label="Black Fish"
+      >
         <div className="brand-lockup brand-lockup--hero">
           <span>Black</span>
           <span>Fish</span>
         </div>
-      </motion.div>
-
-      <motion.div className="hero-title" style={{ y: titleY, opacity }} aria-label="Black Fish">
-        <span>BLACK</span>
-        <span>FISH</span>
       </motion.div>
 
       <div className="hero-topline">
