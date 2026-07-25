@@ -763,9 +763,18 @@ img {
 
 .hero-letter-glyph {
   display: inline-block;
+  opacity: 0;
   backface-visibility: hidden;
+  transform: translate3d(0, 110%, 0);
   transform-origin: 50% 100%;
-  will-change: transform, clip-path, opacity;
+  transition:
+    opacity 0.56s ease,
+    transform 0.82s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-letter-line[data-ready="true"] .hero-letter-glyph {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .hero-letter-space {
@@ -3124,7 +3133,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
 .artist-profile-hero {
   position: relative;
-  min-height: 112svh;
+  min-height: 100svh;
   overflow: hidden;
   background: var(--ink);
 }
@@ -3767,6 +3776,10 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-letter-glyph {
+    transition-duration: 0.56s, 0.82s !important;
   }
 
   .custom-cursor-ring,

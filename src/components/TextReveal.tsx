@@ -1,13 +1,7 @@
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import type { MotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
-const revealEase = [0.16, 1, 0.3, 1] as const;
+import type { RefObject } from "react";
 
 function usePageReady() {
   const [ready, setReady] = useState(false);
@@ -50,11 +44,14 @@ export function HeroLetterLine({
   delay?: number;
 }) {
   const pageReady = usePageReady();
-  const reduceMotion = useReducedMotion();
   let letterIndex = 0;
 
   return (
-    <span className="hero-letter-line" aria-label={text}>
+    <span
+      className="hero-letter-line"
+      data-ready={pageReady}
+      aria-label={text}
+    >
       {text.split(" ").map((word, wordIndex, words) => {
         const letters = Array.from(word);
         const firstLetterIndex = letterIndex;
@@ -67,41 +64,17 @@ export function HeroLetterLine({
             key={`${word}-${wordIndex}`}
           >
             {letters.map((letter, index) => (
-              <motion.span
+              <span
                 className="hero-letter-glyph"
                 key={`${letter}-${index}`}
-                initial={
-                  reduceMotion
-                    ? false
-                    : {
-                        clipPath: "inset(0 0 100% 0)",
-                        opacity: 0,
-                        y: "78%",
-                      }
-                }
-                animate={
-                  pageReady || reduceMotion
-                    ? {
-                        clipPath: "inset(0 0 0% 0)",
-                        opacity: 1,
-                        y: "0%",
-                      }
-                    : {
-                        clipPath: "inset(0 0 100% 0)",
-                        opacity: 0,
-                        y: "78%",
-                      }
-                }
-                transition={{
-                  duration: reduceMotion ? 0.01 : 0.82,
-                  delay: reduceMotion
-                    ? 0
-                    : delay + (firstLetterIndex + index) * 0.035,
-                  ease: revealEase,
+                style={{
+                  transitionDelay: `${
+                    delay + (firstLetterIndex + index) * 0.035
+                  }s`,
                 }}
               >
                 {letter}
-              </motion.span>
+              </span>
             ))}
             {wordIndex < words.length - 1 && (
               <span className="hero-letter-space">&nbsp;</span>
@@ -117,35 +90,31 @@ function ScrollRevealWord({
   children,
   progress,
   range,
-  reduced,
 }: {
   children: string;
   progress: MotionValue<number>;
   range: [number, number];
-  reduced: boolean;
 }) {
   const opacity = useTransform(progress, range, [0.13, 1]);
   const y = useTransform(progress, range, [12, 0]);
 
-  return (
-    <motion.span style={reduced ? undefined : { opacity, y }}>
-      {children}{" "}
-    </motion.span>
-  );
+  return <motion.span style={{ opacity, y }}>{children} </motion.span>;
 }
 
 export function ScrollColorText({
   text,
   className = "",
+  targetRef,
 }: {
   text: string;
   className?: string;
+  targetRef?: RefObject<HTMLElement>;
 }) {
-  const target = useRef<HTMLHeadingElement>(null);
-  const reduceMotion = Boolean(useReducedMotion());
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const target = targetRef ?? headingRef;
   const { scrollYProgress } = useScroll({
     target,
-    offset: ["start 0.82", "end 0.34"],
+    offset: ["start 0.78", "end 0.38"],
   });
   const words = text.split(" ");
   const revealScale = 0.74;
@@ -153,7 +122,7 @@ export function ScrollColorText({
   return (
     <h2
       className={`scroll-color-text ${className}`.trim()}
-      ref={target}
+      ref={headingRef}
     >
       {words.map((word, index) => {
         const start = (index / words.length) * revealScale;
@@ -167,7 +136,6 @@ export function ScrollColorText({
             key={`${word}-${index}`}
             progress={scrollYProgress}
             range={[start, end]}
-            reduced={reduceMotion}
           >
             {word}
           </ScrollRevealWord>

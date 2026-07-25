@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
+import { useRef } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { HeroLetterLine, ScrollColorText } from "../components/TextReveal";
 import { artists, getArtist } from "../data/studio";
 
 export default function ArtistProfile() {
+  const introRef = useRef<HTMLElement>(null);
   const { artistSlug } = useParams();
   const artist = getArtist(artistSlug);
 
@@ -42,13 +44,13 @@ export default function ArtistProfile() {
         </div>
       </section>
 
-      <section className="artist-profile-intro">
+      <section className="artist-profile-intro" ref={introRef}>
         <div className="section-kicker">
           <span>{artist.number}</span>
           <span>Rukopis</span>
         </div>
         <div>
-          <ScrollColorText text={artist.intro} />
+          <ScrollColorText text={artist.intro} targetRef={introRef} />
           <div className="artist-profile-columns">
             <p>{artist.paragraphs[0]}</p>
             <p>{artist.paragraphs[1]}</p>
