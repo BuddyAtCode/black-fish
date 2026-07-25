@@ -11,6 +11,12 @@ const imageAssets = [
   "/images/generated/studio-interior.webp",
   "/images/generated/dadla-portrait.webp",
   "/images/generated/piercing-collection.jpg",
+  "/images/generated/piercing-nocturne-ring.webp",
+  "/images/generated/piercing-blood-moon.webp",
+  "/images/generated/piercing-twin-thorn.webp",
+  "/images/generated/piercing-orbit-chain.webp",
+  "/images/generated/piercing-ritual-bar.webp",
+  "/images/generated/piercing-void-spike.webp",
 ];
 
 const fontAssets = [

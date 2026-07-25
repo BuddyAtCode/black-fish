@@ -3,12 +3,42 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 const products = [
-  { name: "Nocturne Ring", price: 42, crop: "12% 78%", tag: "Black titanium" },
-  { name: "Blood Moon", price: 58, crop: "46% 48%", tag: "Red zircon / steel" },
-  { name: "Twin Thorn", price: 36, crop: "86% 38%", tag: "Surgical steel" },
-  { name: "Orbit Chain", price: 64, crop: "76% 78%", tag: "Black titanium" },
-  { name: "Ritual Bar", price: 49, crop: "22% 38%", tag: "Red zircon / steel" },
-  { name: "Void Spike", price: 31, crop: "78% 24%", tag: "Surgical steel" },
+  {
+    name: "Nocturne Ring",
+    price: 42,
+    image: "/images/generated/piercing-nocturne-ring.webp",
+    tag: "Black titanium",
+  },
+  {
+    name: "Blood Moon",
+    price: 58,
+    image: "/images/generated/piercing-blood-moon.webp",
+    tag: "Red zircon / steel",
+  },
+  {
+    name: "Twin Thorn",
+    price: 36,
+    image: "/images/generated/piercing-twin-thorn.webp",
+    tag: "Surgical steel",
+  },
+  {
+    name: "Orbit Chain",
+    price: 64,
+    image: "/images/generated/piercing-orbit-chain.webp",
+    tag: "Black titanium",
+  },
+  {
+    name: "Ritual Bar",
+    price: 49,
+    image: "/images/generated/piercing-ritual-bar.webp",
+    tag: "Red zircon / steel",
+  },
+  {
+    name: "Void Spike",
+    price: 31,
+    image: "/images/generated/piercing-void-spike.webp",
+    tag: "Surgical steel",
+  },
 ];
 
 export default function Eshop() {
@@ -63,11 +93,7 @@ export default function Eshop() {
               transition={{ duration: 0.6, delay: (index % 3) * 0.08 }}
             >
               <div className="product-image">
-                <img
-                  src="/images/generated/piercing-collection.jpg"
-                  alt={product.name}
-                  style={{ objectPosition: product.crop }}
-                />
+                <img src={product.image} alt={product.name} />
                 <span>0{index + 1}</span>
                 <button
                   type="button"
