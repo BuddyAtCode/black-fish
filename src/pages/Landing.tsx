@@ -195,7 +195,7 @@ function ArtifactCanvas({ progress }: { progress: MotionValue<number> }) {
         setReady(true);
         observer.disconnect();
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "0px" },
     );
     observer.observe(element);
     return () => observer.disconnect();

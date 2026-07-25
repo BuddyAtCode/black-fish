@@ -321,7 +321,7 @@ export default function BlackFishArtifactScene({
     const clock = new THREE.Clock();
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let smoothProgress = progress.get();
-    let active = true;
+    let active = false;
     let frame = 0;
     let mobileFactor = 1;
 
@@ -349,24 +349,19 @@ export default function BlackFishArtifactScene({
       setFailed(true);
     };
 
-    const visibilityObserver = new IntersectionObserver(
-      ([entry]) => {
-        active = entry.isIntersecting;
-      },
-      { rootMargin: "30% 0px" },
-    );
+    const stopRendering = () => {
+      if (!frame) return;
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
     const resizeObserver = new ResizeObserver(resize);
 
-    visibilityObserver.observe(viewport);
-    resizeObserver.observe(viewport);
-    window.addEventListener("pointermove", handlePointer, { passive: true });
-    document.documentElement.addEventListener("pointerleave", handlePointerLeave);
-    canvas.addEventListener("webglcontextlost", handleContextLost);
-    resize();
-
     const render = () => {
-      frame = window.requestAnimationFrame(render);
-      if (!active || document.hidden) return;
+      if (!active || document.hidden) {
+        frame = 0;
+        return;
+      }
 
       const elapsed = clock.getElapsedTime();
       const scrollTarget = progress.get();
@@ -432,17 +427,40 @@ export default function BlackFishArtifactScene({
       const fadeOut = 1 - THREE.MathUtils.smoothstep(p, 0.9, 1);
       canvas.style.opacity = String(Math.min(fadeIn, fadeOut));
       renderer.render(scene, camera);
+      frame = window.requestAnimationFrame(render);
     };
 
-    render();
+    const startRendering = () => {
+      if (frame || !active || document.hidden) return;
+      frame = window.requestAnimationFrame(render);
+    };
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      active = entry.isIntersecting;
+      if (active) startRendering();
+      else stopRendering();
+    });
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopRendering();
+      else startRendering();
+    };
+
+    visibilityObserver.observe(viewport);
+    resizeObserver.observe(viewport);
+    window.addEventListener("pointermove", handlePointer, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.documentElement.addEventListener("pointerleave", handlePointerLeave);
+    canvas.addEventListener("webglcontextlost", handleContextLost);
+    resize();
 
     return () => {
       disposed = true;
       modelRequest.abort();
-      window.cancelAnimationFrame(frame);
+      stopRendering();
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
       window.removeEventListener("pointermove", handlePointer);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       document.documentElement.removeEventListener("pointerleave", handlePointerLeave);
       canvas.removeEventListener("webglcontextlost", handleContextLost);
 

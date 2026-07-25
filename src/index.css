@@ -774,6 +774,7 @@ img {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
+  contain: layout paint;
 }
 
 .expanding-media {
@@ -782,6 +783,10 @@ img {
   height: 100vh;
   overflow: hidden;
   background: var(--ink);
+  backface-visibility: hidden;
+  contain: paint;
+  isolation: isolate;
+  will-change: transform, border-radius;
 }
 
 .expanding-media > img {
@@ -789,6 +794,8 @@ img {
   height: 100%;
   object-fit: cover;
   filter: grayscale(1) contrast(1.25) brightness(0.58);
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .expanding-media-overlay {
@@ -804,6 +811,8 @@ img {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .expanding-copy small {
