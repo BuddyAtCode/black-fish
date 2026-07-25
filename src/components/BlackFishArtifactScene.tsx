@@ -215,7 +215,10 @@ export default function BlackFishArtifactScene({
 
     const loader = new GLTFLoader();
     const modelRequest = new AbortController();
-    fetch("/models/blackfish-skull.glb", { signal: modelRequest.signal })
+    fetch("/models/blackfish-skull.glb", {
+      cache: "force-cache",
+      signal: modelRequest.signal,
+    })
       .then((response) => {
         if (!response.ok) throw new Error("Model request failed");
         return response.arrayBuffer();
