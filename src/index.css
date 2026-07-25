@@ -3203,7 +3203,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 }
 
 .artist-profile-reveal-track {
-  min-height: 220svh;
+  min-height: 440svh;
 }
 
 .artist-profile-reveal-sticky {
@@ -4024,7 +4024,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   }
 
   .artist-profile-reveal-track {
-    min-height: 220svh;
+    min-height: 440svh;
   }
 
   .artist-profile-reveal-sticky {
