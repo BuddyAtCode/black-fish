@@ -117,7 +117,7 @@ export function ScrollColorText({
     offset: ["start start", "end end"],
   });
   const words = text.split(" ");
-  const revealScale = 0.72;
+  const revealScale = 0.62;
 
   return (
     <h2
