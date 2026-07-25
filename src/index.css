@@ -726,12 +726,19 @@ img {
 
 .statement-section {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(130px, 18vw) 1fr;
-  min-height: 130vh;
-  padding: 28vh 4vw 24vh;
+  min-height: 200svh;
   background: var(--bone);
   color: var(--ink);
+}
+
+.statement-sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(130px, 18vw) 1fr;
+  align-content: center;
+  min-height: 100svh;
+  padding: 18vh 4vw;
 }
 
 .statement-section .section-kicker {
@@ -3198,12 +3205,23 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 }
 
 .artist-profile-intro {
-  display: grid;
-  grid-template-columns: minmax(130px, 18vw) 1fr;
-  gap: 3rem;
-  padding: 11rem 4vw 12rem;
   background: var(--bone);
   color: var(--ink);
+}
+
+.artist-profile-reveal-track {
+  min-height: 200svh;
+}
+
+.artist-profile-reveal-sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(130px, 18vw) 1fr;
+  align-content: center;
+  gap: 3rem;
+  min-height: 100svh;
+  padding: 12vh 4vw;
 }
 
 .artist-profile-intro .section-kicker {
@@ -3216,9 +3234,13 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
 .artist-profile-intro h2 {
   max-width: 1080px;
-  margin: 0 0 6rem;
+  margin: 0;
   font: 500 clamp(2.6rem, 5.6vw, 6.5rem)/0.98 var(--serif);
   letter-spacing: -0.07em;
+}
+
+.artist-profile-body {
+  padding: 2rem 4vw 12rem;
 }
 
 .artist-profile-columns {
@@ -3498,7 +3520,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .site-header { grid-template-columns: 1fr 1fr; }
   .header-actions { grid-column: 2; }
 
-  .statement-section { grid-template-columns: 1fr; gap: 4rem; }
+  .statement-sticky { grid-template-columns: 1fr; gap: 4rem; }
   .scroll-statement { font-size: clamp(3rem, 8vw, 6.5rem); }
 
   .relic-description { width: min(340px, 38vw); }
@@ -3577,8 +3599,13 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .scroll-cue { display: none; }
 
   .statement-section {
-    min-height: 110vh;
-    padding: 9rem 1.1rem 10rem;
+    min-height: 200svh;
+  }
+  .statement-sticky {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    min-height: 100svh;
+    padding: 7rem 1.1rem 6rem;
   }
   .scroll-statement { font-size: 11.5vw; line-height: 0.98; }
   .statement-footnote { right: 1.1rem; bottom: 1.5rem; left: 1.1rem; }
@@ -3814,7 +3841,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     grid-column: 2;
   }
 
-  .artist-profile-intro {
+  .artist-profile-reveal-sticky {
     grid-template-columns: 1fr;
   }
 
@@ -4005,13 +4032,29 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   }
 
   .artist-profile-intro {
-    display: block;
-    padding: 7rem 1.1rem 8rem;
+    padding-bottom: 8rem;
+  }
+
+  .artist-profile-reveal-track {
+    min-height: 200svh;
+  }
+
+  .artist-profile-reveal-sticky {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.25rem;
+    min-height: 100svh;
+    padding: 4rem 1.1rem 2rem;
   }
 
   .artist-profile-intro h2 {
-    margin: 3.5rem 0 4rem;
+    margin: 0;
     font-size: 11.5vw;
+  }
+
+  .artist-profile-body {
+    padding: 0 1.1rem;
   }
 
   .artist-profile-columns {

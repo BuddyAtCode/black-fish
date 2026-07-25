@@ -6,7 +6,7 @@ import { HeroLetterLine, ScrollColorText } from "../components/TextReveal";
 import { artists, getArtist } from "../data/studio";
 
 export default function ArtistProfile() {
-  const introRef = useRef<HTMLElement>(null);
+  const introRevealRef = useRef<HTMLDivElement>(null);
   const { artistSlug } = useParams();
   const artist = getArtist(artistSlug);
 
@@ -44,13 +44,17 @@ export default function ArtistProfile() {
         </div>
       </section>
 
-      <section className="artist-profile-intro" ref={introRef}>
-        <div className="section-kicker">
-          <span>{artist.number}</span>
-          <span>Rukopis</span>
+      <section className="artist-profile-intro">
+        <div className="artist-profile-reveal-track" ref={introRevealRef}>
+          <div className="artist-profile-reveal-sticky">
+            <div className="section-kicker">
+              <span>{artist.number}</span>
+              <span>Rukopis</span>
+            </div>
+            <ScrollColorText text={artist.intro} targetRef={introRevealRef} />
+          </div>
         </div>
-        <div>
-          <ScrollColorText text={artist.intro} targetRef={introRef} />
+        <div className="artist-profile-body">
           <div className="artist-profile-columns">
             <p>{artist.paragraphs[0]}</p>
             <p>{artist.paragraphs[1]}</p>

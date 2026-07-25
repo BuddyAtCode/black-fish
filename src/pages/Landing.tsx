@@ -56,36 +56,38 @@ function ScrollStatement() {
   const target = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target,
-    offset: ["start 0.78", "end 0.38"],
+    offset: ["start start", "end end"],
   });
   const words =
     "Kresba, kontrast, jemný detail a sýty akcent sa stretávajú v návrhoch vytvorených pre konkrétne telo.".split(
       " ",
     );
-  const revealScale = 0.74;
+  const revealScale = 0.96;
 
   return (
     <section className="statement-section" ref={target}>
-      <div className="section-kicker">
-        <span>01</span>
-        <span>Štúdio</span>
-      </div>
-      <p className="scroll-statement">
-        {words.map((word, index) => {
-          const start = (index / words.length) * revealScale;
-          const end = Math.min(
-            (index / words.length + 0.16) * revealScale,
-            revealScale,
-          );
-          return (
-            <RevealWord key={`${word}-${index}`} progress={scrollYProgress} range={[start, end]}>
-              {word}
-            </RevealWord>
-          );
-        })}
-      </p>
-      <div className="statement-footnote">
-        .INKSOUL. / DADLA / DUKY / WALLA / AUTORSKÉ TETOVANIE
+      <div className="statement-sticky">
+        <div className="section-kicker">
+          <span>01</span>
+          <span>Štúdio</span>
+        </div>
+        <p className="scroll-statement">
+          {words.map((word, index) => {
+            const start = (index / words.length) * revealScale;
+            const end = Math.min(
+              (index / words.length + 0.16) * revealScale,
+              revealScale,
+            );
+            return (
+              <RevealWord key={`${word}-${index}`} progress={scrollYProgress} range={[start, end]}>
+                {word}
+              </RevealWord>
+            );
+          })}
+        </p>
+        <div className="statement-footnote">
+          .INKSOUL. / DADLA / DUKY / WALLA / AUTORSKÉ TETOVANIE
+        </div>
       </div>
     </section>
   );

@@ -114,10 +114,10 @@ export function ScrollColorText({
   const target = targetRef ?? headingRef;
   const { scrollYProgress } = useScroll({
     target,
-    offset: ["start 0.78", "end 0.38"],
+    offset: ["start start", "end end"],
   });
   const words = text.split(" ");
-  const revealScale = 0.74;
+  const revealScale = 0.96;
 
   return (
     <h2
