@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import BrandMark from "./BrandMark";
 
 const loaderEase = [0.76, 0, 0.24, 1] as const;
 const assetTimeout = 20000;
@@ -9,7 +10,6 @@ const imageAssets = [
   "/images/generated/tattoo-botanical-eye.webp",
   "/images/generated/tattoo-abstract-forearm.webp",
   "/images/generated/studio-interior.webp",
-  "/images/generated/dadla-portrait.webp",
   "/images/generated/piercing-collection.jpg",
   "/images/generated/piercing-nocturne-ring.webp",
   "/images/generated/piercing-blood-moon.webp",
@@ -79,8 +79,8 @@ function startPreloading() {
   const tasks: Array<() => Promise<unknown>> = [
     ...imageAssets.map((src) => () => preloadImage(src)),
     ...fontAssets.map((font) => () => document.fonts.load(font)),
-    () => preloadFile("/models/blackfish-skull.glb"),
-    () => import("./BlackFishArtifactScene"),
+    () => preloadFile("/models/inksoul-skull.glb"),
+    () => import("./InksoulArtifactScene"),
   ];
 
   let completed = 0;
@@ -158,8 +158,8 @@ export default function PageLoader() {
               delay: reduceMotion ? 0 : 0.12,
             }}
           >
-            <span>BLACK FISH / DADLA TATS</span>
-            <span>TATTOO STUDIO · EST. 2024</span>
+            <span>.INKSOUL. / TETOVACIE ŠTÚDIO</span>
+            <span>DADLA · DUKY · WALLA</span>
           </motion.div>
 
           <motion.div
@@ -173,7 +173,7 @@ export default function PageLoader() {
             }}
           >
             <motion.div
-              className="brand-lockup brand-lockup--loader"
+              className="loader-brand-wrap"
               initial={{ opacity: 0, scale: 0.78, filter: "blur(16px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 1.08 }}
@@ -183,13 +183,12 @@ export default function PageLoader() {
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <span>Blac<i className="brand-k">K</i></span>
-              <span>Fish</span>
+              <BrandMark className="brand-mark--loader" />
             </motion.div>
           </motion.div>
 
           <motion.div
-            className="page-loader-ritual"
+            className="page-loader-tagline"
             initial={{ opacity: 0, letterSpacing: "0.42em" }}
             animate={{ opacity: 1, letterSpacing: "0.18em" }}
             transition={{
@@ -197,12 +196,12 @@ export default function PageLoader() {
               delay: reduceMotion ? 0 : 0.66,
             }}
           >
-            Ink / Image / Ritual
+            Tetovacie štúdio / traja tatéri
           </motion.div>
 
           <div className="page-loader-progress">
             <div className="page-loader-progress-meta">
-              <span>Pripravujeme obraz</span>
+              <span>Načítavame štúdio</span>
               <strong>{String(progress).padStart(3, "0")}</strong>
             </div>
             <div className="page-loader-progress-track">

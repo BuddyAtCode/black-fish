@@ -1,6 +1,6 @@
-# BLACK FISH
+# .INKSOUL.
 
-Prezentačný web autorského tetovacieho štúdia BLACK FISH a tatérky DADLA TATS.
+Prezentačný web tattoo štúdia .INKSOUL. a tatérov Dadla, Duky a Walla.
 
 ## Spustenie
 

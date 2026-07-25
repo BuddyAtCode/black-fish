@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import BrandMark from "./BrandMark";
 
 const navigation = [
   { label: "Domov", to: "/" },
   { label: "Portfólio", to: "/portfolio" },
-  { label: "DADLA TATS", to: "/biography" },
+  { label: "Tatéri", to: "/artists" },
   { label: "Piercing shop", to: "/eshop" },
   { label: "Rezervácia", to: "/booking" },
 ];
@@ -191,7 +192,7 @@ function SoundToggle() {
         <i />
         <i />
       </span>
-      Sound {enabled ? "on" : "off"}
+      Zvuk {enabled ? "zap." : "vyp."}
     </button>
   );
 }
@@ -217,13 +218,12 @@ export default function SiteChrome() {
       <CursorTrail />
 
       <header className="site-header">
-        <Link className="mini-logo" to="/" aria-label="BLACK FISH — domov">
-          <span>Blac<i className="brand-k">K</i></span>
-          <span>Fish</span>
+        <Link className="mini-logo" to="/" aria-label=".INKSOUL. — domov">
+          <BrandMark />
         </Link>
 
         <div className="header-meta" aria-hidden="true">
-          Tattoo studio · est. 2024
+          Tetovacie štúdio · Dadla · Duky · Walla
         </div>
 
         <div className="header-actions">
@@ -251,7 +251,7 @@ export default function SiteChrome() {
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           >
-            <div className="menu-watermark" aria-hidden="true">BF</div>
+            <div className="menu-watermark" aria-hidden="true">IS</div>
             <div className="menu-list">
               {navigation.map((item, index) => (
                 <motion.div
@@ -272,8 +272,8 @@ export default function SiteChrome() {
               ))}
             </div>
             <div className="menu-footer">
-              <span>Dadla Tats</span>
-              <span>Slovensko · Instagram DM</span>
+              <span>.INKSOUL.</span>
+              <span>Slovensko · Instagram doplníme</span>
               <span>© {new Date().getFullYear()}</span>
             </div>
           </motion.nav>

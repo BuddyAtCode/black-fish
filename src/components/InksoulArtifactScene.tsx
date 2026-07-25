@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import BrandMark from "./BrandMark";
 
-type BlackFishArtifactSceneProps = {
+type InksoulArtifactSceneProps = {
   progress: MotionValue<number>;
 };
 
@@ -98,9 +99,9 @@ function createInkThreads(material: THREE.LineBasicMaterial) {
   return group;
 }
 
-export default function BlackFishArtifactScene({
+export default function InksoulArtifactScene({
   progress,
-}: BlackFishArtifactSceneProps) {
+}: InksoulArtifactSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [failed, setFailed] = useState(false);
 
@@ -215,7 +216,7 @@ export default function BlackFishArtifactScene({
 
     const loader = new GLTFLoader();
     const modelRequest = new AbortController();
-    fetch("/models/blackfish-skull.glb", {
+    fetch("/models/inksoul-skull.glb", {
       cache: "force-cache",
       signal: modelRequest.signal,
     })
@@ -491,17 +492,16 @@ export default function BlackFishArtifactScene({
       <div
         className="artifact-fallback"
         role="img"
-        aria-label="Abstraktný symbol BLACK FISH"
+        aria-label="Abstraktný symbol .INKSOUL."
       >
-        <span>Blac<i className="brand-k">K</i></span>
-        <span>Fish</span>
+        <BrandMark />
       </div>
     );
   }
 
   return (
     <div
-      className="blackfish-artifact-scene"
+      className="inksoul-artifact-scene"
       role="img"
       aria-label="Interaktívna trojrozmerná chrómová lebka s tetovacou ihlou"
     >

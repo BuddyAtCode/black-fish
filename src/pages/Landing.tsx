@@ -5,37 +5,36 @@ import {
   useTransform,
 } from "framer-motion";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import BrandMark from "../components/BrandMark";
+import { artists, studioWorks } from "../data/studio";
 
-const BlackFishArtifactScene = lazy(
-  () => import("../components/BlackFishArtifactScene"),
+const InksoulArtifactScene = lazy(
+  () => import("../components/InksoulArtifactScene"),
 );
 
-const featuredWorks = [
-  {
-    src: "/images/generated/tattoo-session.jpg",
-    title: "Záhrada, ktorá vidí",
-    meta: "Ilustrácia · predlaktie",
-    className: "work-card work-card--wide",
-  },
-  {
-    src: "/images/generated/tattoo-botanical-eye.webp",
-    title: "Pamäť pod kožou",
-    meta: "Blackwork · chrbát",
-    className: "work-card work-card--portrait",
-  },
-  {
-    src: "/images/generated/tattoo-abstract-forearm.webp",
-    title: "Nočná anatómia",
-    meta: "Abstrakcia · predlaktie",
-    className: "work-card work-card--small",
-  },
-];
+const featuredWorks = studioWorks.slice(0, 3);
 
 const shopPreviewProducts = [
-  { name: "Nocturne Ring", price: "42 €", position: "12% 78%", material: "Black titanium" },
-  { name: "Blood Moon", price: "58 €", position: "46% 48%", material: "Red zircon / steel" },
-  { name: "Twin Thorn", price: "36 €", position: "86% 38%", material: "Surgical steel" },
+  {
+    name: "Nocturne Ring",
+    price: "42 €",
+    image: "/images/generated/piercing-nocturne-ring.webp",
+    material: "Black titanium",
+  },
+  {
+    name: "Blood Moon",
+    price: "58 €",
+    image: "/images/generated/piercing-blood-moon.webp",
+    material: "Red zircon / steel",
+  },
+  {
+    name: "Twin Thorn",
+    price: "36 €",
+    image: "/images/generated/piercing-twin-thorn.webp",
+    material: "Surgical steel",
+  },
 ];
 
 function RevealWord({
@@ -50,11 +49,7 @@ function RevealWord({
   const opacity = useTransform(progress, range, [0.13, 1]);
   const y = useTransform(progress, range, [12, 0]);
 
-  return (
-    <motion.span style={{ opacity, y }}>
-      {children}{" "}
-    </motion.span>
-  );
+  return <motion.span style={{ opacity, y }}>{children} </motion.span>;
 }
 
 function ScrollStatement() {
@@ -64,7 +59,7 @@ function ScrollStatement() {
     offset: ["start 0.78", "end 0.38"],
   });
   const words =
-    "Spomienky, obrazy a zvláštne nápady premieňame na tetovania kreslené pre konkrétne telo.".split(
+    "Kresba, kontrast, jemný detail a sýty akcent sa stretávajú v návrhoch vytvorených pre konkrétne telo.".split(
       " ",
     );
   const revealScale = 0.74;
@@ -73,7 +68,7 @@ function ScrollStatement() {
     <section className="statement-section" ref={target}>
       <div className="section-kicker">
         <span>01</span>
-        <span>Manifest</span>
+        <span>Štúdio</span>
       </div>
       <p className="scroll-statement">
         {words.map((word, index) => {
@@ -90,7 +85,7 @@ function ScrollStatement() {
         })}
       </p>
       <div className="statement-footnote">
-        BLACK FISH / DADLA TATS / AUTORSKÉ OBRAZOVÉ TETOVANIA
+        .INKSOUL. / DADLA / DUKY / WALLA / AUTORSKÉ TETOVANIE
       </div>
     </section>
   );
@@ -110,30 +105,24 @@ function Hero() {
   return (
     <section className="hero" ref={target}>
       <motion.div className="hero-media" style={{ scale, y: imageY }}>
-        <img src="/images/generated/tattoo-session.jpg" alt="DADLA TATS pri tetovaní" />
+        <img src="/images/generated/tattoo-session.jpg" alt="Tetovanie v štúdiu .INKSOUL." />
       </motion.div>
       <div className="hero-shade" />
+      <div className="hero-color-wash" aria-hidden="true" />
 
-      <motion.div
-        className="hero-gothic-logo"
-        style={{ y: markY, opacity }}
-        aria-label="Black Fish"
-      >
-        <div className="brand-lockup brand-lockup--hero">
-          <span>Blac<i className="brand-k">K</i></span>
-          <span>Fish</span>
-        </div>
+      <motion.div className="hero-gothic-logo" style={{ y: markY, opacity }}>
+        <BrandMark className="brand-mark--hero" />
       </motion.div>
 
       <div className="hero-topline">
-        <span>DADLA TATS</span>
-        <span>Obrazy prenesené na kožu</span>
+        <span>DADLA · DUKY · WALLA</span>
+        <span>TETOVACIE ŠTÚDIO / .INKSOUL.</span>
       </div>
 
       <div className="hero-bottomline">
         <p>
-          Dadla navrhuje autorské tetovania
-          <br /> podľa tvojho príbehu a tvaru tela.
+          Tri tatérske rukopisy v jednom štúdiu.
+          <br /> Vyber si autora alebo nám nechaj svoj nápad.
         </p>
         <Link className="magnetic-link" to="/booking">
           <span>Rezervovať konzultáciu</span>
@@ -142,7 +131,7 @@ function Hero() {
       </div>
 
       <div className="scroll-cue" aria-hidden="true">
-        <span>Scroll to enter</span>
+        <span>Vstúpiť</span>
         <i />
       </div>
     </section>
@@ -163,16 +152,13 @@ function ExpandingMedia() {
     <section className="expanding-section" ref={target}>
       <div className="expanding-sticky">
         <motion.div className="expanding-media" style={{ scale, borderRadius: radius }}>
-          <img
-            src="/images/generated/studio-interior.webp"
-            alt="Interiér štúdia BLACK FISH"
-          />
+          <img src="/images/generated/studio-interior.webp" alt="Interiér štúdia .INKSOUL." />
           <div className="expanding-media-overlay" />
           <motion.div className="expanding-copy" style={{ y: copyY }}>
-            <small>Ručne kreslené · osobne navrhnuté</small>
+            <small>Tri rukopisy · jeden priestor</small>
             <strong>
               TVOJ NÁPAD.
-              <br /> JEJ RUKOPIS.
+              <br /> NAŠA KRESBA.
             </strong>
           </motion.div>
         </motion.div>
@@ -204,17 +190,17 @@ function ArtifactCanvas({ progress }: { progress: MotionValue<number> }) {
   return (
     <div className="artifact-canvas-shell" ref={host}>
       {ready ? (
-        <Suspense fallback={<div className="artifact-scene-loader">MATERIALIZING / 02</div>}>
-          <BlackFishArtifactScene progress={progress} />
+        <Suspense fallback={<div className="artifact-scene-loader">.INKSOUL.</div>}>
+          <InksoulArtifactScene progress={progress} />
         </Suspense>
       ) : (
-        <div className="artifact-scene-loader">MATERIALIZING / 02</div>
+        <div className="artifact-scene-loader">.INKSOUL.</div>
       )}
     </div>
   );
 }
 
-function RelicSection() {
+function StudioSignature() {
   const target = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target,
@@ -222,58 +208,37 @@ function RelicSection() {
   });
   const headingY = useTransform(scrollYProgress, [0, 1], [80, -120]);
   const headingOpacity = useTransform(scrollYProgress, [0, 0.12, 0.82, 1], [0, 1, 1, 0]);
-  const annotationOpacity = useTransform(
-    scrollYProgress,
-    [0.12, 0.28, 0.72, 0.9],
-    [0, 1, 1, 0],
-  );
   const copyOpacity = useTransform(scrollYProgress, [0.46, 0.62, 0.94], [0, 1, 1]);
 
   return (
-    <section className="relic-section" ref={target}>
+    <section className="relic-section studio-signature" ref={target}>
       <div className="relic-sticky">
         <div className="relic-grid" aria-hidden="true" />
 
         <div className="relic-meta">
-          <span>02 / BLACK FISH RELIC</span>
-          <span>SCANNED FORM / WEBGL</span>
+          <span>02 / .INKSOUL. STUDIO</span>
+          <span>DADLA · DUKY · WALLA</span>
         </div>
 
         <motion.h2 className="relic-heading" style={{ y: headingY, opacity: headingOpacity }}>
-          <span>ANATÓMIA</span>
-          <span>INŠTINKTU.</span>
+          <span>TRI RUKOPISY.</span>
+          <span>JEDEN PRIESTOR.</span>
         </motion.h2>
 
-        <motion.div
-          className="relic-annotation relic-annotation--skull"
-          style={{ opacity: annotationOpacity }}
-        >
-          <i />
-          <span>01 / RELIC</span>
-        </motion.div>
-        <motion.div
-          className="relic-annotation relic-annotation--needle"
-          style={{ opacity: annotationOpacity }}
-        >
-          <i />
-          <span>02 / IHLA</span>
-        </motion.div>
+        <div className="studio-signature-names" aria-hidden="true">
+          {artists.map((artist) => <span key={artist.slug}>{artist.name}</span>)}
+        </div>
 
         <motion.div className="relic-description" style={{ opacity: copyOpacity }}>
           <p>
-            Dadla začína každý motív kresbou. Pri návrhu pracuje s tvarom tela, tvojím
-            príbehom a tým, ako bude tetovanie pôsobiť v pohybe.
+            Dadla, Duky a Walla prinášajú do štúdia vlastnú kresbu a spôsob práce.
+            Spája ich dôraz na kompozíciu, čisté prevedenie a pokojný proces.
           </p>
-          <Link to="/biography">
-            Spoznaj Dadlu
+          <Link to="/artists">
+            Spoznať tatérov
             <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
           </Link>
         </motion.div>
-
-        <div className="relic-instruction">
-          <span>SCROLL / ROTÁCIA</span>
-          <span>KURZOR / POHĽAD</span>
-        </div>
 
         <div className="relic-progress" aria-hidden="true">
           <motion.i style={{ scaleY: scrollYProgress }} />
@@ -283,7 +248,7 @@ function RelicSection() {
   );
 }
 
-function ArtifactJourney() {
+function ExperienceJourney() {
   const target = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target,
@@ -296,9 +261,9 @@ function ArtifactJourney() {
         <ArtifactCanvas progress={scrollYProgress} />
         <div className="artifact-stage-vignette" />
       </div>
-      <RelicSection />
+      <StudioSignature />
       <PortfolioPreview />
-      <ArtistPreview />
+      <ArtistsPreview />
     </div>
   );
 }
@@ -310,11 +275,11 @@ function PortfolioPreview() {
         className="gothic-wordmark gothic-wordmark--portfolio"
         aria-hidden="true"
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.18 }}
+        whileInView={{ opacity: 0.16 }}
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 1.2 }}
       >
-        Portfolio
+        Archív
       </motion.div>
       <div className="section-heading">
         <div className="section-kicker">
@@ -322,79 +287,84 @@ function PortfolioPreview() {
           <span>Vybrané práce</span>
         </div>
         <h2>
-          KOŽA JE
-          <br /> GALÉRIA.
+          VYBRANÉ
+          <br /> TETOVANIA.
         </h2>
         <Link to="/portfolio">
-          Pozrieť celé portfólio
+          Celé portfólio
           <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
         </Link>
       </div>
 
       <div className="work-grid">
-        {featuredWorks.map((work, index) => (
-          <motion.figure
-            className={work.className}
-            key={work.title}
-            initial={{ opacity: 0, y: 80 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-12%" }}
-            transition={{ duration: 0.85, delay: index * 0.08 }}
-          >
-            <div className="work-image">
-              <img src={work.src} alt={work.title} />
-              <span aria-hidden="true">0{index + 1}</span>
-            </div>
-            <figcaption>
-              <strong>{work.title}</strong>
-              <small>{work.meta}</small>
-            </figcaption>
-          </motion.figure>
-        ))}
+        {featuredWorks.map((work, index) => {
+          const artist = artists.find((item) => item.slug === work.artist);
+          return (
+            <motion.figure
+              className={`work-card ${index === 0 ? "work-card--wide" : index === 1 ? "work-card--portrait" : "work-card--small"}`}
+              key={work.number}
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-12%" }}
+              transition={{ duration: 0.85, delay: index * 0.08 }}
+            >
+              <div className="work-image">
+                <img src={work.src} alt={work.title} style={{ objectPosition: work.position }} />
+                <span aria-hidden="true">0{index + 1}</span>
+              </div>
+              <figcaption>
+                <strong>{work.title}</strong>
+                <small>{artist?.name} / .INKSOUL.</small>
+              </figcaption>
+            </motion.figure>
+          );
+        })}
       </div>
     </section>
   );
 }
 
-function ArtistPreview() {
+function ArtistsPreview() {
   return (
-    <section className="artist-preview">
-      <motion.div
-        className="gothic-wordmark gothic-wordmark--biography"
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.15 }}
-        viewport={{ once: true, margin: "-15%" }}
-        transition={{ duration: 1.2 }}
-      >
-        Biography
-      </motion.div>
-      <div className="artist-image-wrap">
-        <motion.img
-          src="/images/generated/dadla-portrait.webp"
-          alt="Atmosférický portrét tatérky v štúdiu BLACK FISH"
-          initial={{ scale: 1.12 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        />
-        <div className="artist-image-label">Artist / Founder</div>
-      </div>
-      <div className="artist-copy">
-        <span className="eyebrow">Dadla Tats</span>
-        <h2>
-          OBRAZ, KTORÝ
-          <br /> SADNE TVOJMU
-          <br /> TELU.
-        </h2>
+    <section className="artists-preview">
+      <div className="artists-preview-head">
+        <div className="section-kicker">
+          <span>04</span>
+          <span>Tatéri</span>
+        </div>
+        <h2>MENÁ ZA<br />.INKSOUL.</h2>
         <p>
-          Dadla pracuje s obrazmi, symbolmi a útržkami spomienok. Na konzultácii spolu
-          prejdete motív, miesto aj mierku. Potom nakreslí kompozíciu priamo pre tvoje telo.
+          Každý profil ukazuje vlastný rukopis, práce a samostatné voľné termíny.
         </p>
-        <Link className="text-link" to="/biography">
-          Celý príbeh
-          <i className="thorn-arrow thorn-arrow--inline" aria-hidden="true" />
-        </Link>
+      </div>
+
+      <div className="artists-preview-grid">
+        {artists.map((artist, index) => (
+          <motion.article
+            key={artist.slug}
+            style={{ "--artist-accent": artist.accent } as CSSProperties}
+            initial={{ opacity: 0, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8, delay: index * 0.08 }}
+          >
+            <Link to={`/artists/${artist.slug}`}>
+              <div className="artists-preview-media">
+                <img
+                  src={artist.image}
+                  alt={`Práca — ${artist.name}`}
+                  style={{ objectPosition: artist.imagePosition }}
+                />
+              </div>
+              <div className="artists-preview-name">
+                <span>{artist.number}</span>
+                <h3>{artist.name}</h3>
+                <i className="thorn-arrow" aria-hidden="true" />
+              </div>
+              <p>{artist.descriptor}</p>
+            </Link>
+          </motion.article>
+        ))}
       </div>
     </section>
   );
@@ -404,8 +374,8 @@ function ShopPreview() {
   return (
     <section className="shop-preview">
       <div className="shop-preview-meta">
-        <span>04 / BLACK FISH OBJECTS</span>
-        <span>DROP 001 / TITANIUM + STEEL</span>
+        <span>05 / PIERCING SHOP</span>
+        <span>TITÁN / CHIRURGICKÁ OCEĽ</span>
       </div>
 
       <motion.h2
@@ -415,8 +385,8 @@ function ShopPreview() {
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span>PIERCING</span>
-        <span>AFTER DARK.</span>
+        <span>DETAIL</span>
+        <span>PRE TELO.</span>
       </motion.h2>
 
       <div className="shop-product-track">
@@ -434,11 +404,7 @@ function ShopPreview() {
             }}
           >
             <div className="shop-product-media">
-              <img
-                src="/images/generated/piercing-collection.jpg"
-                alt={product.name}
-                style={{ objectPosition: product.position }}
-              />
+              <img src={product.image} alt={product.name} />
               <span>0{index + 1} / LIMITOVANÝ KUS</span>
             </div>
             <div className="shop-product-info">
@@ -454,16 +420,16 @@ function ShopPreview() {
 
       <div className="shop-preview-footer">
         <p>
-          Limitované piercingy z titánu a chirurgickej ocele. Malé objekty s ostrým
-          charakterom, vybrané priamo pre BLACK FISH.
+          Piercingy z titánu a chirurgickej ocele. Veľkosť a vhodné umiestnenie
+          spolu doladíme v štúdiu.
         </p>
         <Link className="shop-preview-cta" to="/eshop">
-          <span>Otvoriť Drop 001</span>
+          <span>Otvoriť shop</span>
           <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
 
-      <div className="shop-preview-wordmark" aria-hidden="true">Store</div>
+      <div className="shop-preview-wordmark" aria-hidden="true">Piercing</div>
     </section>
   );
 }
@@ -478,9 +444,11 @@ function BookingPreview() {
   return (
     <section className="booking-preview">
       <div className="booking-title">
-        <span>05 / Open chair</span>
-        <h2>MÁŠ OBRAZ<br />V HLAVE?</h2>
-        <p>Pošli ho ďalej. Prvý kontakt zatiaľ riešime cez Instagram DM.</p>
+        <span>06 / Konzultácie</span>
+        <h2>VYBER SI<br />TATÉRA.</h2>
+        <p>
+          Pozri si rukopisy, vyber voľný termín a opíš nám svoju predstavu.
+        </p>
       </div>
       <div className="slot-list">
         {slots.map((slot) => (
@@ -492,7 +460,7 @@ function BookingPreview() {
           </div>
         ))}
         <Link className="slot-cta" to="/booking">
-          <span>Otvoriť kalendár</span>
+          <span>Vybrať termín</span>
           <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </div>
@@ -504,24 +472,23 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-marquee" aria-hidden="true">
-        <span>BLACK FISH · SKIN AS CANVAS · DADLA TATS · </span>
-        <span>BLACK FISH · SKIN AS CANVAS · DADLA TATS · </span>
+        <span>.INKSOUL. · DADLA · DUKY · WALLA · TETOVACIE ŠTÚDIO · </span>
+        <span>.INKSOUL. · DADLA · DUKY · WALLA · TETOVACIE ŠTÚDIO · </span>
       </div>
       <div className="footer-inner">
-        <div className="footer-brand" aria-label="BLACK FISH">
-          <span>Blac<i className="brand-k">K</i></span>
-          <span>Fish</span>
+        <div className="footer-brand">
+          <BrandMark className="brand-mark--footer" />
         </div>
         <div className="footer-links">
           <Link to="/portfolio">Portfólio</Link>
-          <Link to="/biography">DADLA TATS</Link>
-          <Link to="/eshop">Shop</Link>
+          <Link to="/artists">Tatéri</Link>
+          <Link to="/eshop">Piercing shop</Link>
           <Link to="/booking">Rezervácia</Link>
         </div>
         <div className="footer-contact">
-          <span>Instagram príde čoskoro</span>
-          <span>Slovensko</span>
-          <span>© {new Date().getFullYear()} BLACK FISH</span>
+          <span>Instagram doplníme</span>
+          <span>Adresa doplníme</span>
+          <span>© {new Date().getFullYear()} .INKSOUL.</span>
         </div>
       </div>
     </footer>
@@ -534,7 +501,7 @@ export default function Landing() {
       <Hero />
       <ScrollStatement />
       <ExpandingMedia />
-      <ArtifactJourney />
+      <ExperienceJourney />
       <ShopPreview />
       <BookingPreview />
       <Footer />

@@ -7,37 +7,37 @@ const products = [
     name: "Nocturne Ring",
     price: 42,
     image: "/images/generated/piercing-nocturne-ring.webp",
-    tag: "Black titanium",
+    tag: "Čierny titán",
   },
   {
     name: "Blood Moon",
     price: 58,
     image: "/images/generated/piercing-blood-moon.webp",
-    tag: "Red zircon / steel",
+    tag: "Červený zirkón / oceľ",
   },
   {
     name: "Twin Thorn",
     price: 36,
     image: "/images/generated/piercing-twin-thorn.webp",
-    tag: "Surgical steel",
+    tag: "Chirurgická oceľ",
   },
   {
     name: "Orbit Chain",
     price: 64,
     image: "/images/generated/piercing-orbit-chain.webp",
-    tag: "Black titanium",
+    tag: "Čierny titán",
   },
   {
     name: "Ritual Bar",
     price: 49,
     image: "/images/generated/piercing-ritual-bar.webp",
-    tag: "Red zircon / steel",
+    tag: "Červený zirkón / oceľ",
   },
   {
     name: "Void Spike",
     price: 31,
     image: "/images/generated/piercing-void-spike.webp",
-    tag: "Surgical steel",
+    tag: "Chirurgická oceľ",
   },
 ];
 
@@ -56,29 +56,29 @@ export default function Eshop() {
           className="page-gothic-wordmark page-gothic-wordmark--store"
           aria-hidden="true"
         >
-          Store
+          Piercing
         </div>
         <div className="shop-hero-image">
-          <img src="/images/generated/piercing-collection.jpg" alt="BLACK FISH piercing collection" />
+          <img src="/images/generated/piercing-collection.jpg" alt="Piercingy v štúdiu .INKSOUL." />
         </div>
         <div className="shop-hero-copy">
           <div className="inner-hero-meta">
-            <span>DROP 001</span>
-            <span>SIMULATED STORE</span>
+            <span>.INKSOUL. / PIERCING SHOP</span>
+            <span>TITÁN / CHIRURGICKÁ OCEĽ</span>
           </div>
-          <h1>OBJECTS<br />AFTER DARK</h1>
+          <h1>DETAIL<br />PRE TELO.</h1>
           <p>
-            Piercingy z titánu a chirurgickej ocele. Ostré línie, bezpečné materiály,
-            limitované kusy.
+            Vybrané piercingy z bezpečných materiálov. Veľkosť a vhodné umiestnenie
+            spolu doladíme v štúdiu.
           </p>
         </div>
       </section>
 
       <section className="product-section">
         <div className="product-toolbar">
-          <span>6 objects / drop 001</span>
+          <span>6 piercingov</span>
           <button type="button" onClick={() => setCheckoutOpen(true)}>
-            Bag [{String(cart.length).padStart(2, "0")}] · {total} €
+            Taška [{String(cart.length).padStart(2, "0")}] · {total} €
           </button>
         </div>
 
@@ -100,7 +100,7 @@ export default function Eshop() {
                   onClick={() => setCart((items) => [...items, index])}
                   aria-label={`Pridať ${product.name} do tašky`}
                 >
-                  + Add
+                  + Pridať
                 </button>
               </div>
               <div className="product-info">
@@ -116,11 +116,11 @@ export default function Eshop() {
       </section>
 
       <section className="shop-note">
-        <span>Hygiene / Material / Fit</span>
-        <h2>SPRÁVNY KUS.<br />SPRÁVNE MIESTO.</h2>
+        <span>Materiál / veľkosť / starostlivosť</span>
+        <h2>VYBERIEME<br />SPRÁVNU VEĽKOSŤ.</h2>
         <p>
-          Pri ostrom nasadení bude každý piercing dostupný s profesionálnou konzultáciou
-          a odporúčaním veľkosti.
+          Pri každom piercingu ti odporučíme vhodný rozmer, materiál aj následnú
+          starostlivosť.
         </p>
         <Link to="/booking">
           Rezervovať piercing konzultáciu
@@ -147,9 +147,9 @@ export default function Eshop() {
               transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
             >
               <button type="button" className="checkout-close" onClick={() => setCheckoutOpen(false)}>
-                Close ×
+                Zavrieť ×
               </button>
-              <span>BLACK FISH / BAG</span>
+              <span>.INKSOUL. / TAŠKA</span>
               <h2 id="checkout-title">TVOJ VÝBER</h2>
               {cart.length === 0 ? (
                 <p className="empty-cart">Zatiaľ je tu ticho.</p>
@@ -164,7 +164,7 @@ export default function Eshop() {
                 </div>
               )}
               <div className="cart-total">
-                <span>Total</span>
+                <span>Spolu</span>
                 <strong>{total} €</strong>
               </div>
               <button
@@ -172,7 +172,7 @@ export default function Eshop() {
                 className="checkout-button"
                 onClick={() => setCheckoutOpen(false)}
               >
-                Demo checkout / čoskoro
+                Objednávky spustíme čoskoro
               </button>
             </motion.div>
           </motion.div>
