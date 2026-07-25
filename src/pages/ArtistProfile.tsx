@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { HeroLetterLine, ScrollColorText } from "../components/TextReveal";
 import { artists, getArtist } from "../data/studio";
 
 export default function ArtistProfile() {
@@ -34,7 +35,9 @@ export default function ArtistProfile() {
         </div>
         <div className="artist-profile-name">
           <span>{artist.number}</span>
-          <h1>{artist.name}</h1>
+          <h1>
+            <HeroLetterLine text={artist.name} />
+          </h1>
           <p>{artist.statement}</p>
         </div>
       </section>
@@ -45,7 +48,7 @@ export default function ArtistProfile() {
           <span>Rukopis</span>
         </div>
         <div>
-          <h2>{artist.intro}</h2>
+          <ScrollColorText text={artist.intro} />
           <div className="artist-profile-columns">
             <p>{artist.paragraphs[0]}</p>
             <p>{artist.paragraphs[1]}</p>

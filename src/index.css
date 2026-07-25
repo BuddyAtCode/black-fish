@@ -752,6 +752,32 @@ img {
   margin-right: 0.16em;
 }
 
+.hero-letter-line {
+  display: block;
+}
+
+.hero-letter-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero-letter-glyph {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform-origin: 50% 100%;
+  will-change: transform, clip-path, opacity;
+}
+
+.hero-letter-space {
+  display: inline-block;
+  width: 0.22em;
+}
+
+.scroll-color-text > span {
+  display: inline-block;
+  margin-right: 0.16em;
+}
+
 .statement-footnote {
   position: absolute;
   right: 4vw;
@@ -1686,7 +1712,7 @@ img {
   letter-spacing: -0.105em;
 }
 
-.portfolio-hero h1 span {
+.portfolio-hero h1 > span {
   display: block;
   white-space: nowrap;
 }
@@ -2305,7 +2331,7 @@ img {
   font-size: clamp(4.6rem, 13vw, 13rem);
 }
 
-.booking-hero h1 span {
+.booking-hero h1 > span {
   display: block;
   white-space: nowrap;
 }
@@ -2937,11 +2963,11 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   letter-spacing: -0.105em;
 }
 
-.artists-hero h1 span {
+.artists-hero h1 > span {
   display: block;
 }
 
-.artists-hero h1 span:last-child {
+.artists-hero h1 > span:last-child {
   margin-left: 12vw;
   margin-top: 0.08em;
   font-family: var(--serif);
@@ -3869,7 +3895,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     line-height: 1;
   }
 
-  .artists-hero h1 span:last-child {
+  .artists-hero h1 > span:last-child {
     margin-left: 0;
     line-height: 1.08;
   }
@@ -4037,7 +4063,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     word-spacing: 0.08em;
   }
 
-  .booking-hero h1 span {
+  .booking-hero h1 > span {
     white-space: nowrap;
   }
 

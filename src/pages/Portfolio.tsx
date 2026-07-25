@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { HeroLetterLine } from "../components/TextReveal";
 import { artists, studioWorks } from "../data/studio";
 import type { ArtistSlug } from "../data/studio";
 
@@ -32,8 +33,8 @@ export default function Portfolio() {
           <span>001—009 / DADLA · DUKY · WALLA</span>
         </div>
         <h1>
-          <span>VYBRANÉ</span>
-          <span>TETOVANIA.</span>
+          <HeroLetterLine text="VYBRANÉ" />
+          <HeroLetterLine text="TETOVANIA." delay={0.1} />
         </h1>
         <p>
           Práce troch tatérov pod jednou strechou. Filter ti ukáže rukopis každého z nich.

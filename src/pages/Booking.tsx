@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { HeroLetterLine } from "../components/TextReveal";
 import { artists, getArtist } from "../data/studio";
 import type { ArtistSlug } from "../data/studio";
 
@@ -72,8 +73,8 @@ export default function Booking() {
           <span>VYBER TATÉRA A TERMÍN</span>
         </div>
         <h1>
-          <span>S KÝM CHCEŠ</span>
-          <span>TVORIŤ?</span>
+          <HeroLetterLine text="S KÝM CHCEŠ" />
+          <HeroLetterLine text="TVORIŤ?" delay={0.1} />
         </h1>
         <p>
           Pozri si rukopisy, vyber orientačný termín konzultácie a napíš nám,

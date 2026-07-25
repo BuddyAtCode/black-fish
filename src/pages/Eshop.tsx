@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { HeroLetterLine } from "../components/TextReveal";
 
 const products = [
   {
@@ -66,7 +67,10 @@ export default function Eshop() {
             <span>.INKSOUL. / PIERCING SHOP</span>
             <span>TITÁN / CHIRURGICKÁ OCEĽ</span>
           </div>
-          <h1>DETAIL<br />PRE TELO.</h1>
+          <h1>
+            <HeroLetterLine text="DETAIL" />
+            <HeroLetterLine text="PRE TELO." delay={0.1} />
+          </h1>
           <p>
             Vybrané piercingy z bezpečných materiálov. Veľkosť a vhodné umiestnenie
             spolu doladíme v štúdiu.

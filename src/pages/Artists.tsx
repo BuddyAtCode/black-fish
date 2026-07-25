@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import { HeroLetterLine } from "../components/TextReveal";
 import { artists } from "../data/studio";
 
 export default function Artists() {
@@ -15,8 +16,8 @@ export default function Artists() {
           <span>01—03 / TATÉRI</span>
         </div>
         <h1>
-          <span>TRI RUKOPISY.</span>
-          <span>JEDNO ŠTÚDIO.</span>
+          <HeroLetterLine text="TRI RUKOPISY." />
+          <HeroLetterLine text="JEDNO ŠTÚDIO." delay={0.1} />
         </h1>
         <p>
           Dadla, Duky a Walla tvoria pod jednou strechou. Každý prináša vlastnú kresbu,
