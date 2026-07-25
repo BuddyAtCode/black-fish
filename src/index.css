@@ -826,7 +826,7 @@ img {
 
 .expanding-copy strong {
   font-size: clamp(3.8rem, 9vw, 10rem);
-  line-height: 0.83;
+  line-height: 0.92;
   letter-spacing: -0.09em;
 }
 
@@ -960,7 +960,7 @@ img {
   flex-direction: column;
   color: rgba(231, 225, 216, 0.035);
   font-size: clamp(6rem, 14.2vw, 13.8rem);
-  line-height: 0.73;
+  line-height: 0.84;
   letter-spacing: -0.095em;
   pointer-events: none;
   -webkit-text-stroke: 1px rgba(231, 225, 216, 0.18);
@@ -1136,7 +1136,7 @@ img {
   margin: 0;
   font-size: clamp(4.6rem, 9.5vw, 11rem);
   font-weight: 650;
-  line-height: 0.8;
+  line-height: 0.92;
   letter-spacing: -0.095em;
 }
 
@@ -1315,7 +1315,7 @@ img {
   margin: 5.5rem 0 7rem;
   font-size: clamp(6rem, 11vw, 13rem);
   font-weight: 650;
-  line-height: 0.72;
+  line-height: 0.84;
   letter-spacing: -0.105em;
 }
 
@@ -1682,7 +1682,7 @@ img {
   margin: auto 0 2rem;
   font-size: clamp(5rem, 15vw, 15rem);
   font-weight: 650;
-  line-height: 0.68;
+  line-height: 0.84;
   letter-spacing: -0.105em;
 }
 
@@ -2739,9 +2739,11 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
 .artists-preview {
   position: relative;
+  z-index: 4;
   overflow: hidden;
   padding: 10rem 4vw 12rem;
   background: var(--ink);
+  isolation: isolate;
 }
 
 .artists-preview-head {
@@ -2756,7 +2758,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   margin: 0;
   font-size: clamp(4.5rem, 9vw, 10.5rem);
   font-weight: 650;
-  line-height: 0.76;
+  line-height: 0.84;
   letter-spacing: -0.1em;
 }
 
@@ -2931,7 +2933,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   margin: auto 0 2rem;
   font-size: clamp(5rem, 12vw, 13rem);
   font-weight: 650;
-  line-height: 0.7;
+  line-height: 0.94;
   letter-spacing: -0.105em;
 }
 
@@ -2941,6 +2943,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
 .artists-hero h1 span:last-child {
   margin-left: 12vw;
+  margin-top: 0.08em;
   font-family: var(--serif);
   font-weight: 500;
   letter-spacing: -0.08em;
@@ -3082,7 +3085,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   margin: 4rem 0 2.5rem;
   font-size: clamp(4rem, 7vw, 8rem);
   font-weight: 650;
-  line-height: 0.78;
+  line-height: 0.9;
   letter-spacing: -0.095em;
 }
 
@@ -3277,7 +3280,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   margin: 10vh 0 0;
   font-size: clamp(5rem, 13vw, 14rem);
   font-weight: 650;
-  line-height: 0.72;
+  line-height: 0.9;
   letter-spacing: -0.105em;
 }
 
@@ -3561,7 +3564,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     right: 0.7rem;
     left: 0.7rem;
     font-size: 20.5vw;
-    line-height: 0.78;
+    line-height: 0.86;
   }
   .relic-heading span:last-child { align-self: flex-start; margin-left: 10vw; }
   .relic-description {
@@ -3611,7 +3614,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .shop-preview-title {
     margin: 4.5rem 1.1rem 5rem;
     font-size: 18vw;
-    line-height: 0.76;
+    line-height: 0.9;
     letter-spacing: -0.09em;
   }
   .shop-preview-title span:last-child {
@@ -3666,7 +3669,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .page-gothic-wordmark--store { bottom: 10%; }
   .portfolio-hero h1 {
     font-size: 20vw;
-    line-height: 0.84;
+    line-height: 0.9;
     letter-spacing: -0.09em;
   }
   .portfolio-hero > p { align-self: flex-start; width: 85%; margin: 0 0 1rem; }
@@ -3700,7 +3703,10 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
   .shop-hero-image { min-height: 60vh; }
   .shop-hero-copy { min-height: 70vh; padding: 6rem 1.1rem 2rem; }
-  .shop-hero h1 { font-size: 18vw; }
+  .shop-hero h1 {
+    font-size: 18vw;
+    line-height: 0.9;
+  }
   .product-section { padding: 1rem 1.1rem 7rem; }
   .product-grid { grid-template-columns: 1fr; gap: 4rem; }
   .product-card:nth-child(2n) { width: 82%; margin-left: auto; }
@@ -3711,7 +3717,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .booking-hero { min-height: 88vh; padding: 6rem 1.1rem 2rem; }
   .booking-hero h1 {
     font-size: 18vw;
-    line-height: 0.76;
+    line-height: 0.9;
     letter-spacing: -0.09em;
   }
   .booking-hero > p { font-size: 1rem; }
@@ -3820,6 +3826,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .artists-preview-head h2 {
     margin: 3rem 0 2rem;
     font-size: 17vw;
+    line-height: 0.9;
   }
 
   .artists-preview-head p {
@@ -3859,11 +3866,12 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .artists-hero h1 {
     margin: auto 0 3rem;
     font-size: 18vw;
-    line-height: 0.77;
+    line-height: 1;
   }
 
   .artists-hero h1 span:last-child {
     margin-left: 0;
+    line-height: 1.08;
   }
 
   .artists-hero > p {
@@ -4024,7 +4032,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
   .booking-hero h1 {
     font-size: 14vw;
-    line-height: 0.82;
+    line-height: 0.9;
     letter-spacing: -0.065em;
     word-spacing: 0.08em;
   }

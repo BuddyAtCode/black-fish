@@ -495,7 +495,7 @@ function Footer() {
             target="_blank"
             rel="noreferrer"
           >
-            Made by Paul Macaronn
+            Made by PAULMA CARONN
           </a>
         </div>
       </div>
