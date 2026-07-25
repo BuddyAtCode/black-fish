@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactLenis } from "lenis/react";
-import { useEffect } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PageLoader from "./components/PageLoader";
 import SiteChrome from "./components/SiteChrome";
@@ -13,10 +13,13 @@ import Portfolio from "./pages/Portfolio";
 
 function AnimatedRoutes() {
   const location = useLocation();
+  const lenis = useLenis();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    window.history.scrollRestoration = "manual";
+    lenis?.scrollTo(0, { immediate: true, force: true });
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [lenis, location.key]);
 
   return (
     <>
