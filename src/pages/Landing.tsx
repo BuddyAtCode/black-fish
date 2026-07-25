@@ -62,7 +62,7 @@ function ScrollStatement() {
     "Kresba, kontrast, jemný detail a sýty akcent sa stretávajú v návrhoch vytvorených pre konkrétne telo.".split(
       " ",
     );
-  const revealScale = 0.96;
+  const revealScale = 0.72;
 
   return (
     <section className="statement-section" ref={target}>
