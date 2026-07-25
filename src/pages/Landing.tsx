@@ -489,6 +489,14 @@ function Footer() {
           <span>Instagram doplníme</span>
           <span>Adresa doplníme</span>
           <span>© {new Date().getFullYear()} .INKSOUL.</span>
+          <a
+            className="footer-credit"
+            href="https://paulmacaronn.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Made by Paul Macaronn
+          </a>
         </div>
       </div>
     </footer>

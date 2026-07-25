@@ -1603,6 +1603,17 @@ img {
   border-color: currentColor;
 }
 
+.footer-credit {
+  margin-top: 0.6rem;
+  border-bottom: 1px solid var(--blood-bright);
+  padding-bottom: 0.25rem;
+  transition: color 0.25s ease;
+}
+
+.footer-credit:hover {
+  color: var(--blood-bright);
+}
+
 .inner-page {
   min-height: 100vh;
   padding-top: 1px;
