@@ -1,7 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useTransform } from "framer-motion";
 import type { MotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import type { RefObject } from "react";
+import { useEffect, useState } from "react";
 
 function usePageReady() {
   const [ready, setReady] = useState(false);
@@ -104,26 +103,17 @@ function ScrollRevealWord({
 export function ScrollColorText({
   text,
   className = "",
-  targetRef,
+  progress,
 }: {
   text: string;
   className?: string;
-  targetRef?: RefObject<HTMLElement>;
+  progress: MotionValue<number>;
 }) {
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const target = targetRef ?? headingRef;
-  const { scrollYProgress } = useScroll({
-    target,
-    offset: ["start start", "end end"],
-  });
   const words = text.split(" ");
   const revealScale = 0.845;
 
   return (
-    <h2
-      className={`scroll-color-text ${className}`.trim()}
-      ref={headingRef}
-    >
+    <h2 className={`scroll-color-text ${className}`.trim()}>
       {words.map((word, index) => {
         const start = (index / words.length) * revealScale;
         const end = Math.min(
@@ -134,7 +124,7 @@ export function ScrollColorText({
         return (
           <ScrollRevealWord
             key={`${word}-${index}`}
-            progress={scrollYProgress}
+            progress={progress}
             range={[start, end]}
           >
             {word}

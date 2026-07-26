@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import type { CSSProperties } from "react";
 import { useRef } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -7,6 +7,11 @@ import { artists, getArtist } from "../data/studio";
 
 export default function ArtistProfile() {
   const introRevealRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: introRevealProgress } = useScroll({
+    target: introRevealRef,
+    offset: ["start start", "end end"],
+    layoutEffect: false,
+  });
   const { artistSlug } = useParams();
   const artist = getArtist(artistSlug);
 
@@ -51,7 +56,10 @@ export default function ArtistProfile() {
               <span>{artist.number}</span>
               <span>Rukopis</span>
             </div>
-            <ScrollColorText text={artist.intro} targetRef={introRevealRef} />
+            <ScrollColorText
+              text={artist.intro}
+              progress={introRevealProgress}
+            />
           </div>
         </div>
         <div className="artist-profile-body">
