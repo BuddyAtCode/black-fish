@@ -97,8 +97,8 @@ export default function ArtistProfile() {
 
       <section className="artist-profile-cta">
         <div>
-          <span>Instagram / doplníme</span>
-          <h2>NAPÍŠ {artist.name}.</h2>
+          <span>Konzultácia / návrh / termín</span>
+          <h2>MÁŠ NÁPAD?</h2>
         </div>
         <Link className="magnetic-link magnetic-link--light" to={`/booking?artist=${artist.slug}`}>
           <span>Vybrať termín</span>

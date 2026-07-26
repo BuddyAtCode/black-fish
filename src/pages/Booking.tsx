@@ -225,8 +225,8 @@ export default function Booking() {
               <span>.INKSOUL. / {activeArtist.name}</span>
               <h2 id="success-title">TERMÍN MÁŠ<br />VYBRANÝ.</h2>
               <p>
-                {activeDay.date}. {activeDay.month} o {selectedTime}. Pre potvrdenie
-                napíš {activeArtist.name} cez Instagram. Konkrétny kontakt doplníme.
+                {activeDay.date}. {activeDay.month} o {selectedTime}. Termín spolu
+                potvrdíme cez Instagram. Konkrétny kontakt doplníme.
               </p>
               <button type="button" onClick={() => setSubmitted(false)}>Späť na formulár</button>
             </motion.div>
