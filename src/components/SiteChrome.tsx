@@ -452,7 +452,9 @@ export default function SiteChrome() {
     <>
       <CursorTrail />
 
-      <header className="site-header">
+      <header
+        className={`site-header${location.pathname === "/eshop" ? " site-header--shop" : ""}`}
+      >
         <Link className="mini-logo" to="/" aria-label=".INKSOUL. — domov">
           <BrandMark />
         </Link>

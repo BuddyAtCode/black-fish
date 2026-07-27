@@ -243,6 +243,21 @@ img {
   pointer-events: auto;
 }
 
+.site-header--shop {
+  border-bottom: 1px solid rgba(241, 238, 232, 0.08);
+  background: rgba(5, 5, 5, 0.94);
+  color: var(--bone);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(14px);
+}
+
+body[data-menu-open="true"] .site-header--shop {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink);
+  backdrop-filter: none;
+}
+
 .mini-logo {
   display: flex;
   flex-direction: column;
@@ -2357,7 +2372,7 @@ body[data-page-loading="true"] .persistent-actions {
 
 .product-toolbar {
   position: sticky;
-  top: 0;
+  top: 4.15rem;
   z-index: 10;
   display: flex;
   justify-content: space-between;
@@ -3799,6 +3814,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   }
 
   .site-header { padding: 1.1rem; }
+  .product-toolbar { top: 3.75rem; }
   .mini-logo { font-size: 1.3rem; }
   .sound-toggle { display: none; }
   .header-actions { gap: 0; }
