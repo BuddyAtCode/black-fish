@@ -11,6 +11,21 @@ const navigation = [
   { label: "Rezervácia", to: "/booking" },
 ];
 
+const persistentActions = [
+  {
+    label: "Shop",
+    eyebrow: "Piercing",
+    to: "/eshop",
+    variant: "shop",
+  },
+  {
+    label: "Rezervácia",
+    eyebrow: "Voľné termíny",
+    to: "/booking",
+    variant: "booking",
+  },
+];
+
 function CursorTrail() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -240,6 +255,28 @@ export default function SiteChrome() {
           </button>
         </div>
       </header>
+
+      <nav className="persistent-actions" aria-label="Rýchle odkazy">
+        {persistentActions.map((action, index) => {
+          const active = location.pathname === action.to;
+
+          return (
+            <Link
+              className={`persistent-action persistent-action--${action.variant}`}
+              to={action.to}
+              aria-current={active ? "page" : undefined}
+              key={action.to}
+            >
+              <span className="persistent-action-index">0{index + 1}</span>
+              <span className="persistent-action-copy">
+                <small>{active ? "Práve tu" : action.eyebrow}</small>
+                <strong>{action.label}</strong>
+              </span>
+              <i className="thorn-arrow" aria-hidden="true" />
+            </Link>
+          );
+        })}
+      </nav>
 
       <AnimatePresence>
         {menuOpen && (
