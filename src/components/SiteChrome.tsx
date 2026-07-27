@@ -14,12 +14,14 @@ const navigation = [
 const persistentActions = [
   {
     label: "Shop",
+    compactLabel: "Shop",
     eyebrow: "Piercing",
     to: "/eshop",
     variant: "shop",
   },
   {
     label: "Rezervácia",
+    compactLabel: "Termín",
     eyebrow: "Voľné termíny",
     to: "/booking",
     variant: "booking",
@@ -267,6 +269,9 @@ export default function SiteChrome() {
               aria-current={active ? "page" : undefined}
               key={action.to}
             >
+              <span className="persistent-action-compact" aria-hidden="true">
+                {action.compactLabel}
+              </span>
               <span className="persistent-action-index">0{index + 1}</span>
               <span className="persistent-action-copy">
                 <small>{active ? "Práve tu" : action.eyebrow}</small>

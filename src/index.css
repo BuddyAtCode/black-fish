@@ -522,11 +522,75 @@ img {
   height: 0.9rem;
 }
 
+.persistent-action-compact {
+  display: none;
+}
+
 body[data-menu-open="true"] .persistent-actions,
 body[data-page-loading="true"] .persistent-actions {
   opacity: 0;
   pointer-events: none;
   transform: translate(120%, -50%);
+}
+
+@media (min-width: 721px) and (hover: hover) {
+  .persistent-actions {
+    width: 3.9rem;
+    transition:
+      width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .persistent-actions:hover,
+  .persistent-actions:focus-within {
+    width: clamp(10.5rem, 13vw, 12.5rem);
+  }
+
+  .persistent-action-compact {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    font: 600 0.52rem/1 var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition:
+      opacity 0.18s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .persistent-action-index,
+  .persistent-action-copy,
+  .persistent-action .thorn-arrow {
+    opacity: 0;
+    transition:
+      opacity 0.18s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .persistent-action-index,
+  .persistent-action-copy {
+    transform: translateX(0.45rem);
+  }
+
+  .persistent-actions:hover .persistent-action-compact,
+  .persistent-actions:focus-within .persistent-action-compact {
+    opacity: 0;
+    transform: translateX(-0.4rem);
+  }
+
+  .persistent-actions:hover .persistent-action-index,
+  .persistent-actions:hover .persistent-action-copy,
+  .persistent-actions:hover .persistent-action .thorn-arrow,
+  .persistent-actions:focus-within .persistent-action-index,
+  .persistent-actions:focus-within .persistent-action-copy,
+  .persistent-actions:focus-within .persistent-action .thorn-arrow {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.11s;
+  }
 }
 
 .page-loader {
