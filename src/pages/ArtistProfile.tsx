@@ -28,7 +28,7 @@ export default function ArtistProfile() {
           <motion.img
             key={artist.slug}
             src={artist.image}
-            alt={`Tetovanie — ${artist.name}`}
+            alt={`Profil — ${artist.name}`}
             style={{ objectPosition: artist.imagePosition }}
             initial={{ scale: 1.12, filter: "grayscale(1) brightness(.5)" }}
             animate={{ scale: 1, filter: "grayscale(.18) brightness(.72)" }}

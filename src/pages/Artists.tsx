@@ -39,7 +39,7 @@ export default function Artists() {
             <div className="artist-index-media">
               <img
                 src={artist.image}
-                alt={`Výber práce — ${artist.name}`}
+                alt={`Profil — ${artist.name}`}
                 style={{ objectPosition: artist.imagePosition }}
               />
               <span>{artist.number}</span>

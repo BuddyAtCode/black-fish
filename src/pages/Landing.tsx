@@ -352,7 +352,7 @@ function ArtistsPreview() {
               <div className="artists-preview-media">
                 <img
                   src={artist.image}
-                  alt={`Práca — ${artist.name}`}
+                  alt={`Profil — ${artist.name}`}
                   style={{ objectPosition: artist.imagePosition }}
                 />
               </div>
