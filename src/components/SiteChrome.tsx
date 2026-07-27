@@ -240,7 +240,6 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
       const eyebrows = dock.querySelectorAll<HTMLElement>(".persistent-action-copy small");
       const titles = dock.querySelectorAll<HTMLElement>(".persistent-action-copy strong");
       const arrows = dock.querySelectorAll<HTMLElement>(".thorn-arrow");
-      const speed = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.001 : 1;
       const widths = getPersistentActionWidths();
 
       gsap.set(dock, { width: widths.collapsed });
@@ -262,8 +261,8 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
           dock,
           {
             width: () => getPersistentActionWidths().expanded,
-            duration: 0.92 * speed,
-            ease: "expo.inOut",
+            duration: 0.82,
+            ease: "expo.out",
           },
           0,
         )
@@ -272,22 +271,22 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
           {
             x: 0,
             clipPath: "inset(0 0 0 0px)",
-            duration: 0.72 * speed,
-            stagger: 0.1 * speed,
-            ease: "power4.inOut",
+            duration: 0.64,
+            stagger: 0.08,
+            ease: "power4.out",
           },
-          0.04 * speed,
+          0,
         )
         .to(
           scans,
           {
             autoAlpha: 0.42,
             scaleX: 1,
-            duration: 0.42 * speed,
-            stagger: 0.1 * speed,
-            ease: "power2.inOut",
+            duration: 0.36,
+            stagger: 0.08,
+            ease: "power2.out",
           },
-          0.08 * speed,
+          0.03,
         )
         .to(
           symbols,
@@ -295,22 +294,22 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
             autoAlpha: 0,
             rotation: 45,
             scale: 0.35,
-            duration: 0.32 * speed,
-            stagger: 0.09 * speed,
+            duration: 0.3,
+            stagger: 0.075,
             ease: "power3.in",
           },
-          0.12 * speed,
+          0.05,
         )
         .to(
           scans,
           {
             autoAlpha: 0,
             xPercent: -12,
-            duration: 0.24 * speed,
-            stagger: 0.1 * speed,
+            duration: 0.2,
+            stagger: 0.08,
             ease: "power2.out",
           },
-          0.45 * speed,
+          0.34,
         )
         .to(
           indices,
@@ -318,33 +317,33 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
             autoAlpha: 1,
             rotationY: 0,
             x: 0,
-            duration: 0.5 * speed,
-            stagger: 0.08 * speed,
+            duration: 0.44,
+            stagger: 0.075,
             ease: "back.out(1.35)",
           },
-          0.32 * speed,
+          0.22,
         )
         .to(
           eyebrows,
           {
             autoAlpha: 1,
             yPercent: 0,
-            duration: 0.42 * speed,
-            stagger: 0.08 * speed,
+            duration: 0.36,
+            stagger: 0.075,
             ease: "power3.out",
           },
-          0.38 * speed,
+          0.28,
         )
         .to(
           titles,
           {
             autoAlpha: 1,
             yPercent: 0,
-            duration: 0.48 * speed,
-            stagger: 0.08 * speed,
+            duration: 0.42,
+            stagger: 0.075,
             ease: "power4.out",
           },
-          0.45 * speed,
+          0.34,
         )
         .to(
           arrows,
@@ -352,11 +351,11 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
             autoAlpha: 1,
             rotation: 0,
             scale: 1,
-            duration: 0.42 * speed,
-            stagger: 0.08 * speed,
+            duration: 0.36,
+            stagger: 0.075,
             ease: "back.out(1.7)",
           },
-          0.55 * speed,
+          0.42,
         );
 
       animationRef.current = timeline;
