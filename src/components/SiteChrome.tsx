@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BrandMark from "./BrandMark";
 
@@ -214,6 +215,155 @@ function SoundToggle() {
   );
 }
 
+function getPersistentActionWidths() {
+  const rootSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+
+  return {
+    collapsed: rootSize * 3.9,
+    expanded: Math.min(rootSize * 12.5, Math.max(rootSize * 10.5, window.innerWidth * 0.13)),
+  };
+}
+
+function PersistentActionDock({ pathname }: { pathname: string }) {
+  const dockRef = useRef<HTMLElement>(null);
+  const animationRef = useRef<gsap.core.Timeline | null>(null);
+
+  useLayoutEffect(() => {
+    const dock = dockRef.current;
+    if (!dock) return;
+
+    const media = gsap.matchMedia();
+
+    media.add("(min-width: 721px) and (hover: hover)", () => {
+      const compact = dock.querySelectorAll<HTMLElement>(".persistent-action-compact");
+      const indices = dock.querySelectorAll<HTMLElement>(".persistent-action-index");
+      const copies = dock.querySelectorAll<HTMLElement>(".persistent-action-copy");
+      const arrows = dock.querySelectorAll<HTMLElement>(".thorn-arrow");
+      const speed = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1;
+
+      gsap.set(dock, { width: getPersistentActionWidths().collapsed });
+      gsap.set(compact, { autoAlpha: 1, x: 0 });
+      gsap.set(indices, { autoAlpha: 0, x: 12 });
+      gsap.set(copies, { autoAlpha: 0, x: 14 });
+      gsap.set(arrows, { autoAlpha: 0 });
+
+      const timeline = gsap
+        .timeline({ paused: true, defaults: { overwrite: "auto" } })
+        .to(
+          dock,
+          {
+            width: () => getPersistentActionWidths().expanded,
+            duration: 0.72 * speed,
+            ease: "expo.inOut",
+          },
+          0,
+        )
+        .to(
+          compact,
+          {
+            autoAlpha: 0,
+            x: -8,
+            duration: 0.2 * speed,
+            stagger: 0.025 * speed,
+            ease: "power2.out",
+          },
+          0,
+        )
+        .to(
+          indices,
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.3 * speed,
+            stagger: 0.035 * speed,
+            ease: "power3.out",
+          },
+          0.14 * speed,
+        )
+        .to(
+          copies,
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.4 * speed,
+            stagger: 0.035 * speed,
+            ease: "power3.out",
+          },
+          0.18 * speed,
+        )
+        .to(
+          arrows,
+          {
+            autoAlpha: 1,
+            duration: 0.28 * speed,
+            stagger: 0.035 * speed,
+            ease: "power2.out",
+          },
+          0.26 * speed,
+        );
+
+      animationRef.current = timeline;
+
+      const resize = () => {
+        timeline.invalidate();
+        if (timeline.progress() === 1) {
+          gsap.set(dock, { width: getPersistentActionWidths().expanded });
+        }
+      };
+
+      window.addEventListener("resize", resize, { passive: true });
+
+      return () => {
+        window.removeEventListener("resize", resize);
+        timeline.kill();
+        animationRef.current = null;
+      };
+    });
+
+    return () => media.revert();
+  }, []);
+
+  return (
+    <nav
+      className="persistent-actions"
+      aria-label="Rýchle odkazy"
+      ref={dockRef}
+      onPointerEnter={() => animationRef.current?.play()}
+      onPointerLeave={() => animationRef.current?.reverse()}
+      onFocus={() => animationRef.current?.play()}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          animationRef.current?.reverse();
+        }
+      }}
+    >
+      {persistentActions.map((action, index) => {
+        const active = pathname === action.to;
+
+        return (
+          <Link
+            className={`persistent-action persistent-action--${action.variant}`}
+            to={action.to}
+            aria-current={active ? "page" : undefined}
+            aria-label={active ? `${action.label} – aktuálna stránka` : action.label}
+            key={action.to}
+          >
+            <span className="persistent-action-compact" aria-hidden="true">
+              {action.compactLabel}
+            </span>
+            <span className="persistent-action-index">0{index + 1}</span>
+            <span className="persistent-action-copy">
+              <small>{active ? "Práve tu" : action.eyebrow}</small>
+              <strong>{action.label}</strong>
+            </span>
+            <i className="thorn-arrow" aria-hidden="true" />
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function SiteChrome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -258,30 +408,7 @@ export default function SiteChrome() {
         </div>
       </header>
 
-      <nav className="persistent-actions" aria-label="Rýchle odkazy">
-        {persistentActions.map((action, index) => {
-          const active = location.pathname === action.to;
-
-          return (
-            <Link
-              className={`persistent-action persistent-action--${action.variant}`}
-              to={action.to}
-              aria-current={active ? "page" : undefined}
-              key={action.to}
-            >
-              <span className="persistent-action-compact" aria-hidden="true">
-                {action.compactLabel}
-              </span>
-              <span className="persistent-action-index">0{index + 1}</span>
-              <span className="persistent-action-copy">
-                <small>{active ? "Práve tu" : action.eyebrow}</small>
-                <strong>{action.label}</strong>
-              </span>
-              <i className="thorn-arrow" aria-hidden="true" />
-            </Link>
-          );
-        })}
-      </nav>
+      <PersistentActionDock pathname={location.pathname} />
 
       <AnimatePresence>
         {menuOpen && (
