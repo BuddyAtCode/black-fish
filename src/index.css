@@ -495,6 +495,7 @@ img {
   display: grid;
   gap: 0.2rem;
   min-width: 0;
+  overflow: hidden;
   justify-self: stretch;
 }
 
@@ -520,7 +521,8 @@ img {
   height: 0.9rem;
 }
 
-.persistent-action-compact {
+.persistent-action-symbol,
+.persistent-action-scan {
   display: none;
 }
 
@@ -540,32 +542,101 @@ body[data-page-loading="true"] .persistent-actions {
   .persistent-action {
     grid-template-columns: 1.1rem minmax(0, 1fr) 0.9rem;
     gap: 0.7rem;
+    justify-self: end;
     padding-inline: 0.8rem;
+    transform-style: preserve-3d;
   }
 
-  .persistent-action-compact {
+  .persistent-action-symbol {
     position: absolute;
-    inset: 0;
-    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
     display: grid;
+    width: 3.8rem;
     place-items: center;
     pointer-events: none;
-    font: 600 0.52rem/1 var(--mono);
-    letter-spacing: 0.08em;
-    text-indent: 0.08em;
-    text-transform: uppercase;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+
+  .persistent-action-symbol::before,
+  .persistent-action-symbol::after {
+    position: absolute;
+    content: "";
+  }
+
+  .persistent-action-symbol--shop::before {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .persistent-action-symbol--shop::after {
+    width: 0.24rem;
+    height: 0.24rem;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0.53rem -0.4rem 0 -0.07rem currentColor;
+  }
+
+  .persistent-action-symbol--booking::before {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  .persistent-action-symbol--booking::after {
+    width: 0.22rem;
+    height: 0.22rem;
+    background: currentColor;
+    box-shadow:
+      0 -0.48rem 0 -0.06rem currentColor,
+      0 0.48rem 0 -0.06rem currentColor,
+      -0.48rem 0 0 -0.06rem currentColor,
+      0.48rem 0 0 -0.06rem currentColor;
+    transform: rotate(45deg);
+  }
+
+  .persistent-action[aria-current="page"] .persistent-action-symbol {
+    box-shadow: inset 3px 0 0 var(--blood-bright);
+  }
+
+  .persistent-action--booking[aria-current="page"] .persistent-action-symbol {
+    box-shadow: inset 3px 0 0 var(--bone);
+  }
+
+  .persistent-action-scan {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    display: block;
+    height: 1px;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transform: scaleX(0);
+    transform-origin: right center;
   }
 
   .persistent-action-index,
-  .persistent-action-copy,
+  .persistent-action-copy small,
+  .persistent-action-copy strong,
   .persistent-action .thorn-arrow {
+    position: relative;
+    z-index: 2;
     opacity: 0;
     visibility: hidden;
+    will-change: transform, opacity;
   }
 
-  .persistent-action-index,
   .persistent-action-copy {
-    transform: translateX(0.45rem);
+    transform: none;
   }
 }
 

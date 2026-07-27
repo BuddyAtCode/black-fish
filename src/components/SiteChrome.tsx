@@ -15,14 +15,12 @@ const navigation = [
 const persistentActions = [
   {
     label: "Shop",
-    compactLabel: "Shop",
     eyebrow: "Piercing",
     to: "/eshop",
     variant: "shop",
   },
   {
     label: "Rezervácia",
-    compactLabel: "Termín",
     eyebrow: "Voľné termíny",
     to: "/booking",
     variant: "booking",
@@ -220,7 +218,7 @@ function getPersistentActionWidths() {
 
   return {
     collapsed: rootSize * 3.9,
-    expanded: Math.min(rootSize * 12.5, Math.max(rootSize * 10.5, window.innerWidth * 0.13)),
+    expanded: Math.min(rootSize * 14, Math.max(rootSize * 12, window.innerWidth * 0.145)),
   };
 }
 
@@ -235,17 +233,28 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
     const media = gsap.matchMedia();
 
     media.add("(min-width: 721px) and (hover: hover)", () => {
-      const compact = dock.querySelectorAll<HTMLElement>(".persistent-action-compact");
+      const rows = dock.querySelectorAll<HTMLElement>(".persistent-action");
+      const symbols = dock.querySelectorAll<HTMLElement>(".persistent-action-symbol");
+      const scans = dock.querySelectorAll<HTMLElement>(".persistent-action-scan");
       const indices = dock.querySelectorAll<HTMLElement>(".persistent-action-index");
-      const copies = dock.querySelectorAll<HTMLElement>(".persistent-action-copy");
+      const eyebrows = dock.querySelectorAll<HTMLElement>(".persistent-action-copy small");
+      const titles = dock.querySelectorAll<HTMLElement>(".persistent-action-copy strong");
       const arrows = dock.querySelectorAll<HTMLElement>(".thorn-arrow");
-      const speed = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1;
+      const speed = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.001 : 1;
+      const widths = getPersistentActionWidths();
 
-      gsap.set(dock, { width: getPersistentActionWidths().collapsed });
-      gsap.set(compact, { autoAlpha: 1, x: 0 });
-      gsap.set(indices, { autoAlpha: 0, x: 12 });
-      gsap.set(copies, { autoAlpha: 0, x: 14 });
-      gsap.set(arrows, { autoAlpha: 0 });
+      gsap.set(dock, { width: widths.collapsed });
+      gsap.set(rows, {
+        width: widths.expanded,
+        x: -(widths.expanded - widths.collapsed),
+        clipPath: `inset(0 0 0 ${widths.expanded - widths.collapsed}px)`,
+      });
+      gsap.set(symbols, { autoAlpha: 1, rotation: 0, scale: 1 });
+      gsap.set(scans, { autoAlpha: 0, scaleX: 0, xPercent: 0, transformOrigin: "right center" });
+      gsap.set(indices, { autoAlpha: 0, rotationY: -90, transformPerspective: 420, x: 18 });
+      gsap.set(eyebrows, { autoAlpha: 0, yPercent: 140 });
+      gsap.set(titles, { autoAlpha: 0, yPercent: 125 });
+      gsap.set(arrows, { autoAlpha: 0, rotation: -45, scale: 0.45 });
 
       const timeline = gsap
         .timeline({ paused: true, defaults: { overwrite: "auto" } })
@@ -253,61 +262,119 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
           dock,
           {
             width: () => getPersistentActionWidths().expanded,
-            duration: 0.72 * speed,
+            duration: 0.92 * speed,
             ease: "expo.inOut",
           },
           0,
         )
         .to(
-          compact,
+          rows,
+          {
+            x: 0,
+            clipPath: "inset(0 0 0 0px)",
+            duration: 0.72 * speed,
+            stagger: 0.1 * speed,
+            ease: "power4.inOut",
+          },
+          0.04 * speed,
+        )
+        .to(
+          scans,
+          {
+            autoAlpha: 0.42,
+            scaleX: 1,
+            duration: 0.42 * speed,
+            stagger: 0.1 * speed,
+            ease: "power2.inOut",
+          },
+          0.08 * speed,
+        )
+        .to(
+          symbols,
           {
             autoAlpha: 0,
-            x: -8,
-            duration: 0.2 * speed,
-            stagger: 0.025 * speed,
+            rotation: 45,
+            scale: 0.35,
+            duration: 0.32 * speed,
+            stagger: 0.09 * speed,
+            ease: "power3.in",
+          },
+          0.12 * speed,
+        )
+        .to(
+          scans,
+          {
+            autoAlpha: 0,
+            xPercent: -12,
+            duration: 0.24 * speed,
+            stagger: 0.1 * speed,
             ease: "power2.out",
           },
-          0,
+          0.45 * speed,
         )
         .to(
           indices,
           {
             autoAlpha: 1,
+            rotationY: 0,
             x: 0,
-            duration: 0.3 * speed,
-            stagger: 0.035 * speed,
-            ease: "power3.out",
+            duration: 0.5 * speed,
+            stagger: 0.08 * speed,
+            ease: "back.out(1.35)",
           },
-          0.14 * speed,
+          0.32 * speed,
         )
         .to(
-          copies,
+          eyebrows,
           {
             autoAlpha: 1,
-            x: 0,
-            duration: 0.4 * speed,
-            stagger: 0.035 * speed,
+            yPercent: 0,
+            duration: 0.42 * speed,
+            stagger: 0.08 * speed,
             ease: "power3.out",
           },
-          0.18 * speed,
+          0.38 * speed,
+        )
+        .to(
+          titles,
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: 0.48 * speed,
+            stagger: 0.08 * speed,
+            ease: "power4.out",
+          },
+          0.45 * speed,
         )
         .to(
           arrows,
           {
             autoAlpha: 1,
-            duration: 0.28 * speed,
-            stagger: 0.035 * speed,
-            ease: "power2.out",
+            rotation: 0,
+            scale: 1,
+            duration: 0.42 * speed,
+            stagger: 0.08 * speed,
+            ease: "back.out(1.7)",
           },
-          0.26 * speed,
+          0.55 * speed,
         );
 
       animationRef.current = timeline;
 
       const resize = () => {
+        const nextWidths = getPersistentActionWidths();
         timeline.invalidate();
-        if (timeline.progress() === 1) {
-          gsap.set(dock, { width: getPersistentActionWidths().expanded });
+        gsap.set(rows, { width: nextWidths.expanded });
+
+        if (timeline.progress() === 0) {
+          gsap.set(dock, { width: nextWidths.collapsed });
+          gsap.set(rows, {
+            x: -(nextWidths.expanded - nextWidths.collapsed),
+            clipPath: `inset(0 0 0 ${nextWidths.expanded - nextWidths.collapsed}px)`,
+          });
+        } else if (timeline.progress() === 1) {
+          gsap.set(dock, { width: nextWidths.expanded });
+          gsap.set(rows, { x: 0, clipPath: "inset(0 0 0 0px)" });
         }
       };
 
@@ -328,12 +395,12 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
       className="persistent-actions"
       aria-label="Rýchle odkazy"
       ref={dockRef}
-      onPointerEnter={() => animationRef.current?.play()}
-      onPointerLeave={() => animationRef.current?.reverse()}
-      onFocus={() => animationRef.current?.play()}
+      onPointerEnter={() => animationRef.current?.timeScale(1).play()}
+      onPointerLeave={() => animationRef.current?.timeScale(1.45).reverse()}
+      onFocus={() => animationRef.current?.timeScale(1).play()}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
-          animationRef.current?.reverse();
+          animationRef.current?.timeScale(1.45).reverse();
         }
       }}
     >
@@ -348,9 +415,11 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
             aria-label={active ? `${action.label} – aktuálna stránka` : action.label}
             key={action.to}
           >
-            <span className="persistent-action-compact" aria-hidden="true">
-              {action.compactLabel}
-            </span>
+            <span
+              className={`persistent-action-symbol persistent-action-symbol--${action.variant}`}
+              aria-hidden="true"
+            />
+            <span className="persistent-action-scan" aria-hidden="true" />
             <span className="persistent-action-index">0{index + 1}</span>
             <span className="persistent-action-copy">
               <small>{active ? "Práve tu" : action.eyebrow}</small>
