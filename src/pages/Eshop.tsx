@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { gsap } from "gsap";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeroLetterLine } from "../components/TextReveal";
 
@@ -45,10 +46,123 @@ const products = [
 export default function Eshop() {
   const [cart, setCart] = useState<number[]>([]);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const cartButtonRef = useRef<HTMLButtonElement>(null);
+  const cartPulseRef = useRef<HTMLSpanElement>(null);
+  const cartSweepRef = useRef<HTMLSpanElement>(null);
+  const productCountRef = useRef<HTMLSpanElement>(null);
+  const cartFocusPlayedRef = useRef(false);
+  const cartFocusTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const total = useMemo(
     () => cart.reduce((sum, productIndex) => sum + products[productIndex].price, 0),
     [cart],
   );
+
+  useEffect(() => {
+    if (cart.length !== 1 || cartFocusPlayedRef.current) return;
+
+    const button = cartButtonRef.current;
+    const pulse = cartPulseRef.current;
+    const sweep = cartSweepRef.current;
+    const productCount = productCountRef.current;
+    if (!button || !pulse || !sweep || !productCount) return;
+
+    cartFocusPlayedRef.current = true;
+    cartFocusTimelineRef.current?.kill();
+
+    const buttonStyle = window.getComputedStyle(button);
+    const baseBackground = buttonStyle.backgroundColor;
+    const baseColor = buttonStyle.color;
+    const baseShadow = buttonStyle.boxShadow;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const clearAnimationStyles = () => {
+      gsap.set(button, {
+        clearProps: "transform,transformOrigin,backgroundColor,color,boxShadow,willChange",
+      });
+      gsap.set(pulse, { clearProps: "transform,opacity,visibility" });
+      gsap.set(sweep, { clearProps: "transform,opacity,visibility" });
+      gsap.set(productCount, { clearProps: "transform,opacity,visibility" });
+    };
+
+    const timeline = gsap.timeline({ onComplete: clearAnimationStyles });
+    cartFocusTimelineRef.current = timeline;
+
+    if (reducedMotion) {
+      timeline
+        .to(button, {
+          backgroundColor: "#d31625",
+          color: "#f1ece4",
+          duration: 0.18,
+        })
+        .to(button, {
+          backgroundColor: baseBackground,
+          color: baseColor,
+          duration: 0.32,
+        });
+      return;
+    }
+
+    timeline
+      .set(button, { transformOrigin: "100% 50%", willChange: "transform" })
+      .set(pulse, { autoAlpha: 0, scale: 0.68 })
+      .set(sweep, { autoAlpha: 0, xPercent: -220 })
+      .to(productCount, {
+        autoAlpha: 0.24,
+        x: -10,
+        duration: 0.28,
+        ease: "power2.out",
+      }, 0)
+      .to(button, {
+        scale: 1.28,
+        backgroundColor: "#d31625",
+        color: "#f1ece4",
+        boxShadow: "0 18px 48px rgba(211, 22, 37, 0.38)",
+        duration: 0.42,
+        ease: "back.out(2.2)",
+      }, 0)
+      .to(pulse, {
+        autoAlpha: 1,
+        scale: 1.25,
+        duration: 0.38,
+        ease: "power2.out",
+      }, 0.04)
+      .to(sweep, {
+        autoAlpha: 0.72,
+        xPercent: 320,
+        duration: 0.58,
+        ease: "power2.inOut",
+      }, 0.1)
+      .to(pulse, {
+        autoAlpha: 0,
+        scale: 1.72,
+        duration: 0.48,
+        ease: "power2.out",
+      }, 0.3)
+      .to(button, {
+        scale: 1.06,
+        duration: 0.2,
+        ease: "power2.inOut",
+      }, 0.44)
+      .to(button, {
+        scale: 1,
+        backgroundColor: baseBackground,
+        color: baseColor,
+        boxShadow: baseShadow,
+        duration: 0.72,
+        ease: "elastic.out(1, 0.45)",
+      }, 0.58)
+      .to(productCount, {
+        autoAlpha: 1,
+        x: 0,
+        duration: 0.34,
+        ease: "power2.out",
+      }, 0.7)
+      .to(sweep, { autoAlpha: 0, duration: 0.12 }, 0.58);
+  }, [cart.length]);
+
+  useEffect(() => () => {
+    cartFocusTimelineRef.current?.kill();
+  }, []);
 
   return (
     <main className="shop-page inner-page">
@@ -80,9 +194,20 @@ export default function Eshop() {
 
       <section className="product-section">
         <div className="product-toolbar">
-          <span>6 piercingov</span>
-          <button type="button" onClick={() => setCheckoutOpen(true)}>
-            Taška [{String(cart.length).padStart(2, "0")}] · {total} €
+          <span ref={productCountRef}>6 piercingov</span>
+          <button
+            ref={cartButtonRef}
+            className="cart-summary-button"
+            type="button"
+            onClick={() => setCheckoutOpen(true)}
+          >
+            <span ref={cartPulseRef} className="cart-summary-pulse" aria-hidden="true" />
+            <span className="cart-summary-surface" aria-hidden="true">
+              <span ref={cartSweepRef} className="cart-summary-sweep" />
+            </span>
+            <span className="cart-summary-label">
+              Taška [{String(cart.length).padStart(2, "0")}] · {total} €
+            </span>
           </button>
         </div>
 

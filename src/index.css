@@ -2385,10 +2385,51 @@ body[data-page-loading="true"] .persistent-actions {
   backdrop-filter: blur(14px);
 }
 
-.product-toolbar button {
-  padding: 0;
+.product-toolbar .cart-summary-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  margin: -0.7rem 0;
+  border: 1px solid rgba(231, 225, 216, 0.18);
+  padding: 0.7rem 0.85rem;
   background: transparent;
+  color: inherit;
   cursor: pointer;
+  transform-origin: 100% 50%;
+}
+
+.cart-summary-label {
+  position: relative;
+  z-index: 2;
+}
+
+.cart-summary-pulse {
+  position: absolute;
+  inset: -0.35rem;
+  z-index: -1;
+  border: 1px solid var(--blood-bright);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-summary-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cart-summary-sweep {
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 0;
+  width: 28%;
+  background: rgba(255, 255, 255, 0.42);
+  opacity: 0;
+  transform: skewX(-18deg);
 }
 
 .product-grid {
