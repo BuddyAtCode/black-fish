@@ -19,7 +19,7 @@ function AnimatedRoutes() {
     window.history.scrollRestoration = "manual";
     lenis?.scrollTo(0, { immediate: true, force: true });
     window.scrollTo(0, 0);
-  }, [lenis, location.key]);
+  }, [lenis, location.pathname]);
 
   return (
     <>

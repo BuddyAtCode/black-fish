@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeroLetterLine } from "../components/TextReveal";
+import { createPortal } from "react-dom";
+import useDialog from "../components/useDialog";
 
 const products = [
   {
@@ -44,18 +46,32 @@ const products = [
 ];
 
 export default function Eshop() {
-  const [cart, setCart] = useState<number[]>([]);
+  const [cart, setCart] = useState<number[]>(() => {
+    try {
+      const saved: unknown = JSON.parse(localStorage.getItem("inksoul-cart") ?? "[]");
+      return Array.isArray(saved) ? saved.filter((id): id is number => Number.isInteger(id) && id >= 0 && id < products.length).slice(0, 99) : [];
+    } catch { return []; }
+  });
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const dialogRef = useDialog(checkoutOpen, () => setCheckoutOpen(false));
   const cartButtonRef = useRef<HTMLButtonElement>(null);
   const cartPulseRef = useRef<HTMLSpanElement>(null);
   const cartSweepRef = useRef<HTMLSpanElement>(null);
   const productCountRef = useRef<HTMLSpanElement>(null);
-  const cartFocusPlayedRef = useRef(false);
+  const cartFocusPlayedRef = useRef(cart.length > 0);
   const cartFocusTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const total = useMemo(
     () => cart.reduce((sum, productIndex) => sum + products[productIndex].price, 0),
     [cart],
   );
+  useEffect(() => {
+    try { localStorage.setItem("inksoul-cart", JSON.stringify(cart)); } catch { /* Storage may be disabled. */ }
+  }, [cart]);
+  const addProduct = (index: number) => setCart((items) => items.length < 99 ? [...items, index] : items);
+  const removeOne = (index: number) => setCart((items) => {
+    const position = items.indexOf(index);
+    return items.filter((_, itemIndex) => itemIndex !== position);
+  });
 
   useEffect(() => {
     if (cart.length !== 1 || cartFocusPlayedRef.current) return;
@@ -189,6 +205,7 @@ export default function Eshop() {
             Vybrané piercingy z bezpečných materiálov. Veľkosť a vhodné umiestnenie
             spolu doladíme v štúdiu.
           </p>
+          <p className="demo-notice">Ukážkový obchod — online objednávky pripravujeme. Výber si môžeš zatiaľ uložiť do tašky.</p>
         </div>
       </section>
 
@@ -205,7 +222,7 @@ export default function Eshop() {
             <span className="cart-summary-surface" aria-hidden="true">
               <span ref={cartSweepRef} className="cart-summary-sweep" />
             </span>
-            <span className="cart-summary-label">
+            <span className="cart-summary-label" aria-live="polite" aria-atomic="true">
               Taška [{String(cart.length).padStart(2, "0")}] · {total} €
             </span>
           </button>
@@ -226,7 +243,7 @@ export default function Eshop() {
                 <span>0{index + 1}</span>
                 <button
                   type="button"
-                  onClick={() => setCart((items) => [...items, index])}
+                  onClick={() => addProduct(index)}
                   aria-label={`Pridať ${product.name} do tašky`}
                 >
                   + Pridať
@@ -257,10 +274,13 @@ export default function Eshop() {
         </Link>
       </section>
 
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {checkoutOpen && (
           <motion.div
             className="checkout-modal"
+            ref={dialogRef}
+            tabIndex={-1}
+            data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -284,12 +304,26 @@ export default function Eshop() {
                 <p className="empty-cart">Zatiaľ je tu ticho.</p>
               ) : (
                 <div className="cart-lines">
-                  {cart.map((productIndex, cartIndex) => (
-                    <div key={`${productIndex}-${cartIndex}`}>
-                      <span>{products[productIndex].name}</span>
-                      <b>{products[productIndex].price} €</b>
-                    </div>
-                  ))}
+                  {[...new Set(cart)].map((productIndex) => {
+                    const product = products[productIndex];
+                    const quantity = cart.filter((id) => id === productIndex).length;
+                    return (
+                      <div className="cart-line" key={productIndex}>
+                        <img src={product.image} alt="" />
+                        <div className="cart-line-copy">
+                          <strong>{product.name}</strong>
+                          <span>{product.price} € / kus</span>
+                          <div className="cart-quantity">
+                            <button type="button" aria-label={`Ubrať ${product.name}`} onClick={() => removeOne(productIndex)}>−</button>
+                            <output aria-label={`Počet ${product.name}`}>{quantity}</output>
+                            <button type="button" aria-label={`Pridať ${product.name}`} disabled={cart.length >= 99} onClick={() => addProduct(productIndex)}>+</button>
+                            <button type="button" className="cart-remove" aria-label={`Odstrániť ${product.name}`} onClick={() => setCart((items) => items.filter((id) => id !== productIndex))}>Odstrániť</button>
+                          </div>
+                        </div>
+                        <b>{product.price * quantity} €</b>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
               <div className="cart-total">
@@ -306,7 +340,7 @@ export default function Eshop() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </main>
   );
 }

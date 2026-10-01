@@ -5,43 +5,23 @@ import { Link, useSearchParams } from "react-router-dom";
 import { HeroLetterLine } from "../components/TextReveal";
 import { artists, getArtist } from "../data/studio";
 import type { ArtistSlug } from "../data/studio";
+import { createPortal } from "react-dom";
+import useDialog from "../components/useDialog";
+import { createSlots, instagramUrls } from "../data/booking";
 
-type Slot = {
-  id: string;
-  day: string;
-  date: string;
-  month: string;
-  times: string[];
-};
-
-const artistOffsets: Record<ArtistSlug, number[]> = {
-  dadla: [3, 7, 11, 15, 20],
-  duky: [4, 8, 12, 16, 22],
-  walla: [5, 9, 14, 18, 24],
-};
-
-function createSlots(artist: ArtistSlug): Slot[] {
-  return artistOffsets[artist].map((offset, index) => {
-    const date = new Date();
-    date.setDate(date.getDate() + offset);
-    return {
-      id: date.toISOString().slice(0, 10),
-      day: new Intl.DateTimeFormat("sk-SK", { weekday: "short" }).format(date),
-      date: String(date.getDate()).padStart(2, "0"),
-      month: new Intl.DateTimeFormat("sk-SK", { month: "short" }).format(date),
-      times: index % 2 ? ["10:00", "14:30"] : ["11:30", "16:00"],
-    };
-  });
-}
+type Slot = ReturnType<typeof createSlots>[number];
 
 export default function Booking() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialArtist = getArtist(searchParams.get("artist") ?? "")?.slug ?? artists[0].slug;
-  const [selectedArtist, setSelectedArtist] = useState<ArtistSlug>(initialArtist);
+  const selectedArtist = initialArtist;
   const slots = useMemo(() => createSlots(selectedArtist), [selectedArtist]);
   const [selectedDay, setSelectedDay] = useState(slots[0].id);
   const [selectedTime, setSelectedTime] = useState(slots[0].times[0]);
   const [submitted, setSubmitted] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [copyStatus, setCopyStatus] = useState("");
+  const dialogRef = useDialog(submitted, () => setSubmitted(false));
   const activeArtist = getArtist(selectedArtist) ?? artists[0];
   const activeDay = slots.find((slot) => slot.id === selectedDay) ?? slots[0];
 
@@ -51,7 +31,6 @@ export default function Booking() {
   }, [slots]);
 
   const selectArtist = (artist: ArtistSlug) => {
-    setSelectedArtist(artist);
     setSearchParams({ artist }, { replace: true });
   };
 
@@ -62,6 +41,9 @@ export default function Booking() {
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    setSummary(`Ahoj, mám záujem o konzultáciu — ${activeArtist.name}.\nOrientačný termín: ${activeDay.date}. ${activeDay.month} o ${selectedTime}\nMeno: ${data.get("name")}\nKontakt: ${data.get("contact")}\nNápad: ${data.get("idea")}\nUmiestnenie: ${data.get("placement") || "dohodneme spolu"}\nVeľkosť: ${data.get("size") || "dohodneme spolu"}`);
+    setCopyStatus("");
     setSubmitted(true);
   };
 
@@ -70,7 +52,7 @@ export default function Booking() {
       <section className="booking-hero">
         <div className="inner-hero-meta">
           <span>.INKSOUL. / REZERVÁCIA</span>
-          <span>VYBER TATÉRA A TERMÍN</span>
+          <span>UKÁŽKA REZERVÁCIE</span>
         </div>
         <h1>
           <HeroLetterLine text="S KÝM CHCEŠ" />
@@ -80,6 +62,7 @@ export default function Booking() {
           Pozri si rukopisy, vyber orientačný termín konzultácie a napíš nám,
           čo by si chcel alebo chcela tetovať.
         </p>
+        <p className="demo-notice">Kalendár je ukážkový. Skutočnú dostupnosť a rezerváciu potvrdí tatér cez Instagram.</p>
       </section>
 
       <section className="artist-selector" aria-label="Vybrať tatéra">
@@ -112,8 +95,8 @@ export default function Booking() {
       >
         <div className="calendar-panel">
           <div className="calendar-heading">
-            <span>02 / {activeArtist.name} / voľné konzultácie</span>
-            <span><i /> Dostupné termíny</span>
+            <span>02 / {activeArtist.name} / konzultácia</span>
+            <span>Ukážkové termíny</span>
           </div>
           <div className="calendar-days">
             {slots.map((slot) => (
@@ -121,6 +104,8 @@ export default function Booking() {
                 type="button"
                 key={slot.id}
                 className={selectedDay === slot.id ? "is-selected" : ""}
+                aria-pressed={selectedDay === slot.id}
+                aria-label={`${slot.day} ${slot.date}. ${slot.month}`}
                 onClick={() => selectDay(slot)}
               >
                 <small>{slot.day}</small>
@@ -135,6 +120,7 @@ export default function Booking() {
                 type="button"
                 key={time}
                 className={selectedTime === time ? "is-selected" : ""}
+                aria-pressed={selectedTime === time}
                 onClick={() => setSelectedTime(time)}
               >
                 {time}
@@ -180,7 +166,7 @@ export default function Booking() {
             </label>
           </div>
           <button className="booking-submit" type="submit">
-            <span>Dokončiť výber</span>
+            <span>Pripraviť správu pre tatéra</span>
             <i className="thorn-arrow" aria-hidden="true" />
           </button>
           <small className="form-disclaimer">
@@ -205,10 +191,13 @@ export default function Booking() {
         </div>
       </section>
 
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {submitted && (
           <motion.div
             className="booking-success"
+            ref={dialogRef}
+            tabIndex={-1}
+            data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -223,16 +212,28 @@ export default function Booking() {
               style={{ "--artist-accent": activeArtist.accent } as CSSProperties}
             >
               <span>.INKSOUL. / {activeArtist.name}</span>
-              <h2 id="success-title">TERMÍN MÁŠ<br />VYBRANÝ.</h2>
+              <h2 id="success-title">POĎME SA<br />DOHODNÚŤ.</h2>
               <p>
-                {activeDay.date}. {activeDay.month} o {selectedTime}. Termín spolu
-                potvrdíme cez Instagram. Konkrétny kontakt doplníme.
+                Skopíruj správu a pošli ju cez Instagram. Termín bude rezervovaný až po potvrdení tatérom.
               </p>
+              <textarea className="booking-summary" aria-label="Správa pre tatéra" value={summary} readOnly rows={6} onFocus={(event) => event.currentTarget.select()} />
+              <div className="booking-success-actions">
+                <button type="button" onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(summary);
+                    setCopyStatus("Správa skopírovaná.");
+                  } catch {
+                    setCopyStatus("Označ a skopíruj správu z poľa vyššie.");
+                  }
+                }}>Skopírovať správu</button>
+                <a href={instagramUrls[activeArtist.slug]} target="_blank" rel="noreferrer">Otvoriť Instagram — {activeArtist.name}</a>
+              </div>
+              <p role="status">{copyStatus}</p>
               <button type="button" onClick={() => setSubmitted(false)}>Späť na formulár</button>
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </main>
   );
 }

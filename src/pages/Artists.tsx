@@ -38,9 +38,9 @@ export default function Artists() {
           >
             <div className="artist-index-media">
               <img
-                src={artist.image}
-                alt={`Profil — ${artist.name}`}
-                style={{ objectPosition: artist.imagePosition }}
+                src={artist.gallery[0].src}
+                alt={`Tetovanie — ${artist.name}`}
+                style={{ objectPosition: artist.gallery[0].position }}
               />
               <span>{artist.number}</span>
             </div>

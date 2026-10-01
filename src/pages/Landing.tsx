@@ -9,6 +9,7 @@ import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import BrandMark from "../components/BrandMark";
 import { artists, studioWorks } from "../data/studio";
+import { createSlots, studioInstagram } from "../data/booking";
 
 const InksoulArtifactScene = lazy(
   () => import("../components/InksoulArtifactScene"),
@@ -351,9 +352,9 @@ function ArtistsPreview() {
             <Link to={`/artists/${artist.slug}`}>
               <div className="artists-preview-media">
                 <img
-                  src={artist.image}
+                  src={artist.gallery[0].src}
                   alt={`Profil — ${artist.name}`}
-                  style={{ objectPosition: artist.imagePosition }}
+                  style={{ objectPosition: artist.gallery[0].position }}
                 />
               </div>
               <div className="artists-preview-name">
@@ -435,11 +436,7 @@ function ShopPreview() {
 }
 
 function BookingPreview() {
-  const slots = [
-    { day: "12", month: "AUG", time: "14:30" },
-    { day: "16", month: "AUG", time: "10:00" },
-    { day: "22", month: "AUG", time: "16:00" },
-  ];
+  const slots = createSlots("dadla").slice(0, 3);
 
   return (
     <section className="booking-preview">
@@ -447,16 +444,16 @@ function BookingPreview() {
         <span>06 / Konzultácie</span>
         <h2>VYBER SI<br />TATÉRA.</h2>
         <p>
-          Pozri si rukopisy, vyber voľný termín a opíš nám svoju predstavu.
+          Vyber tatéra a priprav si správu. Kalendár je ukážkový, dostupnosť potvrdíme cez Instagram.
         </p>
       </div>
       <div className="slot-list">
         {slots.map((slot) => (
-          <div className="slot" key={`${slot.day}-${slot.time}`}>
-            <span className="slot-status"><i /> voľné</span>
-            <strong>{slot.day}</strong>
+          <div className="slot" key={slot.id}>
+            <span className="slot-status">ukážka</span>
+            <strong>{slot.date}</strong>
             <span>{slot.month}</span>
-            <b>{slot.time}</b>
+            <b>{slot.times[0]}</b>
           </div>
         ))}
         <Link className="slot-cta" to="/booking">
@@ -486,8 +483,8 @@ function Footer() {
           <Link to="/booking">Rezervácia</Link>
         </div>
         <div className="footer-contact">
-          <span>Instagram doplníme</span>
-          <span>Adresa doplníme</span>
+          <a href={studioInstagram} target="_blank" rel="noreferrer">Instagram .INKSOUL.</a>
+          <span>Adresu ti pošleme pri potvrdení konzultácie.</span>
           <span>© {new Date().getFullYear()} .INKSOUL.</span>
           <a
             className="footer-credit"

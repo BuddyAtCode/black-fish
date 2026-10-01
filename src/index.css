@@ -1042,7 +1042,7 @@ body[data-page-loading="true"] .persistent-actions {
 
 .expanding-section {
   position: relative;
-  height: 190vh;
+  height: 150vh;
   background: var(--bone);
 }
 
@@ -1174,7 +1174,7 @@ body[data-page-loading="true"] .persistent-actions {
 
 .relic-section {
   position: relative;
-  height: 260vh;
+  height: 210vh;
   background: #050505;
   color: var(--bone);
   isolation: isolate;
@@ -2330,14 +2330,14 @@ body[data-page-loading="true"] .persistent-actions {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 100svh;
+  min-height: 80svh;
   overflow: hidden;
   background: var(--bone);
   color: var(--ink);
 }
 
 .shop-hero-image {
-  min-height: 100svh;
+  min-height: 80svh;
   overflow: hidden;
 }
 
@@ -2556,6 +2556,8 @@ body[data-page-loading="true"] .persistent-actions {
   padding: 2rem;
   background: var(--blood);
   color: var(--bone);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .checkout-close {
@@ -2613,7 +2615,7 @@ body[data-page-loading="true"] .persistent-actions {
 .booking-hero {
   display: flex;
   flex-direction: column;
-  min-height: 94vh;
+  min-height: 72svh;
   padding: 8.5rem 4vw 4rem;
   background: var(--blood);
 }
@@ -3486,7 +3488,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 }
 
 .artist-profile-reveal-track {
-  min-height: 440svh;
+  min-height: 280svh;
 }
 
 .artist-profile-reveal-sticky {
@@ -3512,7 +3514,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   max-width: 1080px;
   margin: 0;
   font: 500 clamp(2.6rem, 5.6vw, 6.5rem)/0.98 var(--serif);
-  letter-spacing: -0.07em;
+  letter-spacing: -0.035em;
 }
 
 .artist-profile-body {
@@ -3906,7 +3908,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .brand-lockup--hero { font-size: 31vw; }
   .hero-topline { top: 5.7rem; right: 1.1rem; left: 1.1rem; }
   .hero-topline span:last-child { display: none; }
-  .hero-bottomline { right: 1.1rem; bottom: 1.1rem; left: 1.1rem; }
+  .hero-bottomline { right: 1.1rem; bottom: var(--dock-clearance); left: 1.1rem; }
   .hero-bottomline p { display: none; }
   .magnetic-link { width: 100%; min-width: 0; }
   .scroll-cue { display: none; }
@@ -3918,11 +3920,11 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .scroll-statement { font-size: 11.5vw; line-height: 0.98; }
   .statement-footnote { right: 1.1rem; bottom: 1.5rem; left: 1.1rem; }
 
-  .expanding-section { height: 150vh; }
+  .expanding-section { height: 130vh; }
   .expanding-copy { left: 1.1rem; }
   .expanding-copy strong { font-size: 15vw; }
 
-  .relic-section { height: 215vh; }
+  .relic-section { height: 185vh; }
   .relic-sticky {
     min-height: 100svh;
   }
@@ -4071,8 +4073,8 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .process-list article { grid-template-columns: 38px 1fr; }
   .process-list article p { grid-column: 2; }
 
-  .shop-hero-image { min-height: 60vh; }
-  .shop-hero-copy { min-height: 70vh; padding: 6rem 1.1rem 2rem; }
+  .shop-hero-image { min-height: 35svh; }
+  .shop-hero-copy { min-height: 0; padding: 3rem 1.1rem var(--dock-clearance); }
   .shop-hero h1 {
     font-size: 18vw;
     line-height: 0.9;
@@ -4084,7 +4086,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .shop-note h2 { font-size: 17vw; }
   .checkout-panel { padding: 1.1rem; }
 
-  .booking-hero { min-height: 88vh; padding: 6rem 1.1rem 2rem; }
+  .booking-hero { min-height: 70svh; padding: 6rem 1.1rem var(--dock-clearance); }
   .booking-hero h1 {
     font-size: 18vw;
     line-height: 0.9;
@@ -4096,7 +4098,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .calendar-days { gap: 0.25rem; }
   .calendar-days button { min-height: 100px; padding: 0.5rem; }
   .calendar-days strong { font-size: 1.8rem; }
-  .calendar-days span { display: none; }
+  .calendar-days span { display: block; }
   .booking-form-row { grid-template-columns: 1fr; gap: 0; }
   .booking-faq { grid-template-columns: 1fr; padding: 7rem 1.1rem; }
   .booking-faq h2 { margin-top: 4rem; font-size: 17vw; }
@@ -4229,7 +4231,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
 
   .artists-hero {
     min-height: 100svh;
-    padding: 6rem 1.1rem 2.5rem;
+    padding: 6rem 1.1rem var(--dock-clearance);
   }
 
   .page-gothic-wordmark--artists {
@@ -4344,7 +4346,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   }
 
   .artist-profile-reveal-track {
-    min-height: 440svh;
+    min-height: 280svh;
   }
 
   .artist-profile-reveal-sticky {
@@ -4353,7 +4355,7 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
     justify-content: center;
     gap: 2.25rem;
     min-height: 100svh;
-    padding: 4rem 1.1rem 2rem;
+    padding: 5rem 1.1rem var(--dock-clearance);
   }
 
   .artist-profile-intro h2 {
@@ -4453,4 +4455,69 @@ body[data-menu-open="true"] .mini-logo .brand-mark {
   .artist-selector-grid button strong {
     font-size: 16vw;
   }
+}
+
+/* Shared clearance and dialog behavior across every route. */
+:root { --dock-clearance: calc(6.5rem + env(safe-area-inset-bottom)); }
+html { scroll-padding-top: 6rem; scroll-padding-bottom: var(--dock-clearance); }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+body[data-dialog-open="true"] .persistent-actions,
+body[data-dialog-open="true"] .site-header { visibility: hidden; pointer-events: none; }
+.menu-dialog-close {
+  position: absolute; top: 2rem; right: 4vw;
+  min-height: 44px; padding: 0.75rem; background: transparent; color: inherit;
+  font: 500 0.8rem/1 var(--mono); text-transform: uppercase;
+}
+.menu-overlay { overflow-y: auto; overscroll-behavior: contain; }
+.demo-notice,
+.booking-hero > .demo-notice,
+.shop-hero-copy > .demo-notice {
+  margin-top: 1.5rem; max-width: 40rem;
+  font: 400 0.85rem/1.6 var(--mono); opacity: 0.85;
+}
+.cart-lines > .cart-line { align-items: flex-start; gap: 0.8rem; }
+.cart-line > img { width: 64px; height: 80px; object-fit: cover; }
+.cart-line-copy { flex: 1; min-width: 0; }
+.cart-line-copy > strong, .cart-line-copy > span { display: block; }
+.cart-line-copy > span { margin-top: 0.4rem; font-size: 0.75rem; }
+.cart-line > b { white-space: nowrap; }
+.cart-quantity { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.6rem; }
+.cart-quantity button { min-width: 44px; min-height: 44px; padding: 0.5rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.cart-quantity output { min-width: 1.5rem; text-align: center; }
+.cart-quantity .cart-remove { border: 0; text-decoration: underline; font-size: 0.75rem; }
+.cart-total { flex-shrink: 0; }
+.checkout-close, .checkout-button { min-height: 44px; font-size: 0.8rem; flex-shrink: 0; }
+.booking-success { overflow-y: auto; align-items: flex-start; }
+.booking-success > div { margin: auto; max-width: 720px; }
+.booking-success h2 { margin-top: 1rem; font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1; }
+.booking-summary { width: 100%; margin-top: 1rem; padding: 1rem; border: 1px solid currentColor; background: transparent; color: inherit; font: 400 1rem/1.5 var(--sans); resize: vertical; }
+.booking-success-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1rem; }
+.booking-success-actions button { margin: 0; font-size: 0.8rem; }
+.booking-success-actions a { padding: 1rem; border: 1px solid currentColor; font-size: 0.85rem; }
+.portfolio-work-open { display: block; width: 100%; padding: 0; background: transparent; color: inherit; text-align: left; }
+.portfolio-item figcaption > a { font: 500 0.8rem/1.4 var(--mono); text-decoration: underline; }
+.portfolio-lightbox { position: fixed; inset: 0; z-index: 400; display: flex; flex-direction: column; align-items: center; gap: 1rem; overflow-y: auto; padding: 1.25rem; background: rgba(5,5,5,0.98); color: var(--bone); }
+.portfolio-lightbox > button { align-self: flex-end; min-height: 44px; padding: 0.75rem; color: inherit; background: transparent; }
+.portfolio-lightbox > img { width: 100%; min-height: 0; height: 72svh; object-fit: contain; }
+.portfolio-lightbox > div { text-align: center; }
+.portfolio-lightbox h2 { margin: 0 0 0.75rem; font-size: 1.5rem; letter-spacing: 0; }
+.portfolio-lightbox a { text-decoration: underline; }
+.product-image > button, .product-info span,
+.product-toolbar, .calendar-days small, .calendar-days span,
+.persistent-action-copy small, .inner-hero-meta,
+.artist-profile-meta, .form-disclaimer,
+.artist-selector-grid button small, .artist-selector-heading,
+.artist-index-copy > span, .section-kicker,
+.calendar-heading, .calendar-note > span,
+.booking-form label > span { font-size: 0.75rem; line-height: 1.4; }
+.product-image > button { min-height: 44px; }
+.inner-hero-meta { gap: 0.75rem 1.5rem; flex-wrap: wrap; }
+.portfolio-item-image img { filter: none; }
+@media (max-width: 720px) {
+  main { padding-bottom: var(--dock-clearance); }
+  .persistent-action-copy strong { font-size: 0.85rem; }
+  .persistent-action-copy small { font-size: 0.65rem; }
+  .booking-success > div { padding: 1.5rem; }
+  .menu-dialog-close { top: 1rem; right: 1.1rem; }
+  .artist-profile-intro h2 { font-size: clamp(1.8rem, 9.8vw, 3.9rem); line-height: 1.08; }
 }

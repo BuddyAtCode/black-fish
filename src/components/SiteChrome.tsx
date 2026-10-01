@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BrandMark from "./BrandMark";
+import useDialog from "./useDialog";
+import { studioInstagram } from "../data/booking";
 
 const navigation = [
   { label: "Domov", to: "/" },
@@ -434,6 +436,7 @@ function PersistentActionDock({ pathname }: { pathname: string }) {
 
 export default function SiteChrome() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useDialog<HTMLElement>(menuOpen, () => setMenuOpen(false));
   const location = useLocation();
 
   useEffect(() => {
@@ -472,7 +475,7 @@ export default function SiteChrome() {
             aria-expanded={menuOpen}
             aria-controls="main-menu"
           >
-            <span>{menuOpen ? "Close" : "Menu"}</span>
+            <span>{menuOpen ? "Zavrieť" : "Menu"}</span>
             <i aria-hidden="true" />
           </button>
         </div>
@@ -484,12 +487,19 @@ export default function SiteChrome() {
         {menuOpen && (
           <motion.nav
             id="main-menu"
+            ref={menuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Hlavné menu"
+            tabIndex={-1}
+            data-lenis-prevent
             className="menu-overlay"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           >
+            <button type="button" className="menu-dialog-close" onClick={() => setMenuOpen(false)}>Zavrieť ×</button>
             <div className="menu-watermark" aria-hidden="true">IS</div>
             <div className="menu-list">
               {navigation.map((item, index) => (
@@ -512,7 +522,7 @@ export default function SiteChrome() {
             </div>
             <div className="menu-footer">
               <span>.INKSOUL.</span>
-              <span>Slovensko · Instagram doplníme</span>
+              <a href={studioInstagram} target="_blank" rel="noreferrer">Instagram .INKSOUL.</a>
               <span>© {new Date().getFullYear()}</span>
             </div>
           </motion.nav>

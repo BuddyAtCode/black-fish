@@ -1,9 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { createPortal } from "react-dom";
+import useDialog from "../components/useDialog";
 import { Link } from "react-router-dom";
 import { HeroLetterLine } from "../components/TextReveal";
 import { artists, studioWorks } from "../data/studio";
-import type { ArtistSlug } from "../data/studio";
+import type { ArtistSlug, StudioWork } from "../data/studio";
 
 type Filter = "all" | ArtistSlug;
 
@@ -14,6 +16,8 @@ const filters: Array<{ value: Filter; label: string }> = [
 
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
+  const [selectedWork, setSelectedWork] = useState<StudioWork | null>(null);
+  const dialogRef = useDialog(Boolean(selectedWork), () => setSelectedWork(null));
   const visibleWorks =
     activeFilter === "all"
       ? studioWorks
@@ -49,6 +53,7 @@ export default function Portfolio() {
               type="button"
               key={filter.value}
               className={activeFilter === filter.value ? "is-active" : ""}
+              aria-pressed={activeFilter === filter.value}
               onClick={() => setActiveFilter(filter.value)}
             >
               {filter.label}
@@ -70,7 +75,7 @@ export default function Portfolio() {
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.65, delay: Math.min(index * 0.05, 0.25) }}
                 >
-                  <Link to={`/artists/${work.artist}`}>
+                  <button className="portfolio-work-open" type="button" onClick={() => setSelectedWork(work)} aria-label={`Zväčšiť: ${work.title}`}>
                     <div className="portfolio-item-image">
                       <img
                         src={work.src}
@@ -80,15 +85,15 @@ export default function Portfolio() {
                       />
                       <span>{work.number}</span>
                       <b aria-hidden="true">
-                        PROFIL
+                        ZVÄČŠIŤ
                         <i className="thorn-arrow thorn-arrow--inline" />
                       </b>
                     </div>
+                  </button>
                     <figcaption>
                       <strong>{work.title}</strong>
-                      <span>{artist?.name} / .INKSOUL.</span>
+                      <Link to={`/artists/${work.artist}`}>Profil — {artist?.name}</Link>
                     </figcaption>
-                  </Link>
                 </motion.figure>
               );
             })}
@@ -104,6 +109,18 @@ export default function Portfolio() {
           <i className="thorn-arrow" aria-hidden="true" />
         </Link>
       </section>
+      {createPortal(<AnimatePresence>
+        {selectedWork && (
+          <motion.div className="portfolio-lightbox" ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="work-title" tabIndex={-1} data-lenis-prevent initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <button type="button" onClick={() => setSelectedWork(null)}>Zavrieť ×</button>
+            <img src={selectedWork.src} alt={selectedWork.title} />
+            <div>
+              <h2 id="work-title">{selectedWork.title}</h2>
+              <Link to={`/artists/${selectedWork.artist}`}>Profil — {artists.find((artist) => artist.slug === selectedWork.artist)?.name}</Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>, document.body)}
     </main>
   );
 }
