@@ -65,12 +65,6 @@ function preloadImage(src: string) {
   });
 }
 
-async function preloadFile(src: string) {
-  const response = await fetch(src, { cache: "force-cache" });
-  if (!response.ok) throw new Error(`Failed to preload ${src}`);
-  await response.arrayBuffer();
-}
-
 function withTimeout(task: Promise<unknown>) {
   return new Promise<void>((resolve) => {
     const timeout = window.setTimeout(resolve, assetTimeout);
@@ -89,7 +83,6 @@ function startPreloading() {
   const tasks: Array<() => Promise<unknown>> = [
     ...imageAssets.map((src) => () => preloadImage(src)),
     ...fontAssets.map((font) => () => document.fonts.load(font)),
-    () => preloadFile("/models/inksoul-skull.glb"),
     () => import("./InksoulArtifactScene"),
   ];
 
